@@ -115,6 +115,105 @@
     },
     "correction_note": {
       "type": "string"
+    },
+    "significance_score": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100,
+      "description": "Editorial archive value only; not a probability of factual accuracy."
+    },
+    "significance_reason": {
+      "type": "string"
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "title",
+          "publisher",
+          "url"
+        ],
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "publisher": {
+            "type": "string"
+          },
+          "country": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "source_type": {
+            "enum": [
+              "primary",
+              "independent_reporting",
+              "analysis",
+              "other"
+            ]
+          },
+          "original_reporting": {
+            "type": [
+              "boolean",
+              "null"
+            ]
+          },
+          "ownership_or_mandate_note": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "claim_supported": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "independent_domains": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "disagreements": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "issue": {
+            "type": "string"
+          },
+          "version_a": {
+            "type": "string"
+          },
+          "version_b": {
+            "type": "string"
+          },
+          "what_is_known": {
+            "type": "string"
+          },
+          "what_remains_uncertain": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "limitations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "correction_watch": {
+      "type": "string"
+    },
+    "review_note": {
+      "type": "string"
     }
   }
-}
+}\n
