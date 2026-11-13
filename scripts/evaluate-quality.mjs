@@ -1,7 +1,7 @@
 import { readFile, writeFile } from "node:fs/promises";
 const read = async path => JSON.parse(await readFile(path, "utf8"));
 const benchmark = await read("data/quality/benchmark.json");
-const cases = Array.isArray(benchmark.items) ? benchmark.items : [];
+const cases = Array.isArray(benchmark.items) ? benchmark.items : [];\nif (cases.length === 0) { console.log("No human-labelled benchmark cases yet; evaluation remains unchanged."); process.exit(0); }
 const holdout = cases.filter(x => x.split === "holdout");
 const counts = {};
 for (const type of ["claim_verification","source_attribution","date_extraction","translation","context_completeness"]) {
