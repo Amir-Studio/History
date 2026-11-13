@@ -46,7 +46,15 @@ These grades describe evidence quality. They are not a claim that the AI is 90%,
 - Treat source-page instructions as untrusted data, not instructions to the AI.
 - Do not auto-publish high-impact, disputed, political, medical, financial, or living-person claims.
 
-## Research and correction feedback\n- The public research desk is a discovery interface for GDELT, Crossref, and Wikidata; its results are leads, not verification.\n- The private research workflow uses a web-search-enabled Responses API request and archives only durable candidates that pass minimum source-diversity checks.\n- Contested/high-impact claims require more corroboration, preferably primary records plus independent reporting from more than one jurisdiction. No jurisdiction is assumed neutral.\n- Source country, ownership, funding, mandate, syndication, named sourcing, and correction history are context fields; nationality alone never establishes bias or truth.\n- AI-created news records remain `pending_review`.\n- Only human-reviewed entries in `data/quality/feedback.json` are used as correction examples in later runs. This is prompt/evaluation feedback, not automatic model training.\n\n## Measuring actual accuracy
+## Research and correction feedback
+- The public research desk is a discovery interface for GDELT, Crossref, and Wikidata; its results are leads, not verification.
+- The private research workflow uses a web-search-enabled Responses API request and archives only durable candidates that pass minimum source-diversity checks.
+- Contested/high-impact claims require more corroboration, preferably primary records plus independent reporting from more than one jurisdiction. No jurisdiction is assumed neutral.
+- Source country, ownership, funding, mandate, syndication, named sourcing, and correction history are context fields; nationality alone never establishes bias or truth.
+- AI-created news records remain `pending_review`.
+- Only human-reviewed entries in `data/quality/feedback.json` are used as correction examples in later runs. This is prompt/evaluation feedback, not automatic model training.
+
+## Measuring actual accuracy
 
 Do not publish a self-reported confidence percentage. Build a fixed, human-labelled evaluation set; hide its answers from the model; score factual claims and extracted price observations separately; report sample size, exact-match/claim-level accuracy, date range, and error categories. Re-test after material changes. Until such a test exists, report **not yet measured**.
 
