@@ -4,7 +4,7 @@ import { existsSync } from "node:fs";
 import { dirname, join } from "node:path";
 
 const API_KEY = process.env.OPENAI_API_KEY;
-const MODEL = process.env.HISTORY_MODEL || "gpt-6-luna";
+const MODEL = process.env.HISTORY_MODEL || "gpt-6-astra";
 const DOLLAR_NEWS_URL = process.env.DOLLAR_NEWS_URL || "https://oolfbjxclhzlbwjmzxxx.supabase.co/functions/v1/market-api/news";
 const MAX_CANDIDATES = Math.max(1, Math.min(5, Number(process.env.MAX_CANDIDATES || 3)));
 const ROOT = process.cwd();
@@ -74,7 +74,7 @@ function searchSources(response) {
   return [...new Map(found.map(x => [x.url, x])).values()].slice(0, 20);
 }
 function parseJson(text) {
-  const stripped = String(text).trim().replace(/^\uFEFF/, "").replace(/^\`\`\`(?:json)?\s*/i, "").replace(/\s*\`\`\`$/, "");
+  const stripped = String(text).trim().replace(/^\uFEFF/, "").replace(/^\x60{3}(?:json)?\s*/i, "").replace(/\s*\x60{3}$/, "");
   const first = stripped.indexOf("{"), last = stripped.lastIndexOf("}");
   if (first < 0 || last <= first) throw new Error("Model did not return a JSON object");
   return JSON.parse(stripped.slice(first, last + 1));
@@ -112,7 +112,7 @@ Research rules:
   const response = await fetch("https://api.openai.com/v1/responses", {
     method: "POST",
     headers: { authorization: "Bearer " + API_KEY, "content-type": "application/json" },
-    body: JSON.stringify({ model: MODEL, tools: [{ type: "web_search" }], tool_choice: "auto", include: ["web_search_call.results"], input: instructions + "\n\nINPUT:\n" + input }),
+    body: JSON.stringify({ model: MODEL, tools: [{ type: "web_search" }], tool_choice: "auto", include: ["web_search_call.action.sources"], input: instructions + "\n\nINPUT:\n" + input }),
     signal: AbortSignal.timeout(120000)
   });
   if (!response.ok) throw new Error("Responses API HTTP " + response.status + ": " + (await response.text()).slice(0, 900));
