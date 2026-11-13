@@ -67,16 +67,22 @@
       "slug": "how-to-read-history",
       "title": "چگونه تاریخ را بخوانیم؟",
       "category": "world",
-      "description": "راهنمای کوتاه برای تشخیص سند از تفسیر، سنجش اعتبار منابع، شناخت سوگیری و فهم محدودیت‌های تحلیل تاریخی.",
+      "description": "راهنمای عملی برای سنجش اسناد و روایت‌ها، تشخیص بازنشر از تأیید مستقل، بررسی سوگیری و اغراق و مقایسهٔ منابع چندکشوری.",
       "status": "published",
       "status_label": "راهنمای روش‌شناسی",
       "last_verified": "2026-11-13",
       "html_url": "https://amir-studio.github.io/History/articles/how-to-read-history/",
       "json_url": "https://amir-studio.github.io/History/data/articles/how-to-read-history.json",
-      "source_count": 2,
+      "source_count": 5,
       "keywords": [
-        "چگونه تاریخ را بخوانیم؟",
-        "world"
+        "روش پژوهش تاریخی",
+        "منبع اولیه",
+        "منبع ثانویه",
+        "راستی‌آزمایی",
+        "سوگیری رسانه",
+        "استقلال منابع",
+        "اغراق خبری",
+        "تاریخ‌نگاری"
       ],
       "markdown_url": "https://amir-studio.github.io/History/data/articles/how-to-read-history.md"
     }
