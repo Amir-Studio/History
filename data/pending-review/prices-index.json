@@ -1,0 +1,60 @@
+{
+  "schema_version": "1.0.0",
+  "updated_at": "2026-11-13",
+  "items": [
+    {
+      "id": "price-738fe84cbcdd36bbe7",
+      "instrument": "تتر (ریالی)",
+      "symbol": "USDT_IRR",
+      "market": "crypto_iran",
+      "observed_at": "2026-11-13T21:38:42.008Z",
+      "status": "pending_review",
+      "json_url": "https://amir-studio.github.io/History/data/pending-review/prices/price-738fe84cbcdd36bbe7.json"
+    },
+    {
+      "id": "price-c74895de9fa3cd13f9",
+      "instrument": "سکه امامی",
+      "symbol": "COIN_EMAMI_IRR",
+      "market": "iran_gold",
+      "observed_at": "2026-11-12T13:29:58.000Z",
+      "status": "pending_review",
+      "json_url": "https://amir-studio.github.io/History/data/pending-review/prices/price-c74895de9fa3cd13f9.json"
+    },
+    {
+      "id": "price-cc8dcbf635565b7a57",
+      "instrument": "طلای ۱۸ عیار (هر گرم)",
+      "symbol": "GOLD_18K_IRR",
+      "market": "iran_gold",
+      "observed_at": "2026-11-12T13:29:56.000Z",
+      "status": "pending_review",
+      "json_url": "https://amir-studio.github.io/History/data/pending-review/prices/price-cc8dcbf635565b7a57.json"
+    },
+    {
+      "id": "price-a6eddb1800f294976e",
+      "instrument": "پوند انگلیس (بازار آزاد)",
+      "symbol": "GBP_IRR_FREE",
+      "market": "iran_free",
+      "observed_at": "2026-11-12T13:29:57.000Z",
+      "status": "pending_review",
+      "json_url": "https://amir-studio.github.io/History/data/pending-review/prices/price-a6eddb1800f294976e.json"
+    },
+    {
+      "id": "price-b331780a982b997d77",
+      "instrument": "یورو (بازار آزاد)",
+      "symbol": "EUR_IRR_FREE",
+      "market": "iran_free",
+      "observed_at": "2026-11-12T13:29:57.000Z",
+      "status": "pending_review",
+      "json_url": "https://amir-studio.github.io/History/data/pending-review/prices/price-b331780a982b997d77.json"
+    },
+    {
+      "id": "price-e2577160267781482a",
+      "instrument": "دلار آمریکا (بازار آزاد)",
+      "symbol": "USD_IRR_FREE",
+      "market": "iran_free",
+      "observed_at": "2026-11-12T13:29:52.000Z",
+      "status": "pending_review",
+      "json_url": "https://amir-studio.github.io/History/data/pending-review/prices/price-e2577160267781482a.json"
+    }
+  ]
+}

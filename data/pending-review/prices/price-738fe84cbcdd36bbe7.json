@@ -1,0 +1,17 @@
+{
+  "id": "price-738fe84cbcdd36bbe7",
+  "instrument": "تتر (ریالی)",
+  "symbol": "USDT_IRR",
+  "market": "crypto_iran",
+  "value": 269190,
+  "unit": "واحد",
+  "currency": "IRT",
+  "observed_at": "2026-11-13T21:38:42.008Z",
+  "collected_at": "2026-11-13T22:26:28.451Z",
+  "source_name": "Nobitex",
+  "source_url": "https://raw.githubusercontent.com/iran-market/iran-market.github.io/main/data/popular.json",
+  "methodology": "ثبت عین مشاهدهٔ منتشرشده در خوراک عمومی؛ بدون تبدیل واحد، برآورد یا جایگزینی مقدار.",
+  "status": "pending_review",
+  "supersedes": null,
+  "notes": "وضعیت بازار: در خوراک مشخص نشده | زمان تهران: 2026-11-14T01:08:42+03:30 | تاریخ شمسی: 1405/08/23 01:08:42 | زمان بررسی منبع: 2026-11-13T21:59:53.210Z | پرچم stale: false"
+}

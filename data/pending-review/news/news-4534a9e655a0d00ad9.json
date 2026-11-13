@@ -1,0 +1,48 @@
+{
+  "id": "news-4534a9e655a0d00ad9",
+  "headline": "قیمت نفت کاهش یافت",
+  "publisher": "yjc.ir",
+  "author": null,
+  "source_url": "https://www.yjc.ir/fa/news/9148572/%D9%82%DB%8C%D9%85%D8%AA-%D9%86%D9%81%D8%AA-%DA%A9%D8%A7%D9%87%D8%B4-%DB%8C%D8%A7%D9%81%D8%AA",
+  "published_at": "2026-11-13T20:57:02.000Z",
+  "collected_at": "2026-11-13T22:26:28.451Z",
+  "event_date": null,
+  "language": "fa",
+  "category": "economy",
+  "summary": "این رکورد در مرحلهٔ دریافت خودکار فقط تیتر و پیوند ناشر را ثبت می‌کند. متن کامل، سند اولیه و صحت ادعا هنوز مستقلاً بررسی نشده‌اند.",
+  "claims": [
+    {
+      "claim": "تیتر منتشرشدهٔ ناشر چنین گزارش می‌کند: قیمت نفت کاهش یافت",
+      "evidence_grade": "unverified",
+      "supporting_sources": [
+        "https://www.yjc.ir/fa/news/9148572/%D9%82%DB%8C%D9%85%D8%AA-%D9%86%D9%81%D8%AA-%DA%A9%D8%A7%D9%87%D8%B4-%DB%8C%D8%A7%D9%81%D8%AA"
+      ],
+      "note": "ثبت تیتر به معنی تأیید ادعا نیست؛ بررسی متن کامل و سند پشتیبان لازم است."
+    }
+  ],
+  "status": "pending_review",
+  "significance_score": 59,
+  "significance_reason": "امتیاز صرفاً برای اولویت‌بندی بررسی آرشیوی و بر پایهٔ واژگان موضوعی است؛ معیار صحت یا بی‌طرفی نیست.",
+  "sources": [
+    {
+      "title": "قیمت نفت کاهش یافت",
+      "publisher": "yjc.ir",
+      "country": null,
+      "source_type": "other",
+      "original_reporting": null,
+      "ownership_or_mandate_note": "در دریافت خودکار بررسی نشده است.",
+      "url": "https://www.yjc.ir/fa/news/9148572/%D9%82%DB%8C%D9%85%D8%AA-%D9%86%D9%81%D8%AA-%DA%A9%D8%A7%D9%87%D8%B4-%DB%8C%D8%A7%D9%81%D8%AA",
+      "claim_supported": "تیتر منتشرشدهٔ ناشر چنین گزارش می‌کند: قیمت نفت کاهش یافت",
+      "reporting_chain": "زنجیرهٔ گزارش‌دهی و استقلال منبع هنوز بررسی نشده است."
+    }
+  ],
+  "independent_domains": [],
+  "disagreements": [],
+  "limitations": [
+    "این رکورد بر پایهٔ تیتر و فرادادهٔ خوراک خبری ساخته شده است، نه بررسی متن کامل.",
+    "استقلال ناشر، مالکیت رسانه و بازنشر از خبرگزاری دیگر هنوز ارزیابی نشده است.",
+    "امتیاز اهمیت، احتمال صحت خبر نیست."
+  ],
+  "correction_watch": "برای اصلاحیه، تکذیبیه یا گزارش تکمیلی بعدی ناشر دوباره بررسی شود.",
+  "review_note": "پیش از تغییر وضعیت به verified، منبع اولیه و دست‌کم دو زنجیرهٔ گزارش‌دهی مستقل بررسی شوند."
+}
