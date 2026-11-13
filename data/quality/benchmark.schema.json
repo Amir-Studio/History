@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "History Research Evaluation Case",
+  "type": "object",
+  "required": [
+    "id",
+    "split",
+    "task_type",
+    "predictions",
+    "human_labels"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+$"
+    },
+    "split": {
+      "enum": [
+        "development",
+        "holdout"
+      ]
+    },
+    "task_type": {
+      "enum": [
+        "claim_verification",
+        "source_attribution",
+        "date_extraction",
+        "translation",
+        "context_completeness"
+      ]
+    },
+    "predictions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "item_id",
+          "label"
+        ],
+        "properties": {
+          "item_id": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "human_labels": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "item_id",
+          "label"
+        ],
+        "properties": {
+          "item_id": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "reviewed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "reviewer": {
+      "type": "string"
+    }
+  }
+}
