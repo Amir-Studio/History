@@ -23,7 +23,8 @@
       "keywords": [
         "تاریخ معاصر ایران",
         "iran"
-      ]
+      ],
+      "markdown_url": "https://amir-studio.github.io/History/data/articles/iran-contemporary-history.md"
     },
     {
       "id": "history-of-us-dollar",
@@ -40,7 +41,8 @@
       "keywords": [
         "تاریخچهٔ دلار آمریکا",
         "economy"
-      ]
+      ],
+      "markdown_url": "https://amir-studio.github.io/History/data/articles/history-of-us-dollar.md"
     },
     {
       "id": "elon-musk",
@@ -57,7 +59,8 @@
       "keywords": [
         "ایلان ماسک",
         "people"
-      ]
+      ],
+      "markdown_url": "https://amir-studio.github.io/History/data/articles/elon-musk.md"
     },
     {
       "id": "how-to-read-history",
@@ -74,7 +77,8 @@
       "keywords": [
         "چگونه تاریخ را بخوانیم؟",
         "world"
-      ]
+      ],
+      "markdown_url": "https://amir-studio.github.io/History/data/articles/how-to-read-history.md"
     }
   ]
 }
