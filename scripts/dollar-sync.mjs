@@ -7,6 +7,8 @@ const NEWS_URL = process.env.DOLLAR_NEWS_URL ||
   "https://oolfbjxclhzlbwjmzxxx.supabase.co/functions/v1/market-api/news?read_only=1";
 const PRICE_URL = process.env.MARKET_DATA_URL ||
   "https://raw.githubusercontent.com/iran-market/iran-market.github.io/main/data/popular.json";
+const NERKHARA_URL = process.env.NERKHARA_URL || "https://nerkhara.com/api/v1/latest.json";
+const NERKHARA_IDS = {usd:"USD_IRR_FREE",eur:"EUR_IRR_FREE","gold-18k":"GOLD_18K_IRR","coin-emami":"COIN_EMAMI_IRR"};
 const PENDING_DIR = "data/pending-review";
 const NEWS_DIR = join(PENDING_DIR, "news");
 const PRICE_DIR = join(PENDING_DIR, "prices");
@@ -67,6 +69,25 @@ async function fetchJson(url) {
   });
   if (!response.ok) throw new Error("HTTP " + response.status + " from " + new URL(url).hostname);
   return response.json();
+}
+async function fetchMarketPayload() {
+  try {
+    const payload=await fetchJson(NERKHARA_URL);
+    const items=Array.isArray(payload?.items)?payload.items:[];
+    const data=items.flatMap(item=>{
+      const symbol=NERKHARA_IDS[item.id],price=Number(item.price),timestamp=iso(item.updated_utc||payload.generated_utc);
+      if(!symbol||!(price>0)||!timestamp) return [];
+      return [{symbol,price,timestamp,name_fa:item.name?.fa||item.name?.en||symbol,unit:item.unit||"IRT",
+        currency:item.unit||"IRT",market:"iran_free",source:"NerkhAra",stale:item.stale===true,
+        provider_meta:{method:item.method||null,source_count:Number(item.sources)||0,spread_pct:Number.isFinite(Number(item.spread_pct))?Number(item.spread_pct):null,
+          updated_utc:item.updated_utc||payload.generated_utc,page:item.page?.fa||item.page?.en||null}}];
+    });
+    if(!data.length) throw new Error("NerkhAra returned no mapped quotes");
+    return {data,meta:{source:"NerkhAra",published_at:payload.generated_utc||null,public_file:NERKHARA_URL}};
+  } catch(error) {
+    console.warn("NerkhAra price source unavailable; trying legacy public snapshot:",String(error?.message||error).slice(0,160));
+    return fetchJson(PRICE_URL);
+  }
 }
 async function readIndex(path) {
   try {
@@ -146,8 +167,12 @@ function priceRecord(item, marketMeta) {
     observed_at: iso(item.timestamp),
     collected_at: NOW.toISOString(),
     source_name: sourceName,
-    source_url: marketMeta.public_file || PRICE_URL,
-    methodology: "ثبت عین مشاهدهٔ منتشرشده در خوراک عمومی؛ بدون تبدیل واحد، برآورد یا جایگزینی مقدار.",
+    source_url: item.provider_meta?.page || marketMeta.public_file || PRICE_URL,
+    provider_method: item.provider_meta?.method || null,
+    provider_source_count: item.provider_meta?.source_count ?? null,
+    provider_spread_pct: item.provider_meta?.spread_pct ?? null,
+    provider_updated_at: item.provider_meta?.updated_utc || item.timestamp || null,
+    methodology: "ثبت عین مشاهدهٔ منتشرشده در خوراک عمومی؛ واحد و زمان منبع حفظ می‌شود و هیچ مقدار کهنه‌ای جایگزین نمی‌شود.",
     status: "pending_review",
     supersedes: null,
     notes: [
@@ -167,7 +192,7 @@ const existingNewsUrls = new Set(newsIndex.items.map(item => item.source_url).fi
 const existingPrices = new Set(priceIndex.items.map(item => item.id));
 const existingPriceKeys = new Set(priceIndex.items.map(item => String(item.symbol || "") + ":" + String(item.observed_at || "")));
 
-const results = await Promise.allSettled([fetchJson(NEWS_URL), fetchJson(PRICE_URL)]);
+const results = await Promise.allSettled([fetchJson(NEWS_URL), fetchMarketPayload()]);
 const newsPayload = results[0].status === "fulfilled" ? results[0].value : null;
 const marketPayload = results[1].status === "fulfilled" ? results[1].value : null;
 if (!newsPayload && !marketPayload) {
@@ -186,7 +211,7 @@ for (const item of newsItems) {
   const publishedAt = iso(item.published_at);
   if (!title || title.length < 8 || !publishedAt) continue;
   const age = NOW.getTime() - Date.parse(publishedAt);
-  if (age < -5 * 60 * 1000 || age > 72 * 60 * 60 * 1000) continue;
+  if (age < -5 * 60 * 1000 || age > 24 * 60 * 60 * 1000) continue;
   const significance = scoreHeadline(title);
   if (significance < 52 || existingNewsUrls.has(url)) continue;
   const publisher = publisherFor(item, url);
