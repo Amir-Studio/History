@@ -21,7 +21,7 @@
       return categoryMatch && (!q || haystack.includes(q));
     });
     grid.innerHTML = list.map((item, i) => `
-      <a class="article-card" href="${escapeHTML(item.url || '#')}">
+      <a class="article-card" href="${escapeHTML(item.url || `article.html?id=${encodeURIComponent(item.id)}`)}">
         <div class="article-top"><span class="article-index">${String(i+1).padStart(2,'0')}</span><span class="article-tag">${escapeHTML(categoryNames[item.category] || 'پرونده')}</span></div>
         <div class="article-body"><h3>${escapeHTML(item.title)}</h3><p>${escapeHTML(item.description)}</p><div class="article-foot"><span>${escapeHTML(item.status || 'در حال توسعه')}</span><b>↗</b></div></div>
       </a>`).join('');
