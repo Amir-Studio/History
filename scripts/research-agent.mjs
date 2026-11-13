@@ -80,7 +80,7 @@ async function research(candidate, feedback) {
   const instructions = `You are the research editor for History, a source-led historical archive.
 Use web search to investigate the candidate, not merely summarize its headline.
 Return ONE JSON object only, in Persian where appropriate, with these keys:
-historically_significant (boolean), significance_score (integer 0-100; editorial relevance, NOT probability of truth), significance_reason, headline, publisher, source_url, published_at, event_date (YYYY-MM-DD or null), language, category (iran|world|economy|technology|people|other), summary (original concise paraphrase, no long quotations), claims (array of {claim,evidence_grade:A|B|C|unverified,supporting_sources:[URLs],note}), sources (array of {title,publisher,country,url,source_type:primary|independent_reporting|analysis|other,original_reporting:boolean,ownership_or_mandate_note,claim_supported}), disagreements (array of {issue,version_a,version_b,what_is_known,what_remains_uncertain}), limitations, correction_watch.
+historically_significant (boolean), significance_score (integer 0-100; editorial relevance, NOT probability of truth), significance_reason, headline, publisher, source_url, published_at, event_date (YYYY-MM-DD or null), language, category (iran|world|economy|technology|people|other), summary (original concise paraphrase, no long quotations), claims (array of {claim,evidence_grade:A|B|C|unverified,supporting_sources:[URLs],note}), sources (array of {title,publisher,country,url,reporting_chain,source_type:primary|independent_reporting|analysis|other,original_reporting:boolean,ownership_or_mandate_note,claim_supported}), disagreements (array of {issue,version_a,version_b,what_is_known,what_remains_uncertain}), limitations, correction_watch.
 Research rules:
 - Search for the original document, statement, dataset, filing, court record, scientific paper, or direct transcript where relevant.
 - Seek genuinely independent corroboration. Syndicated copies, shared wire stories, and articles quoting the same single source count as one reporting chain.
@@ -134,8 +134,8 @@ function validateResearch(candidate, result, sources) {
   const independentDomains = new Set(assessments.filter(x => x.source_type === "independent_reporting" && x.original_reporting === true).map(x => host(x.url)).filter(Boolean));
   const contested = isContested(result);
   const enough = contested
-    ? independentDomains.size >= 2 && (primaryDomains.size >= 1 || independentDomains.size >= 3)
-    : (primaryDomains.size >= 1 && independentDomains.size >= 1) || independentDomains.size >= 2;
+    ? independentGroups.size >= 2 && (primaryDomains.size >= 1 || independentGroups.size >= 3)
+    : (primaryDomains.size >= 1 && independentGroups.size >= 1) || independentGroups.size >= 2;
   if (!enough) return { ok: false, reason: "insufficient-assessed-independent-reporting" };
   const sourceUrl = cleanUrl(result.source_url || candidate.url);
   if (!sourceUrl) return { ok: false, reason: "invalid-primary-url" };
@@ -147,7 +147,7 @@ function validateResearch(candidate, result, sources) {
     return { claim: claim.claim.trim(), evidence_grade: grade, supporting_sources: [...new Set(links)], note: String(claim.note || "") };
   }).filter(x => x.supporting_sources.length > 0);
   if (!validClaims.length) return { ok: false, reason: "claims-not-cited-by-retrieved-sources" };
-  return { ok: true, sourceUrl, claims: validClaims, domains: [...independentDomains], assessments };
+  return { ok: true, sourceUrl, claims: validClaims, domains: [...independentGroups], assessments };
 }
 
 async function main() {
@@ -179,7 +179,7 @@ async function main() {
         headline: title,
         publisher: String(result.publisher || candidate.domain || "نامشخص"),
         source_url: checked.sourceUrl,
-        published_at: (Number.isFinite(Date.parse(result.published_at || candidate.published_at || now)) ? new Date(result.published_at || candidate.published_at || now).toISOString() : now),
+        published_at: (Number.isFinite(Date.parse(candidate.published_at || result.published_at || now)) ? new Date(candidate.published_at || result.published_at || now).toISOString() : now),
         collected_at: now,
         event_date: result.event_date || null,
         language: String(result.language || candidate.language_code || "unknown"),
@@ -192,7 +192,7 @@ async function main() {
           title: String(s.title || s.publisher || s.domain || "Source").slice(0, 220),
           publisher: String(s.publisher || s.domain || "نامشخص").slice(0, 160),
           country: s.country || null,
-          source_type: s.source_type || "other",
+          source_type: s.source_type || "other",\n          reporting_chain: String(s.reporting_chain || "").slice(0, 160),
           original_reporting: typeof s.original_reporting === "boolean" ? s.original_reporting : null,
           ownership_or_mandate_note: String(s.ownership_or_mandate_note || "").slice(0, 500),
           url: s.url,
