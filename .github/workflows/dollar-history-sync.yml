@@ -29,7 +29,12 @@ jobs:
           BRANCH="automation/no-key-dollar-history-intake"
           if git ls-remote --exit-code --heads origin "$BRANCH" >/dev/null 2>&1; then
             git fetch origin "$BRANCH"
-            git checkout -B "$BRANCH" "origin/$BRANCH"
+            OPEN_PR="$(gh pr list --state open --head "$BRANCH" --base main --json number --jq '.[0].number')"
+            if [ -n "$OPEN_PR" ]; then
+              git checkout -B "$BRANCH" "origin/$BRANCH"
+            else
+              git checkout -B "$BRANCH" origin/main
+            fi
           else
             git checkout -B "$BRANCH" origin/main
           fi
