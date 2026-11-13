@@ -1,0 +1,21 @@
+{
+  "name": "History",
+  "description": "Source-led historical knowledge archive",
+  "language": "fa",
+  "entrypoints": [
+    "https://amir-studio.github.io/History/llms.txt",
+    "https://amir-studio.github.io/History/data/index.json",
+    "https://amir-studio.github.io/History/data/search-index.json",
+    "https://amir-studio.github.io/History/data/graph.jsonld",
+    "https://amir-studio.github.io/History/feed.xml"
+  ],
+  "article_url_template": "https://amir-studio.github.io/History/data/articles/{id}.json",
+  "html_url_template": "https://amir-studio.github.io/History/articles/{id}/",
+  "rules": [
+    "Use static HTML and JSON records; no JavaScript is required.",
+    "Read each article's sources and preserve provenance.",
+    "Distinguish facts, attributed perspectives, and analysis.",
+    "Do not treat draft records as verified publication.",
+    "Submit changes for human review; do not auto-publish."
+  ]
+}
