@@ -58,6 +58,10 @@ These grades describe evidence quality. They are not a claim that the AI is 90%,
 
 Do not publish a self-reported confidence percentage. Build a fixed, human-labelled evaluation set; hide its answers from the model; score factual claims and extracted price observations separately; report sample size, exact-match/claim-level accuracy, date range, and error categories. Re-test after material changes. Until such a test exists, report **not yet measured**.
 
+## No-key Dollar intake
+
+The scheduled workflow `.github/workflows/dollar-history-sync.yml` uses only public Dollar news and market-data feeds plus the GitHub Actions token supplied by GitHub. It does not require an OpenAI key or any user-created AI key. It appends price observations and high-priority headline candidates as immutable `pending_review` records and opens or updates a review pull request. Headline significance is a triage heuristic, not a truth score. Headline-only claims remain `unverified`; the workflow does not infer source independence, resolve factual disputes, mark records verified, auto-publish, or delete source items. Full-text research and human review remain separate.
+
 ## Project separation
 
 History is independent of Dollar and Moon Shop. Do not read, modify, delete, or migrate their Supabase data as part of History ingestion. If a separate History database is later approved, it must have its own project, credentials, and retention policy.
