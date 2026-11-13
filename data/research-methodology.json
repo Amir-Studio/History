@@ -1,0 +1,39 @@
+{
+  "version": "1.0.0",
+  "updated_at": "2026-11-13",
+  "principles": [
+    "Separate event facts, attributed claims, interpretation, and uncertainty.",
+    "Prefer primary records for claims they directly document.",
+    "Independence is assessed by ownership, syndication, shared wire copy, and sourcing; URL count is not corroboration count.",
+    "Source country is contextual metadata, never a truth or neutrality score.",
+    "For contested high-impact claims, search for reporting and primary evidence from multiple jurisdictions, including states not directly involved when available; do not assume any state is neutral.",
+    "Preserve disagreements and corrections; do not silently resolve conflicts.",
+    "Never infer motive from nationality, audience, or political position without evidence.",
+    "No claim is verified solely because an AI model generated it."
+  ],
+  "source_assessment_fields": [
+    "publisher",
+    "country_of_publication",
+    "ownership_or_funding_evidence",
+    "editorial_or_institutional_mandate",
+    "primary_or_secondary",
+    "original_reporting_or_syndicated",
+    "named_sources",
+    "correction_history",
+    "access_constraints",
+    "claim_scope"
+  ],
+  "minimum_corroboration": {
+    "ordinary_claims": 2,
+    "contested_high_impact_claims": 3,
+    "notes": "Count genuinely independent reporting chains, not copied articles. Primary evidence is preferred where available."
+  },
+  "publication_states": [
+    "pending_review",
+    "verified",
+    "rejected",
+    "archived"
+  ],
+  "accuracy_reporting": "Not measured until a fixed, human-labelled holdout set is evaluated. Report sample size, date range, claim-level accuracy, calibration, and error categories.",
+  "learning_policy": "Only human-reviewed corrections may be used as feedback examples. Keep original model output, correction, reviewer, timestamp, and reason. Feedback improves prompts and test cases; it does not rewrite model weights or establish truth by itself."
+}
