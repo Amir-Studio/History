@@ -170,6 +170,9 @@
           },
           "claim_supported": {
             "type": "string"
+          },
+          "reporting_chain": {
+            "type": "string"
           }
         }
       }
