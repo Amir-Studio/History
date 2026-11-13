@@ -80,7 +80,7 @@ async function research(candidate, feedback) {
   const instructions = `You are the research editor for History, a source-led historical archive.
 Use web search to investigate the candidate, not merely summarize its headline.
 Return ONE JSON object only, in Persian where appropriate, with these keys:
-historically_significant (boolean), significance_score (integer 0-100; editorial relevance, NOT probability of truth), significance_reason, headline, publisher, source_url, published_at, event_date (YYYY-MM-DD or null), language, category (iran|world|economy|technology|people|other), summary (original concise paraphrase, no long quotations), claims (array of {claim,evidence_grade:A|B|C|unverified,supporting_sources:[URLs],note}), sources (array of {title,publisher,country,source_type:primary|independent_reporting|analysis|other,original_reporting:boolean,ownership_or_mandate_note,claim_supported}), disagreements (array of {issue,version_a,version_b,what_is_known,what_remains_uncertain}), limitations, correction_watch.
+historically_significant (boolean), significance_score (integer 0-100; editorial relevance, NOT probability of truth), significance_reason, headline, publisher, source_url, published_at, event_date (YYYY-MM-DD or null), language, category (iran|world|economy|technology|people|other), summary (original concise paraphrase, no long quotations), claims (array of {claim,evidence_grade:A|B|C|unverified,supporting_sources:[URLs],note}), sources (array of {title,publisher,country,url,source_type:primary|independent_reporting|analysis|other,original_reporting:boolean,ownership_or_mandate_note,claim_supported}), disagreements (array of {issue,version_a,version_b,what_is_known,what_remains_uncertain}), limitations, correction_watch.
 Research rules:
 - Search for the original document, statement, dataset, filing, court record, scientific paper, or direct transcript where relevant.
 - Seek genuinely independent corroboration. Syndicated copies, shared wire stories, and articles quoting the same single source count as one reporting chain.
@@ -129,18 +129,25 @@ function validateResearch(candidate, result, sources) {
   if (result.historically_significant !== true || Number(result.significance_score) < 70) return { ok: false, reason: "not-selected" };
   const claims = Array.isArray(result.claims) ? result.claims.filter(x => x && typeof x.claim === "string" && x.claim.trim()) : [];
   if (!claims.length) return { ok: false, reason: "no-claims" };
-  const domains = new Set(sources.map(x => host(x.url)).filter(Boolean));
-  const minimum = isContested(result) ? 3 : 2;
-  if (domains.size < minimum) return { ok: false, reason: "insufficient-independent-domains" };
+  const assessments = Array.isArray(result.sources) ? result.sources.filter(x => x && cleanUrl(x.url)) : [];
+  const primaryDomains = new Set(assessments.filter(x => x.source_type === "primary").map(x => host(x.url)).filter(Boolean));
+  const independentDomains = new Set(assessments.filter(x => x.source_type === "independent_reporting" && x.original_reporting === true).map(x => host(x.url)).filter(Boolean));
+  const contested = isContested(result);
+  const enough = contested
+    ? independentDomains.size >= 2 && (primaryDomains.size >= 1 || independentDomains.size >= 3)
+    : (primaryDomains.size >= 1 && independentDomains.size >= 1) || independentDomains.size >= 2;
+  if (!enough) return { ok: false, reason: "insufficient-assessed-independent-reporting" };
   const sourceUrl = cleanUrl(result.source_url || candidate.url);
   if (!sourceUrl) return { ok: false, reason: "invalid-primary-url" };
+  const allowedUrls = new Set(sources.map(x => cleanUrl(x.url)).filter(Boolean));
+  allowedUrls.add(sourceUrl);
   const validClaims = claims.map(claim => {
-    const links = Array.isArray(claim.supporting_sources) ? claim.supporting_sources.map(cleanUrl).filter(Boolean) : [];
-    const grade = ["A", "B", "C", "unverified"].includes(claim.evidence_grade) ? claim.evidence_grade : "unverified";
+    const links = Array.isArray(claim.supporting_sources) ? claim.supporting_sources.map(cleanUrl).filter(url => url && allowedUrls.has(url)) : [];
+    const grade = links.length ? (["A", "B", "C", "unverified"].includes(claim.evidence_grade) ? claim.evidence_grade : "unverified") : "unverified";
     return { claim: claim.claim.trim(), evidence_grade: grade, supporting_sources: [...new Set(links)], note: String(claim.note || "") };
-  });
-  if (validClaims.every(x => x.supporting_sources.length === 0)) return { ok: false, reason: "claims-not-cited" };
-  return { ok: true, sourceUrl, claims: validClaims, domains: [...domains] };
+  }).filter(x => x.supporting_sources.length > 0);
+  if (!validClaims.length) return { ok: false, reason: "claims-not-cited-by-retrieved-sources" };
+  return { ok: true, sourceUrl, claims: validClaims, domains: [...independentDomains], assessments };
 }
 
 async function main() {
@@ -172,7 +179,7 @@ async function main() {
         headline: title,
         publisher: String(result.publisher || candidate.domain || "نامشخص"),
         source_url: checked.sourceUrl,
-        published_at: result.published_at || candidate.published_at || now,
+        published_at: (Number.isFinite(Date.parse(result.published_at || candidate.published_at || now)) ? new Date(result.published_at || candidate.published_at || now).toISOString() : now),
         collected_at: now,
         event_date: result.event_date || null,
         language: String(result.language || candidate.language_code || "unknown"),
