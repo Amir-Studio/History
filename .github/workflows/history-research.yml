@@ -36,6 +36,8 @@ jobs:
           HISTORY_MODEL: gpt-6-luna
           MAX_CANDIDATES: ${{ inputs.max_candidates || '3' }}
         run: node scripts/research-agent.mjs
+      - name: Evaluate reviewed quality benchmark
+        run: node scripts/evaluate-quality.mjs
       - name: Validate JSON and diff
         run: |
           node --input-type=module -e "import fs from 'node:fs'; for (const f of fs.readdirSync('data/news').filter(x => x.endsWith('.json'))) JSON.parse(fs.readFileSync('data/news/'+f,'utf8')); JSON.parse(fs.readFileSync('data/news/index.json','utf8'));"
@@ -48,6 +50,6 @@ jobs:
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/news
+          git add data/news data/quality/evaluation.json
           git commit -m "Archive researched historical news"
           git push
