@@ -1,0 +1,66 @@
+name: Dollar no-key archive intake
+
+on:
+  schedule:
+    - cron: "17,47 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: dollar-history-intake
+  cancel-in-progress: false
+
+jobs:
+  intake:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Fetch the existing intake branch when present
+        env:
+          GH_TOKEN: \${{ github.token }}
+        run: |
+          git init repo
+          cd repo
+          git remote add origin https://github.com/\${{ github.repository }}.git
+          git fetch origin main
+          BRANCH="automation/no-key-dollar-history-intake"
+          if git ls-remote --exit-code --heads origin "$BRANCH" >/dev/null 2>&1; then
+            git fetch origin "$BRANCH"
+            git checkout -B "$BRANCH" "origin/$BRANCH"
+          else
+            git checkout -B "$BRANCH" origin/main
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Run no-key Dollar intake
+        working-directory: repo
+        run: |
+          node --check scripts/dollar-sync.mjs
+          node scripts/dollar-sync.mjs
+      - name: Commit and open or update review pull request
+        working-directory: repo
+        env:
+          GH_TOKEN: \${{ github.token }}
+        run: |
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "No new archive candidates."
+            exit 0
+          fi
+          git add data/news data/prices
+          git commit -m "Add pending-review Dollar news and price records"
+          git push --set-upstream origin automation/no-key-dollar-history-intake
+          PR_NUMBER="$(gh pr list --head automation/no-key-dollar-history-intake --base main --json number --jq '.[0].number')"
+          if [ -z "$PR_NUMBER" ]; then
+            gh pr create --base main --head automation/no-key-dollar-history-intake \
+              --title "History: automated Dollar archive candidates" \
+              --body "No external AI key is used. This workflow appends public Dollar RSS headlines and market observations as pending_review records. Headline triage scores are not truth scores; no claim is marked verified. Please inspect provenance, reporting independence, and the market/unit metadata before merging."
+          else
+            echo "Updated existing review PR #$PR_NUMBER."
+          fi
