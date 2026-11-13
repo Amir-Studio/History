@@ -31,10 +31,12 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "22"
+      - name: Validate JavaScript syntax
+        run: node --check scripts/research-agent.mjs
       - name: Run research agent
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          HISTORY_MODEL: gpt-6-luna
+          HISTORY_MODEL: gpt-6-astra
           MAX_CANDIDATES: ${{ inputs.max_candidates || '3' }}
         run: node scripts/research-agent.mjs
       - name: Evaluate reviewed quality benchmark
