@@ -60,7 +60,7 @@ Do not publish a self-reported confidence percentage. Build a fixed, human-label
 
 ## No-key Dollar intake
 
-The scheduled workflow `.github/workflows/dollar-history-sync.yml` uses only public Dollar news and market-data feeds plus the GitHub Actions token supplied by GitHub. It does not require an OpenAI key or any user-created AI key. It appends price observations and high-priority headline candidates as immutable `pending_review` records and opens or updates a review pull request. Headline significance is a triage heuristic, not a truth score. Headline-only claims remain `unverified`; the workflow does not infer source independence, resolve factual disputes, mark records verified, auto-publish, or delete source items. Full-text research and human review remain separate.
+The scheduled workflow `.github/workflows/dollar-history-sync.yml` uses only public Dollar news and market-data feeds plus the GitHub Actions token supplied by GitHub. It does not require an OpenAI key or any user-created AI key. It appends price observations and high-priority headline candidates as immutable `pending_review` records under `data/pending-review/`. This directory is not wired into the public archive index, RSS feed, or sitemap. Headline significance is a triage heuristic, not a truth score. Headline-only claims remain `unverified`; the workflow does not infer source independence, resolve factual disputes, mark records verified, auto-publish, or delete source items. Full-text research and human review remain separate. Do not move pending-review records into the public news index until they have been reviewed.
 
 ## Project separation
 
