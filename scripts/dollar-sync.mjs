@@ -191,18 +191,20 @@ for (const item of newsItems) {
   const publisher = publisherFor(item, url);
   const record = newsRecord(item, title, url, publisher, publishedAt, significance);
   if (existingNews.has(record.id)) continue;
-  if (await saveRecord(NEWS_DIR, record.id, record)) {
+  const created = await saveRecord(NEWS_DIR, record.id, record);
+  const stored = created ? record : JSON.parse(await readFile(join(NEWS_DIR, record.id + ".json"), "utf8"));
+  if (!newsIndex.items.some(entry => entry.id === record.id)) {
     newsIndex.items.unshift({
-      id: record.id,
-      headline: record.headline,
-      category: record.category,
-      status: record.status,
-      published_at: record.published_at,
-      source_url: record.source_url,
-      json_url: "https://amir-studio.github.io/History/data/news/" + record.id + ".json"
+      id: stored.id,
+      headline: stored.headline,
+      category: stored.category,
+      status: stored.status,
+      published_at: stored.published_at,
+      source_url: stored.source_url,
+      json_url: "https://amir-studio.github.io/History/data/news/" + stored.id + ".json"
     });
-    existingNews.add(record.id);
-    existingNewsUrls.add(url);
+    existingNews.add(stored.id);
+    existingNewsUrls.add(stored.source_url);
     newsAdded++;
   }
   if (newsAdded >= 12) break;
@@ -219,17 +221,19 @@ for (const item of marketItems) {
   if (existingPriceKeys.has(key)) continue;
   const record = priceRecord(item, marketPayload.meta || {});
   if (existingPrices.has(record.id)) continue;
-  if (await saveRecord(PRICE_DIR, record.id, record)) {
+  const created = await saveRecord(PRICE_DIR, record.id, record);
+  const stored = created ? record : JSON.parse(await readFile(join(PRICE_DIR, record.id + ".json"), "utf8"));
+  if (!priceIndex.items.some(entry => entry.id === record.id)) {
     priceIndex.items.unshift({
-      id: record.id,
-      instrument: record.instrument,
-      symbol: record.symbol,
-      market: record.market,
-      observed_at: record.observed_at,
-      status: record.status,
-      json_url: "https://amir-studio.github.io/History/data/prices/" + record.id + ".json"
+      id: stored.id,
+      instrument: stored.instrument,
+      symbol: stored.symbol,
+      market: stored.market,
+      observed_at: stored.observed_at,
+      status: stored.status,
+      json_url: "https://amir-studio.github.io/History/data/prices/" + stored.id + ".json"
     });
-    existingPrices.add(record.id);
+    existingPrices.add(stored.id);
     existingPriceKeys.add(key);
     pricesAdded++;
   }
