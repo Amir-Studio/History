@@ -5,7 +5,7 @@ import { dirname, join } from "node:path";
 
 const API_KEY = process.env.OPENAI_API_KEY;
 const MODEL = process.env.HISTORY_MODEL || "gpt-6-astra";
-const DOLLAR_NEWS_URL = process.env.DOLLAR_NEWS_URL || "https://oolfbjxclhzlbwjmzxxx.supabase.co/functions/v1/market-api/news";
+const DOLLAR_NEWS_URL = process.env.DOLLAR_NEWS_URL || "https://oolfbjxclhzlbwjmzxxx.supabase.co/functions/v1/market-api/news?read_only=1";
 const MAX_CANDIDATES = Math.max(1, Math.min(5, Number(process.env.MAX_CANDIDATES || 3)));
 const ROOT = process.cwd();
 const now = new Date().toISOString();
@@ -119,9 +119,12 @@ Research rules:
   const payload = await response.json();
   const result = parseJson(outputText(payload));
   const search = searchSources(payload);
-  const sources = Array.isArray(result.sources) ? result.sources : [];
-  const combined = [...sources.map(s => ({ ...s, url: cleanUrl(s.url) })).filter(s => s.url), ...search];
-  const unique = [...new Map(combined.map(s => [s.url, s])).values()];
+  const retrieved = new Map(search.map(source => [source.url, source]));
+  for (const assessment of Array.isArray(result.sources) ? result.sources : []) {
+    const url = cleanUrl(assessment?.url);
+    if (url && retrieved.has(url)) Object.assign(retrieved.get(url), assessment, { url });
+  }
+  const unique = [...retrieved.values()];
   return { result, unique };
 }
 function isContested(item) {
@@ -132,9 +135,10 @@ function validateResearch(candidate, result, sources) {
   if (result.historically_significant !== true || Number(result.significance_score) < 70) return { ok: false, reason: "not-selected" };
   const claims = Array.isArray(result.claims) ? result.claims.filter(x => x && typeof x.claim === "string" && x.claim.trim()) : [];
   if (!claims.length) return { ok: false, reason: "no-claims" };
-  const assessments = Array.isArray(result.sources) ? result.sources.filter(x => x && cleanUrl(x.url)) : [];
+  const retrievedUrls = new Set(sources.map(x => cleanUrl(x.url)).filter(Boolean));
+  const assessments = Array.isArray(result.sources) ? result.sources.filter(x => x && cleanUrl(x.url) && retrievedUrls.has(cleanUrl(x.url))) : [];
   const primaryDomains = new Set(assessments.filter(x => x.source_type === "primary").map(x => host(x.url)).filter(Boolean));
-  const independentGroups = new Set(assessments.filter(x => x.source_type === "independent_reporting" && x.original_reporting === true).map(x => String(x.reporting_chain || host(x.url)).toLowerCase().trim()).filter(Boolean));
+  const independentGroups = new Set(assessments.filter(x => x.source_type === "independent_reporting" && x.original_reporting === true).map(x => String(x.reporting_chain || "").toLowerCase().trim()).filter(Boolean));
   for (const domain of primaryDomains) independentGroups.delete(domain);
   const contested = isContested(result);
   const enough = contested
@@ -144,7 +148,7 @@ function validateResearch(candidate, result, sources) {
   const sourceUrl = cleanUrl(result.source_url || candidate.url);
   if (!sourceUrl) return { ok: false, reason: "invalid-primary-url" };
   const allowedUrls = new Set(sources.map(x => cleanUrl(x.url)).filter(Boolean));
-  allowedUrls.add(sourceUrl);
+  if (retrievedUrls.has(sourceUrl)) allowedUrls.add(sourceUrl);
   const validClaims = claims.map(claim => {
     const links = Array.isArray(claim.supporting_sources) ? claim.supporting_sources.map(cleanUrl).filter(url => url && allowedUrls.has(url)) : [];
     const grade = links.length ? (["A", "B", "C", "unverified"].includes(claim.evidence_grade) ? claim.evidence_grade : "unverified") : "unverified";
