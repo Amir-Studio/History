@@ -1,0 +1,37 @@
+{
+  "schema_version": "1.0.0",
+  "categories": [
+    {
+      "id": "iran",
+      "title": "تاریخ ایران",
+      "description": "تاریخ سیاسی، اجتماعی، اقتصادی و فرهنگی ایران",
+      "items": [
+        "iran-contemporary-history"
+      ]
+    },
+    {
+      "id": "economy",
+      "title": "اقتصاد و پول",
+      "description": "تاریخ نظام پولی، ارز و اقتصاد",
+      "items": [
+        "history-of-us-dollar"
+      ]
+    },
+    {
+      "id": "people",
+      "title": "شخصیت‌ها",
+      "description": "پروندهٔ مستقل افراد اثرگذار",
+      "items": [
+        "elon-musk"
+      ]
+    },
+    {
+      "id": "world",
+      "title": "تاریخ جهان و روش پژوهش",
+      "description": "تاریخ جهان و روش مطالعهٔ انتقادی تاریخ",
+      "items": [
+        "how-to-read-history"
+      ]
+    }
+  ]
+}
