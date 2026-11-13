@@ -3,11 +3,16 @@
 ## What it does
 
 - The public research desk at `research.html` searches GDELT (news coverage), Crossref (scholarly publications), and Wikidata (reference entities) from the visitor's browser.
-- The private GitHub Actions workflow can investigate recent Dollar headlines with the OpenAI Responses API and its web-search tool.
+- A separate scheduled no-key workflow imports significant Dollar headlines and public market observations into append-only `pending_review` records; it uses no external AI key and never marks claims verified.
+- The private GitHub Actions workflow can investigate recent Dollar headlines with the OpenAI Responses API and its web-search tool when its optional API secret is configured.
 - It checks for durable historical value, searches for primary evidence and independent reporting, records disagreements and source context, and opens a GitHub pull request for selected candidates as `pending_review`; nothing is published to the main site until a human reviews and merges the pull request.
 - It never marks an AI-generated record as verified.
 - Human-reviewed corrections in `data/quality/feedback.json` are supplied as examples in later research runs. This is feedback-based prompt improvement, not model-weight training.
 - Accuracy remains `not_measured` until a human-labelled holdout benchmark exists.
+
+## Optional deep-research setup
+
+Routine scheduled Dollar news and price intake does not need any AI API key. The following one-time setup applies only to the optional private deep-research workflow, not to the no-key intake.
 
 ## One-time setup required
 
