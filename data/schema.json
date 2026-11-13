@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://amir-studio.github.io/History/data/schema.json",
+  "title": "History Article Record",
+  "type": "object",
+  "required": ["id", "title", "category", "summary", "status", "sections", "sources"],
+  "properties": {
+    "id": {"type":"string","pattern":"^[a-z0-9-]+$"},
+    "title": {"type":"string"},
+    "category": {"enum":["people","iran","economy","world"]},
+    "status": {"enum":["draft","review","published","archived"]},
+    "lastVerified": {"type":["string","null"],"format":"date"},
+    "summary": {"type":"string"},
+    "notice": {"type":"string"},
+    "sections": {
+      "type":"array",
+      "items": {
+        "type":"object",
+        "required":["heading"],
+        "properties": {
+          "heading":{"type":"string"},
+          "paragraphs":{"type":"array","items":{"type":"string"}},
+          "points":{"type":"array","items":{"type":"string"}},
+          "timeline":{"type":"array","items":{"type":"object","required":["date","text"],"properties":{"date":{"type":"string"},"text":{"type":"string"}}}}
+        }
+      }
+    },
+    "sources": {
+      "type":"array",
+      "items":{"type":"object","required":["title","publisher","url"],"properties":{"title":{"type":"string"},"publisher":{"type":"string"},"url":{"type":"string","format":"uri"},"note":{"type":"string"},"publishedAt":{"type":"string","format":"date"}}}
+    }
+  }
+}
