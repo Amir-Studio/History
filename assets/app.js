@@ -12,16 +12,17 @@
   let query = '';
 
   const escapeHTML = (value) => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const safeHref = (value) => { try { const u = new URL(String(value || ''), location.href); return ['https:', 'http:'].includes(u.protocol) ? u.href : '#'; } catch { return '#'; } };
   const categoryNames = {people:'شخصیت‌ها',iran:'ایران',economy:'اقتصاد',world:'جهان'};
   function render() {
     const q = query.trim().toLocaleLowerCase('fa');
     const list = records.filter(item => {
       const categoryMatch = activeFilter === 'all' || item.category === activeFilter;
-      const haystack = [item.title,item.description,item.category,...(item.tags || [])].join(' ').toLocaleLowerCase('fa');
+      const haystack = [item.title,item.description,item.category,...(item.tags || []),...(item.keywords || [])].join(' ').toLocaleLowerCase('fa');
       return categoryMatch && (!q || haystack.includes(q));
     });
     grid.innerHTML = list.map((item, i) => `
-      <a class="article-card" href="${escapeHTML(item.html_url || item.url || ('articles/' + encodeURIComponent(item.id) + '/'))}">
+      <a class="article-card" href="${escapeHTML(safeHref(item.html_url || item.url || ('articles/' + encodeURIComponent(item.id) + '/')))}">
         <div class="article-top"><span class="article-index">${String(i+1).padStart(2,'0')}</span><span class="article-tag">${escapeHTML(categoryNames[item.category] || 'پرونده')}</span></div>
         <div class="article-body"><h3>${escapeHTML(item.title)}</h3><p>${escapeHTML(item.description)}</p><div class="article-foot"><span>${escapeHTML(item.status || 'در حال توسعه')}</span><b>↗</b></div></div>
       </a>`).join('');
@@ -55,7 +56,7 @@
     filters.querySelectorAll('.filter').forEach(el => el.classList.toggle('active', el.dataset.filter === activeFilter));
     render();
   }));
-  menuBtn.addEventListener('click', () => nav.classList.toggle('open'));
+  menuBtn.addEventListener('click', () => { const open = nav.classList.toggle('open'); menuBtn.setAttribute('aria-expanded', String(open)); });
   nav.querySelectorAll('a').forEach(link => link.addEventListener('click', () => nav.classList.remove('open')));
   document.getElementById('langToggle').addEventListener('click', () => {
     const button = document.getElementById('langToggle');

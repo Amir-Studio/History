@@ -12,7 +12,12 @@
     "https://amir-studio.github.io/History/data/prices/index.json",
     "https://amir-studio.github.io/History/data/news/schema.json",
     "https://amir-studio.github.io/History/data/prices/schema.json",
-    "https://amir-studio.github.io/History/feed.xml"
+    "https://amir-studio.github.io/History/feed.xml",
+    "https://amir-studio.github.io/History/research.html",
+    "https://amir-studio.github.io/History/news.html",
+    "https://amir-studio.github.io/History/data/research-methodology.json",
+    "https://amir-studio.github.io/History/data/quality/feedback.json",
+    "https://amir-studio.github.io/History/data/quality/evaluation.json"
   ],
   "article_url_template": "https://amir-studio.github.io/History/data/articles/{id}.json",
   "html_url_template": "https://amir-studio.github.io/History/articles/{id}/",
@@ -33,6 +38,17 @@
     "Validate records against their JSON schemas.",
     "Do not infer missing prices, units, market types, timestamps, or sources.",
     "Distinguish facts, attributed claims, analysis, and uncertainty.",
-    "Never claim a numeric AI accuracy without a disclosed human-labelled evaluation."
-  ]
+    "Never claim a numeric AI accuracy without a disclosed human-labelled evaluation.",
+    "Source country is not a truth or neutrality score.",
+    "Use multiple independent reporting chains and primary records for contested claims.",
+    "Human-reviewed corrections may inform later prompts; no automatic self-verification."
+  ],
+  "research_agent": {
+    "workflow": "https://github.com/Amir-Studio/History/actions/workflows/history-research.yml",
+    "setup": "https://amir-studio.github.io/History/RESEARCH-AGENT.md",
+    "mode": "manual-dispatch; requires private OPENAI_API_KEY secret",
+    "web_search": true,
+    "auto_verify": false,
+    "default_record_status": "pending_review"
+  }
 }

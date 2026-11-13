@@ -1,0 +1,5 @@
+{
+  "schema_version": "1.0.0",
+  "description": "Human-reviewed corrections used as examples for future research runs. Empty until reviewed cases are added.",
+  "items": []
+}

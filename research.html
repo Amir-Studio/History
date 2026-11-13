@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#090a0b">
+<meta name="description" content="میز پژوهش History؛ جست‌وجوی چندمنبعی، مقایسه روایت‌ها و بررسی اسناد با شفافیت درباره محدودیت شواهد.">
+<link rel="canonical" href="https://amir-studio.github.io/History/research.html">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css"><link rel="stylesheet" href="assets/research.css">
+<title>میز پژوهش | History</title>
+</head>
+<body>
+<div class="topline"><span>میز پژوهش و راستی‌آزمایی</span><span class="topline-right">SEARCH · COMPARE · VERIFY</span></div>
+<header class="site-header">
+<a class="brand" href="./"><span class="brand-mark">H</span><span>HISTORY<span class="brand-dot">.</span><small>دانشنامهٔ تاریخ و اندیشه</small></span></a>
+<nav class="desktop-nav" aria-label="ناوبری اصلی"><a href="./#collections">موضوعات</a><a href="./#featured">پرونده‌ها</a><a href="./#method">روش پژوهش</a><a href="./research.html" aria-current="page">میز پژوهش</a></nav>
+<div class="header-actions"><a class="header-link" href="./">بازگشت به آرشیو ↗</a><button class="menu-btn" id="menuBtn" type="button" aria-label="باز کردن منو" aria-expanded="false">☰</button></div>
+</header>
+<main class="research-main">
+<section class="research-hero">
+<div class="eyebrow"><i></i> HISTORY RESEARCH DESK <span>LIVE SOURCES</span></div>
+<h1>پیش از نتیجه‌گیری،<br><em>شواهد را مقایسه کن.</em></h1>
+<p>یک موضوع را در چند پایگاه مستقل جست‌وجو کن؛ ببین چه منابعی آن را پوشش داده‌اند، از کدام کشورها هستند و کجا هنوز به سند یا تأیید بیشتری نیاز داریم.</p>
+<div class="research-warning"><strong>اصل مهم</strong><span>کشورِ محل انتشار به‌تنهایی نشانهٔ بی‌طرفی یا جانبداری نیست. این ابزار تنوع منابع را نشان می‌دهد، نه امتیاز حقیقت یا رتبه‌بندی سیاسی رسانه‌ها.</span></div>
+</section>
+<section class="research-panel" aria-labelledby="searchTitle">
+<div class="panel-heading"><div><span class="section-kicker">MULTI-SOURCE SEARCH / 01</span><h2 id="searchTitle">موضوع مورد بررسی</h2></div><span class="live-indicator">جست‌وجوی زندهٔ وب</span></div>
+<form id="researchForm" class="research-form">
+<label class="sr-only" for="researchQuery">عبارت جست‌وجو</label>
+<input id="researchQuery" name="q" type="search" maxlength="180" placeholder="مثلاً: پیامدهای اقتصادی یک تصمیم یا تاریخ یک رویداد..." required>
+<button type="submit" id="searchButton">جست‌وجو <span>↗</span></button>
+</form>
+<div class="research-options"><label for="timeRange">بازهٔ انتشار</label><select id="timeRange"><option value="7d">۷ روز اخیر</option><option value="30d" selected>۳۰ روز اخیر</option><option value="90d">۹۰ روز اخیر</option><option value="1y">یک سال اخیر</option></select><span>پایگاه‌ها: GDELT · Crossref · Wikidata</span></div>
+<p class="research-status" id="researchStatus" role="status" aria-live="polite">برای شروع، موضوعی را جست‌وجو کن.</p>
+</section>
+<section class="research-results" id="results" hidden>
+<div class="results-overview"><div><span class="section-kicker">EVIDENCE LANDSCAPE / 02</span><h2>نقشهٔ شواهد</h2></div><div class="result-counts" id="resultCounts"></div></div>
+<div class="coverage-note" id="coverageNote"></div>
+<div class="source-grid">
+<section class="source-column"><div class="source-column-head"><h3>گزارش‌ها و رسانه‌ها</h3><span id="newsCount">۰</span></div><div id="newsResults" class="source-list"></div></section>
+<section class="source-column"><div class="source-column-head"><h3>پژوهش‌های علمی</h3><span id="paperCount">۰</span></div><div id="paperResults" class="source-list"></div></section>
+<section class="source-column"><div class="source-column-head"><h3>دانشنامه و دادهٔ مرجع</h3><span id="wikiCount">۰</span></div><div id="wikiResults" class="source-list"></div></section>
+</div>
+</section>
+<section class="method-mini">
+<span class="section-kicker">HOW TO READ THE RESULTS / 03</span><h2>چه چیزی را باید مقایسه کرد؟</h2>
+<div class="method-mini-grid">
+<article><b>۱. استقلال منابع</b><p>چند رسانه ممکن است یک خبرگزاری را بازنشر کرده باشند؛ تعداد لینک‌ها لزوماً تعداد تأییدهای مستقل نیست.</p></article>
+<article><b>۲. سند اولیه</b><p>بیانیه، دادهٔ خام، متن قانون، رأی دادگاه، مقالهٔ علمی یا سند آرشیوی را در اولویت بررسی قرار بده.</p></article>
+<article><b>۳. اختلاف روایت‌ها</b><p>اختلاف در عدد، زمان، علت یا نقل‌قول را جداگانه ثبت کن؛ اختلاف را با حدس پنهان نکن.</p></article>
+<article><b>۴. زمینه و منافع</b><p>مالکیت، وابستگی، مخاطب و محدودیت دسترسی هر منبع را با سند بررسی کن؛ ملیت به‌تنهایی معیار نیست.</p></article>
+</div>
+<p class="method-disclaimer">این صفحه ابزار گردآوری و مقایسهٔ اولیه است، نه داور خودکار حقیقت. پوشش خبری، اعتبار منبع و صحت ادعا سه موضوع جداگانه‌اند.</p>
+</section>
+</main>
+<footer class="site-footer"><a class="brand" href="./"><span class="brand-mark">H</span><span>HISTORY<span class="brand-dot">.</span><small>دانشنامهٔ تاریخ و اندیشه</small></span></a><div class="footer-note">EVIDENCE BEFORE CONCLUSION.</div><div class="footer-bottom"><span>© 2026 HISTORY ARCHIVE</span><span>میز پژوهش چندمنبعی</span><a href="AI-INGESTION.md">استاندارد پژوهش ↗</a></div></footer>
+<script src="assets/research.js" defer></script>
+</body></html>

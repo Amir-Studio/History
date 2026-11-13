@@ -1,0 +1,5 @@
+{
+  "schema_version": "1.0.0",
+  "description": "Human-labelled benchmark. Keep holdout labels hidden from the model during evaluation; add only reviewed cases.",
+  "items": []
+}
