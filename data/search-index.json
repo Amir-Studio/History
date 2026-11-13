@@ -12,7 +12,8 @@
         "iran"
       ],
       "html_url": "https://amir-studio.github.io/History/articles/iran-contemporary-history/",
-      "json_url": "https://amir-studio.github.io/History/data/articles/iran-contemporary-history.json"
+      "json_url": "https://amir-studio.github.io/History/data/articles/iran-contemporary-history.json",
+      "markdown_url": "https://amir-studio.github.io/History/data/articles/iran-contemporary-history.md"
     },
     {
       "id": "history-of-us-dollar",
@@ -24,7 +25,8 @@
         "economy"
       ],
       "html_url": "https://amir-studio.github.io/History/articles/history-of-us-dollar/",
-      "json_url": "https://amir-studio.github.io/History/data/articles/history-of-us-dollar.json"
+      "json_url": "https://amir-studio.github.io/History/data/articles/history-of-us-dollar.json",
+      "markdown_url": "https://amir-studio.github.io/History/data/articles/history-of-us-dollar.md"
     },
     {
       "id": "elon-musk",
@@ -36,7 +38,8 @@
         "people"
       ],
       "html_url": "https://amir-studio.github.io/History/articles/elon-musk/",
-      "json_url": "https://amir-studio.github.io/History/data/articles/elon-musk.json"
+      "json_url": "https://amir-studio.github.io/History/data/articles/elon-musk.json",
+      "markdown_url": "https://amir-studio.github.io/History/data/articles/elon-musk.md"
     },
     {
       "id": "how-to-read-history",
@@ -48,7 +51,8 @@
         "world"
       ],
       "html_url": "https://amir-studio.github.io/History/articles/how-to-read-history/",
-      "json_url": "https://amir-studio.github.io/History/data/articles/how-to-read-history.json"
+      "json_url": "https://amir-studio.github.io/History/data/articles/how-to-read-history.json",
+      "markdown_url": "https://amir-studio.github.io/History/data/articles/how-to-read-history.md"
     }
   ]
 }
