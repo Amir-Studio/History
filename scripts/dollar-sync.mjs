@@ -155,7 +155,7 @@ function conflictCandidates(items) {
   const positive=["افزایش","رشد","صعود","بالا رفت","تقویت","increase","rise","surge","gain","up"];
   const negative=["کاهش","افت","نزول","پایین آمد","تضعیف","decrease","fall","drop","decline","down"];
   const stop=new Set(["the","and","for","from","with","that","this","در","از","به","با","برای","و","را","که","این","آن","یک","های","شد"]);
-  const tokens=value=>normalize(value).match(/[\\p{L}\\p{N}]{2,}/gu)?.filter(x=>!stop.has(x))||[];
+  const tokens=value=>normalize(value).match(/[\p{L}\p{N}]{2,}/gu)?.filter(x=>!stop.has(x))||[];
   const pairs=[];
   for(let i=0;i<items.length;i++) for(let j=i+1;j<items.length;j++) {
     const a=items[i],b=items[j],da=publisherFor(a,a.url),db=publisherFor(b,b.url);
@@ -166,7 +166,7 @@ function conflictCandidates(items) {
     const ta=normalize(a.title||a.original_title),tb=normalize(b.title||b.original_title);
     const polarity=t=>({up:positive.some(x=>t.includes(normalize(x))),down:negative.some(x=>t.includes(normalize(x)))});
     const pa=polarity(ta),pb=polarity(tb);
-    const nums=t=>(t.match(/\\d+(?:[.,]\\d+)?/g)||[]).sort().join(",");
+    const nums=t=>(t.match(/\d+(?:[.,]\d+)?/g)||[]).sort().join(",");
     const opposite=(pa.up&&pb.down)||(pa.down&&pb.up),numeric=Boolean(nums(ta)&&nums(tb)&&nums(ta)!==nums(tb));
     if(!opposite&&!numeric) continue;
     pairs.push({headline_a:a.title||a.original_title,headline_b:b.title||b.original_title,
@@ -242,7 +242,7 @@ const conflictReport = {
 conflictReport.candidates=conflictCandidates(newsItems);
 conflictReport.candidate_count=conflictReport.candidates.length;
 await mkdir(PENDING_DIR,{recursive:true});
-await writeFile(join(PENDING_DIR,"news-analysis.json"),JSON.stringify(conflictReport,null,2)+"\\n","utf8");
+await writeFile(join(PENDING_DIR,"news-analysis.json"),JSON.stringify(conflictReport,null,2)+"\n","utf8");
 for (const item of newsItems) {
   const title = String(item.title || item.original_title || "").trim();
   let url;
