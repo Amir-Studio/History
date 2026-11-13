@@ -11,6 +11,7 @@ on:
 
 permissions:
   contents: write
+  pull-requests: write
 
 concurrency:
   group: history-research-intake
@@ -42,14 +43,19 @@ jobs:
         run: |
           node --input-type=module -e "import fs from 'node:fs'; for (const f of fs.readdirSync('data/news').filter(x => x.endsWith('.json'))) JSON.parse(fs.readFileSync('data/news/'+f,'utf8')); JSON.parse(fs.readFileSync('data/news/index.json','utf8'));"
           git diff --check
-      - name: Commit archive records
+      - name: Open human review pull request
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           if [ -z "$(git status --porcelain)" ]; then
-            echo "No new archive records."
+            echo "No new archive proposals."
             exit 0
           fi
+          BRANCH="history-news-review-${GITHUB_RUN_ID}"
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/news data/quality/evaluation.json
-          git commit -m "Archive researched historical news"
-          git push
+          git checkout -b "$BRANCH"
+          git add data/news feed.xml sitemap.xml data/quality/evaluation.json
+          git commit -m "Propose researched historical news records"
+          git push --set-upstream origin "$BRANCH"
+          gh pr create --base main --head "$BRANCH" --title "History: news research proposals" --body "Automated research proposals only. All records remain pending_review. Please inspect source independence, primary documents, disagreements, and every claim before merging. No proposal is marked verified."
