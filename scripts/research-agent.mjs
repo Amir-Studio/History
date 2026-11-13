@@ -36,6 +36,9 @@ function cleanUrl(url) {
     return parsed.href;
   } catch { return null; }
 }
+function xmlEscape(value) {
+  return String(value || "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&apos;");
+}
 function slug(value) {
   const normalized = String(value || "").toLowerCase().normalize("NFKD")
     .replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 48);
@@ -161,7 +164,8 @@ async function main() {
   const feedback = Array.isArray(feedbackDoc.items) ? feedbackDoc.items : [];
   const queue = candidates.filter(x => cleanUrl(x.url) && !known.has(cleanUrl(x.url))).slice(0, MAX_CANDIDATES);
   console.log("Dollar news candidates:", candidates.length, "new candidates selected for research:", queue.length);
-  let archived = 0, skipped = 0;\n  const archivedRecords = [];
+  let archived = 0, skipped = 0;
+  const archivedRecords = [];
   for (const candidate of queue) {
     try {
       const { result, unique } = await research(candidate, feedback);
@@ -223,8 +227,25 @@ async function main() {
       skipped++;
     }
   }
-  index.updated_at = now.slice(0, 10);
-  await writeFile(join(ROOT, indexPath), JSON.stringify(index, null, 2) + "\n");
+  if (archived > 0) {
+    index.updated_at = now.slice(0, 10);
+    await writeFile(join(ROOT, indexPath), JSON.stringify(index, null, 2) + "\n");
+    const feedPath = join(ROOT, "feed.xml");
+    let feed = await readFile(feedPath, "utf8");
+    const sitemapPath = join(ROOT, "sitemap.xml");
+    let sitemap = await readFile(sitemapPath, "utf8");
+    for (const record of archivedRecords) {
+      const recordUrl = "https://amir-studio.github.io/History/data/news/" + record.id + ".json";
+      const pageUrl = "https://amir-studio.github.io/History/news.html?id=" + encodeURIComponent(record.id);
+      if (!feed.includes(recordUrl)) {
+        const item = "<item><title>" + xmlEscape(record.headline) + "</title><link>" + pageUrl + "</link><guid isPermaLink=\"false\">" + recordUrl + "</guid><pubDate>" + new Date(record.published_at).toUTCString() + "</pubDate><description>" + xmlEscape(record.summary.slice(0, 420)) + "</description><category>" + xmlEscape(record.category) + "</category></item>";
+        feed = feed.replace("</channel>", item + "</channel>");
+      }
+      if (!sitemap.includes(recordUrl)) sitemap = sitemap.replace("</urlset>", "<url><loc>" + recordUrl + "</loc><priority>0.7</priority></url></urlset>");
+    }
+    await writeFile(feedPath, feed);
+    await writeFile(sitemapPath, sitemap);
+  }
   console.log(JSON.stringify({ archived, skipped, index_items: index.items.length, model: MODEL }));
 }
 main().catch(error => { console.error(error); process.exit(1); });
