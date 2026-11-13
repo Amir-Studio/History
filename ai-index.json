@@ -1,6 +1,6 @@
 {
   "name": "History",
-  "description": "Source-led historical knowledge archive",
+  "description": "Source-led, AI-first historical archive with append-only news and price observations",
   "language": "fa",
   "entrypoints": [
     "https://amir-studio.github.io/History/llms.txt",
@@ -8,16 +8,31 @@
     "https://amir-studio.github.io/History/data/categories.json",
     "https://amir-studio.github.io/History/data/search-index.json",
     "https://amir-studio.github.io/History/data/graph.jsonld",
+    "https://amir-studio.github.io/History/data/news/index.json",
+    "https://amir-studio.github.io/History/data/prices/index.json",
+    "https://amir-studio.github.io/History/data/news/schema.json",
+    "https://amir-studio.github.io/History/data/prices/schema.json",
     "https://amir-studio.github.io/History/feed.xml"
   ],
   "article_url_template": "https://amir-studio.github.io/History/data/articles/{id}.json",
   "html_url_template": "https://amir-studio.github.io/History/articles/{id}/",
-  "rules": [
-    "Use static HTML and JSON records; no JavaScript is required.",
-    "Read each article's sources and preserve provenance.",
-    "Distinguish facts, attributed perspectives, and analysis.",
-    "Do not treat draft records as verified publication.",
-    "Submit changes for human review; do not auto-publish."
-  ],
-  "markdown_url_template": "https://amir-studio.github.io/History/data/articles/{id}.md"
+  "markdown_url_template": "https://amir-studio.github.io/History/data/articles/{id}.md",
+  "news_record_template": "https://amir-studio.github.io/History/data/news/{id}.json",
+  "price_observation_template": "https://amir-studio.github.io/History/data/prices/{id}.json",
+  "ingestion_policy": "https://amir-studio.github.io/History/AI-INGESTION.md",
+  "write_policy": {
+    "allowed": "Connected GitHub repository tools may add immutable news and price JSON records and update their indexes.",
+    "default_status": "pending_review",
+    "human_approval_required": true,
+    "overwrite_historical_prices": false,
+    "auto_publish": false
+  },
+  "reliability_rules": [
+    "Use source URLs and preserve provenance.",
+    "Keep event/publication/observation time separate from collection time.",
+    "Validate records against their JSON schemas.",
+    "Do not infer missing prices, units, market types, timestamps, or sources.",
+    "Distinguish facts, attributed claims, analysis, and uncertainty.",
+    "Never claim a numeric AI accuracy without a disclosed human-labelled evaluation."
+  ]
 }
