@@ -186,7 +186,7 @@ async function main() {
         source_url: checked.sourceUrl,
         published_at: (Number.isFinite(Date.parse(candidate.published_at || result.published_at || now)) ? new Date(candidate.published_at || result.published_at || now).toISOString() : now),
         collected_at: now,
-        event_date: result.event_date || null,
+        event_date: /^\\d{4}-\\d{2}-\\d{2}$/.test(String(result.event_date || "")) && Number.isFinite(Date.parse(result.event_date + "T00:00:00Z")) ? result.event_date : null,
         language: String(result.language || candidate.language_code || "unknown"),
         category: ["iran","world","economy","technology","people","other"].includes(result.category) ? result.category : "other",
         summary: String(result.summary || "").trim().slice(0, 2200),
