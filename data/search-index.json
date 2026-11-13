@@ -1,0 +1,54 @@
+{
+  "schema_version": "1.0.0",
+  "generated_at": "2026-11-13",
+  "documents": [
+    {
+      "id": "iran-contemporary-history",
+      "title": "تاریخ معاصر ایران",
+      "summary": "پرونده‌ای برای مطالعهٔ تحولات سیاسی، اجتماعی و اقتصادی ایران معاصر؛ با تفکیک اسناد، روایت‌های بازیگران و تحلیل‌های تاریخی.",
+      "category": "iran",
+      "keywords": [
+        "تاریخ معاصر ایران",
+        "iran"
+      ],
+      "html_url": "https://amir-studio.github.io/History/articles/iran-contemporary-history/",
+      "json_url": "https://amir-studio.github.io/History/data/articles/iran-contemporary-history.json"
+    },
+    {
+      "id": "history-of-us-dollar",
+      "title": "تاریخچهٔ دلار آمریکا",
+      "summary": "مسیر تحول پول آمریکا از اسکناس‌های اولیه تا نقش دلار در نظام مالی جهانی؛ با تمرکز بر نهادها، قواعد پولی و رویدادهای تعیین‌کننده.",
+      "category": "economy",
+      "keywords": [
+        "تاریخچهٔ دلار آمریکا",
+        "economy"
+      ],
+      "html_url": "https://amir-studio.github.io/History/articles/history-of-us-dollar/",
+      "json_url": "https://amir-studio.github.io/History/data/articles/history-of-us-dollar.json"
+    },
+    {
+      "id": "elon-musk",
+      "title": "ایلان ماسک",
+      "summary": "پرونده‌ای مستقل برای بررسی زندگی، مسیر حرفه‌ای، شرکت‌ها، تصمیم‌ها، اظهارنظرها، موفقیت‌ها و شکست‌های ایلان ماسک؛ با تفکیک اسناد اولیه از روایت رسانه‌ای.",
+      "category": "people",
+      "keywords": [
+        "ایلان ماسک",
+        "people"
+      ],
+      "html_url": "https://amir-studio.github.io/History/articles/elon-musk/",
+      "json_url": "https://amir-studio.github.io/History/data/articles/elon-musk.json"
+    },
+    {
+      "id": "how-to-read-history",
+      "title": "چگونه تاریخ را بخوانیم؟",
+      "summary": "راهنمای کوتاه برای تشخیص سند از تفسیر، سنجش اعتبار منابع، شناخت سوگیری و فهم محدودیت‌های تحلیل تاریخی.",
+      "category": "world",
+      "keywords": [
+        "چگونه تاریخ را بخوانیم؟",
+        "world"
+      ],
+      "html_url": "https://amir-studio.github.io/History/articles/how-to-read-history/",
+      "json_url": "https://amir-studio.github.io/History/data/articles/how-to-read-history.json"
+    }
+  ]
+}
