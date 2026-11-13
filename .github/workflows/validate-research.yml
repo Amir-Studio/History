@@ -1,0 +1,33 @@
+name: Validate History research code
+
+on:
+  push:
+    branches:
+      - research-engine-upgrade
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Check JavaScript syntax
+        run: |
+          node --check scripts/research-agent.mjs
+          node --check scripts/evaluate-quality.mjs
+          node --check assets/news.js
+          node --check assets/research.js
+          node --check assets/app.js
+      - name: Validate JSON data
+        run: |
+          node --input-type=module -e "import fs from 'node:fs'; import path from 'node:path'; const walk=d=>fs.readdirSync(d,{withFileTypes:true}).flatMap(x=>x.isDirectory()?walk(path.join(d,x.name)):[path.join(d,x.name)]); const files=walk('data').filter(x=>x.endsWith('.json')); for(const f of files) JSON.parse(fs.readFileSync(f,'utf8')); console.log('Validated',files.length,'JSON files');"
+      - name: Check whitespace errors
+        run: git diff --check
