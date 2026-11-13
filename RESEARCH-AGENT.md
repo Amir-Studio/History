@@ -4,7 +4,7 @@
 
 - The public research desk at `research.html` searches GDELT (news coverage), Crossref (scholarly publications), and Wikidata (reference entities) from the visitor's browser.
 - The private GitHub Actions workflow can investigate recent Dollar headlines with the OpenAI Responses API and its web-search tool.
-- It checks for durable historical value, searches for primary evidence and independent reporting, records disagreements and source context, and archives selected candidates as `pending_review`.
+- It checks for durable historical value, searches for primary evidence and independent reporting, records disagreements and source context, and opens a GitHub pull request for selected candidates as `pending_review`; nothing is published to the main site until a human reviews and merges the pull request.
 - It never marks an AI-generated record as verified.
 - Human-reviewed corrections in `data/quality/feedback.json` are supplied as examples in later research runs. This is feedback-based prompt improvement, not model-weight training.
 - Accuracy remains `not_measured` until a human-labelled holdout benchmark exists.
