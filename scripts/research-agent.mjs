@@ -221,6 +221,7 @@ async function main() {
       });
       known.add(checked.sourceUrl);
       archived++;
+      archivedRecords.push(record);
       console.log("Archived pending human review:", id, "sources:", checked.domains.length);
     } catch (error) {
       console.error("Research failed for candidate:", String(candidate.title || "").slice(0, 120), error?.message || error);
