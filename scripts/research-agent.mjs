@@ -112,7 +112,7 @@ Research rules:
   const response = await fetch("https://api.openai.com/v1/responses", {
     method: "POST",
     headers: { authorization: "Bearer " + API_KEY, "content-type": "application/json" },
-    body: JSON.stringify({ model: MODEL, tools: [{ type: "web_search" }], tool_choice: "auto", input: instructions + "\n\nINPUT:\n" + input }),
+    body: JSON.stringify({ model: MODEL, tools: [{ type: "web_search" }], tool_choice: "auto", include: ["web_search_call.results"], input: instructions + "\n\nINPUT:\n" + input }),
     signal: AbortSignal.timeout(120000)
   });
   if (!response.ok) throw new Error("Responses API HTTP " + response.status + ": " + (await response.text()).slice(0, 900));
