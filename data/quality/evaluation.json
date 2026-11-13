@@ -1,0 +1,17 @@
+{
+  "schema_version": "1.0.0",
+  "status": "not_measured",
+  "updated_at": "2026-11-13",
+  "benchmark": {
+    "items": 0,
+    "human_labelled_items": 0,
+    "holdout_items": 0
+  },
+  "metrics": {
+    "claim_level_accuracy": null,
+    "source_attribution_accuracy": null,
+    "date_accuracy": null,
+    "calibration_error": null
+  },
+  "notes": "No accuracy percentage is published until a fixed human-labelled holdout benchmark has been reviewed and evaluated. News selection quality and factual claim accuracy are measured separately."
+}
