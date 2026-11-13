@@ -50,5 +50,19 @@
     "web_search": true,
     "auto_verify": false,
     "default_record_status": "pending_review"
+  },
+  "automated_ingestion": {
+    "workflow": "https://github.com/Amir-Studio/History/actions/workflows/dollar-history-sync.yml",
+    "mode": "scheduled-and-manual; no external AI key required",
+    "sources": [
+      "Dollar public RSS/news endpoint",
+      "Iran Market Data public price feed"
+    ],
+    "output": "append-only news and price JSON records proposed through a review pull request",
+    "default_status": "pending_review",
+    "human_approval_required": true,
+    "auto_publish": false,
+    "auto_verify": false,
+    "auto_delete_source_items": false
   }
 }
