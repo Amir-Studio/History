@@ -216,7 +216,13 @@ async function main() {
           ownership_or_mandate_note: String(s.ownership_or_mandate_note || "").slice(0, 500),
           url: s.url,
           claim_supported: String(s.claim_supported || "").slice(0, 500)
-        })).concat(unique.some(s => cleanUrl(s.url) === cleanUrl(candidate.url)) ? [] : [{\n          title: String(candidate.title || "Original Dollar news headline").slice(0, 220),\n          publisher: String(candidate.domain || "نامشخص").slice(0, 160),\n          country: null, source_type: "other", reporting_chain: "", original_reporting: null,\n          ownership_or_mandate_note: "Original candidate URL supplied by Dollar RSS intake; not counted as independent corroboration.",\n          url: cleanUrl(candidate.url), claim_supported: ""\n        }]),
+        })).concat(unique.some(s => cleanUrl(s.url) === cleanUrl(candidate.url)) ? [] : [{
+          title: String(candidate.title || "Original Dollar news headline").slice(0, 220),
+          publisher: String(candidate.domain || "نامشخص").slice(0, 160),
+          country: null, source_type: "other", reporting_chain: "", original_reporting: null,
+          ownership_or_mandate_note: "Original candidate URL supplied by Dollar RSS intake; not counted as independent corroboration.",
+          url: cleanUrl(candidate.url), claim_supported: ""
+        }]),
         independent_domains: checked.domains,
         disagreements: Array.isArray(result.disagreements) ? result.disagreements : [],
         limitations: Array.isArray(result.limitations) ? result.limitations : [],
