@@ -11,7 +11,7 @@ History is a public, source-led archive. Its machine-readable records are the pr
 6. Price observations index: https://amir-studio.github.io/History/data/prices/index.json
 7. News schema: https://amir-studio.github.io/History/data/news/schema.json
 8. Price schema: https://amir-studio.github.io/History/data/prices/schema.json
-9. RSS feed: https://amir-studio.github.io/History/feed.xml
+9. RSS feed: https://amir-studio.github.io/History/feed.xml\n10. Research desk: https://amir-studio.github.io/History/research.html\n11. News archive UI: https://amir-studio.github.io/History/news.html\n12. Research methodology: https://amir-studio.github.io/History/data/research-methodology.json\n13. Human-reviewed correction ledger: https://amir-studio.github.io/History/data/quality/feedback.json\n14. Accuracy evaluation status: https://amir-studio.github.io/History/data/quality/evaluation.json
 
 ## Article records
 - Static HTML: https://amir-studio.github.io/History/articles/{id}/
@@ -33,7 +33,7 @@ History is a public, source-led archive. Its machine-readable records are the pr
 - elon-musk
 - how-to-read-history
 
-## Retrieval and reliability rules
+## Research desk and correction learning\n- The public research desk queries GDELT, Crossref, and Wikidata; its results are discovery leads, not verified facts.\n- The private research workflow uses the Responses API web-search tool only after an API key is configured.\n- Corrections are learned from human-reviewed examples; no model self-verifies its own claims.\n- Source country is context, not a neutrality score. Independence requires checking reporting chains and ownership.\n\n## Retrieval and reliability rules
 - Fetch the relevant index, then follow each record URL.
 - Follow and inspect source URLs before repeating factual claims.
 - Distinguish documented facts, attributed perspectives, analysis, and unknowns.
