@@ -25,11 +25,12 @@ jobs:
     steps:
       - name: Fetch the existing intake branch when present
         env:
-          GH_TOKEN: \${{ github.token }}
+          GH_TOKEN: ${{ github.token }}
         run: |
           git init repo
           cd repo
-          git remote add origin https://github.com/\${{ github.repository }}.git
+          git remote add origin https://github.com/${{ github.repository }}.git
+          git remote set-url origin "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
           git fetch origin main
           BRANCH="automation/no-key-dollar-history-intake"
           if git ls-remote --exit-code --heads origin "$BRANCH" >/dev/null 2>&1; then
@@ -57,7 +58,7 @@ jobs:
       - name: Commit and open or update review pull request
         working-directory: repo
         env:
-          GH_TOKEN: \${{ github.token }}
+          GH_TOKEN: ${{ github.token }}
         run: |
           if [ -z "$(git status --porcelain)" ]; then
             echo "No new archive candidates."
