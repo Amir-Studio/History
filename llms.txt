@@ -38,6 +38,12 @@ History is a public, source-led archive. Its machine-readable records are the pr
 - elon-musk
 - how-to-read-history
 
+## Automated no-key Dollar intake
+- Workflow: https://github.com/Amir-Studio/History/actions/workflows/dollar-history-sync.yml
+- Scheduled and manually dispatchable; no external AI key is required.
+- Imports significant Dollar RSS headlines and public market observations as append-only `pending_review` records through a review pull request.
+- Headline significance is only a triage heuristic. It does not verify claims, establish source independence, or resolve contradictions.
+
 ## Research desk and correction learning
 - The public research desk queries GDELT, Crossref, and Wikidata; its results are discovery leads, not verified facts.
 - The private research workflow uses the Responses API web-search tool only after an API key is configured.
