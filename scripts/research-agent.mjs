@@ -21,8 +21,13 @@ async function getJson(url) {
   return response.json();
 }
 async function readJson(path, fallback) {
-  try { return JSON.parse(await readFile(join(ROOT, path), "utf8")); }
-  catch { return fallback; }
+  let raw;
+  try { raw = await readFile(join(ROOT, path), "utf8"); }
+  catch (error) {
+    if (error?.code === "ENOENT") return fallback;
+    throw error;
+  }
+  return JSON.parse(raw);
 }
 function host(url) {
   try { return new URL(url).hostname.toLowerCase().replace(/^www\./, ""); }
@@ -112,7 +117,7 @@ Research rules:
   const response = await fetch("https://api.openai.com/v1/responses", {
     method: "POST",
     headers: { authorization: "Bearer " + API_KEY, "content-type": "application/json" },
-    body: JSON.stringify({ model: MODEL, tools: [{ type: "web_search" }], tool_choice: "required", include: ["web_search_call.action.sources"], input: instructions + "\n\nINPUT:\n" + input }),
+    body: JSON.stringify({ model: MODEL, reasoning: { effort: "high" }, tools: [{ type: "web_search", search_context_size: "high" }], tool_choice: "required", include: ["web_search_call.action.sources"], input: instructions + "\n\nINPUT:\n" + input }),
     signal: AbortSignal.timeout(120000)
   });
   if (!response.ok) throw new Error("Responses API HTTP " + response.status + ": " + (await response.text()).slice(0, 900));
@@ -145,13 +150,16 @@ function validateResearch(candidate, result, sources) {
     ? independentGroups.size >= 2 && (primaryDomains.size >= 1 || independentGroups.size >= 3)
     : (primaryDomains.size >= 1 && independentGroups.size >= 1) || independentGroups.size >= 2;
   if (!enough) return { ok: false, reason: "insufficient-assessed-independent-reporting" };
-  const sourceUrl = cleanUrl(result.source_url || candidate.url);
+  const sourceUrl = cleanUrl(candidate.url);
   if (!sourceUrl) return { ok: false, reason: "invalid-primary-url" };
   const allowedUrls = new Set(sources.map(x => cleanUrl(x.url)).filter(Boolean));
   if (retrievedUrls.has(sourceUrl)) allowedUrls.add(sourceUrl);
   const validClaims = claims.map(claim => {
     const links = Array.isArray(claim.supporting_sources) ? claim.supporting_sources.map(cleanUrl).filter(url => url && allowedUrls.has(url)) : [];
-    const grade = links.length ? (["A", "B", "C", "unverified"].includes(claim.evidence_grade) ? claim.evidence_grade : "unverified") : "unverified";
+    const linked = assessments.filter(source => links.includes(cleanUrl(source.url)));
+    const chains = new Set(linked.filter(source => source.source_type === "independent_reporting" && source.original_reporting === true).map(source => String(source.reporting_chain || "").toLowerCase().trim()).filter(Boolean));
+    const hasPrimary = linked.some(source => source.source_type === "primary");
+    const grade = !links.length ? "unverified" : (hasPrimary && chains.size >= 1) || chains.size >= 2 ? "A" : (hasPrimary || chains.size >= 1) ? "B" : "C";
     return { claim: claim.claim.trim(), evidence_grade: grade, supporting_sources: [...new Set(links)], note: String(claim.note || "") };
   }).filter(x => x.supporting_sources.length > 0);
   if (!validClaims.length) return { ok: false, reason: "claims-not-cited-by-retrieved-sources" };
@@ -160,7 +168,8 @@ function validateResearch(candidate, result, sources) {
 
 async function main() {
   const response = await getJson(DOLLAR_NEWS_URL);
-  const candidates = Array.isArray(response.items) ? response.items : [];
+  if (response?.ok !== true || !Array.isArray(response.items)) throw new Error("Dollar read-only news endpoint returned an unexpected response shape");
+  const candidates = response.items;
   const indexPath = "data/news/index.json";
   const index = await readJson(indexPath, { schema_version: "1.0.0", items: [] });
   const known = new Set((index.items || []).map(x => x.source_url).filter(Boolean));
@@ -207,7 +216,13 @@ async function main() {
           ownership_or_mandate_note: String(s.ownership_or_mandate_note || "").slice(0, 500),
           url: s.url,
           claim_supported: String(s.claim_supported || "").slice(0, 500)
-        })),
+        })).concat(unique.some(s => cleanUrl(s.url) === cleanUrl(candidate.url)) ? [] : [{
+          title: String(candidate.title || "Original Dollar news headline").slice(0, 220),
+          publisher: String(candidate.domain || "نامشخص").slice(0, 160),
+          country: null, source_type: "other", reporting_chain: "", original_reporting: null,
+          ownership_or_mandate_note: "Original candidate URL supplied by Dollar RSS intake; not counted as independent corroboration.",
+          url: cleanUrl(candidate.url), claim_supported: ""
+        }]),
         independent_domains: checked.domains,
         disagreements: Array.isArray(result.disagreements) ? result.disagreements : [],
         limitations: Array.isArray(result.limitations) ? result.limitations : [],
