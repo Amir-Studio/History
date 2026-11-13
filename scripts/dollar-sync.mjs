@@ -79,7 +79,7 @@ async function fetchMarketPayload() {
       if(!symbol||!(price>0)||!timestamp) return [];
       return [{symbol,price,timestamp,name_fa:item.name?.fa||item.name?.en||symbol,unit:item.unit||"IRT",
         currency:item.unit||"IRT",market:"iran_free",source:"NerkhAra",stale:item.stale===true,
-        provider_meta:{method:item.method||null,source_count:Number(item.sources)||0,spread_pct:Number.isFinite(Number(item.spread_pct))?Number(item.spread_pct):null,
+        provider_meta:{method:item.method||null,source_count:Number(item.sources)||0,spread_pct:item.spread_pct==null?null:(Number.isFinite(Number(item.spread_pct))?Number(item.spread_pct):null),
           updated_utc:item.updated_utc||payload.generated_utc,page:item.page?.fa||item.page?.en||null}}];
     });
     if(!data.length) throw new Error("NerkhAra returned no mapped quotes");
