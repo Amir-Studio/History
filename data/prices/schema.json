@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://amir-studio.github.io/History/data/prices/schema.json",
+  "title": "History Price Observation",
+  "type": "object",
+  "required": [
+    "id",
+    "instrument",
+    "market",
+    "value",
+    "unit",
+    "currency",
+    "observed_at",
+    "collected_at",
+    "source_name",
+    "source_url",
+    "status"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+$"
+    },
+    "instrument": {
+      "type": "string"
+    },
+    "symbol": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "market": {
+      "type": "string"
+    },
+    "value": {
+      "type": "number"
+    },
+    "unit": {
+      "type": "string"
+    },
+    "currency": {
+      "type": "string"
+    },
+    "observed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "collected_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "source_name": {
+      "type": "string"
+    },
+    "source_url": {
+      "type": "string",
+      "format": "uri"
+    },
+    "methodology": {
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "pending_review",
+        "verified",
+        "rejected",
+        "superseded"
+      ]
+    },
+    "supersedes": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "notes": {
+      "type": "string"
+    }
+  }
+}
