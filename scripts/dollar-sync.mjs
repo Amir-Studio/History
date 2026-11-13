@@ -211,7 +211,7 @@ for (const item of newsItems) {
   const publishedAt = iso(item.published_at);
   if (!title || title.length < 8 || !publishedAt) continue;
   const age = NOW.getTime() - Date.parse(publishedAt);
-  if (age < -5 * 60 * 1000 || age > 24 * 60 * 60 * 1000) continue;
+  if (age < -5 * 60 * 1000 || age > 72 * 60 * 60 * 1000) continue;
   const significance = scoreHeadline(title);
   if (significance < 52 || existingNewsUrls.has(url)) continue;
   const publisher = publisherFor(item, url);
@@ -242,7 +242,7 @@ for (const item of marketItems) {
   const value = Number(item.price);
   if (!item.symbol || !(value > 0) || !observedAt || item.stale === true) continue;
   const age = NOW.getTime() - Date.parse(observedAt);
-  if (age < -5 * 60 * 1000 || age > 72 * 60 * 60 * 1000) continue;
+  if (age < -5 * 60 * 1000 || age > 24 * 60 * 60 * 1000) continue;
   const key = String(item.symbol) + ":" + observedAt;
   if (existingPriceKeys.has(key)) continue;
   const record = priceRecord(item, marketPayload.meta || {});
