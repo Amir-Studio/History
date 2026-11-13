@@ -131,7 +131,7 @@ function validateResearch(candidate, result, sources) {
   if (!claims.length) return { ok: false, reason: "no-claims" };
   const assessments = Array.isArray(result.sources) ? result.sources.filter(x => x && cleanUrl(x.url)) : [];
   const primaryDomains = new Set(assessments.filter(x => x.source_type === "primary").map(x => host(x.url)).filter(Boolean));
-  const independentDomains = new Set(assessments.filter(x => x.source_type === "independent_reporting" && x.original_reporting === true).map(x => host(x.url)).filter(Boolean));
+  const independentGroups = new Set(assessments.filter(x => x.source_type === "independent_reporting" && x.original_reporting === true).map(x => String(x.reporting_chain || host(x.url)).toLowerCase().trim()).filter(Boolean));\n  for (const domain of primaryDomains) independentGroups.delete(domain);
   const contested = isContested(result);
   const enough = contested
     ? independentGroups.size >= 2 && (primaryDomains.size >= 1 || independentGroups.size >= 3)
