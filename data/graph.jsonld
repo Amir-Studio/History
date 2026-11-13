@@ -1,0 +1,77 @@
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://amir-studio.github.io/History/articles/iran-contemporary-history/#article",
+      "url": "https://amir-studio.github.io/History/articles/iran-contemporary-history/",
+      "name": "تاریخ معاصر ایران",
+      "description": "پرونده‌ای برای مطالعهٔ تحولات سیاسی، اجتماعی و اقتصادی ایران معاصر؛ با تفکیک اسناد، روایت‌های بازیگران و تحلیل‌های تاریخی.",
+      "inLanguage": "fa",
+      "dateModified": "2026-11-13",
+      "citation": [
+        "https://www.loc.gov/item/2008011784/",
+        "https://history.state.gov/historicaldocuments/frus1951-54Iran",
+        "https://history.state.gov/countries/iran"
+      ],
+      "keywords": [
+        "iran",
+        "iran-contemporary-history"
+      ]
+    },
+    {
+      "@type": "Article",
+      "@id": "https://amir-studio.github.io/History/articles/history-of-us-dollar/#article",
+      "url": "https://amir-studio.github.io/History/articles/history-of-us-dollar/",
+      "name": "تاریخچهٔ دلار آمریکا",
+      "description": "مسیر تحول پول آمریکا از اسکناس‌های اولیه تا نقش دلار در نظام مالی جهانی؛ با تمرکز بر نهادها، قواعد پولی و رویدادهای تعیین‌کننده.",
+      "inLanguage": "fa",
+      "dateModified": "2026-11-13",
+      "citation": [
+        "https://www.uscurrency.gov/history",
+        "https://www.federalreservehistory.org/essays/bretton-woods-created",
+        "https://www.federalreservehistory.org/essays/gold-convertibility-ends",
+        "https://home.treasury.gov/system/files/206/Appendix1FinalOctober152009.pdf"
+      ],
+      "keywords": [
+        "economy",
+        "history-of-us-dollar"
+      ]
+    },
+    {
+      "@type": "Article",
+      "@id": "https://amir-studio.github.io/History/articles/elon-musk/#article",
+      "url": "https://amir-studio.github.io/History/articles/elon-musk/",
+      "name": "ایلان ماسک",
+      "description": "پرونده‌ای مستقل برای بررسی زندگی، مسیر حرفه‌ای، شرکت‌ها، تصمیم‌ها، اظهارنظرها، موفقیت‌ها و شکست‌های ایلان ماسک؛ با تفکیک اسناد اولیه از روایت رسانه‌ای.",
+      "inLanguage": "fa",
+      "dateModified": "2026-11-13",
+      "citation": [
+        "https://ir.tesla.com/",
+        "https://www.sec.gov/edgar/search/",
+        "https://www.spacex.com/about/"
+      ],
+      "keywords": [
+        "people",
+        "elon-musk"
+      ]
+    },
+    {
+      "@type": "Article",
+      "@id": "https://amir-studio.github.io/History/articles/how-to-read-history/#article",
+      "url": "https://amir-studio.github.io/History/articles/how-to-read-history/",
+      "name": "چگونه تاریخ را بخوانیم؟",
+      "description": "راهنمای کوتاه برای تشخیص سند از تفسیر، سنجش اعتبار منابع، شناخت سوگیری و فهم محدودیت‌های تحلیل تاریخی.",
+      "inLanguage": "fa",
+      "dateModified": "2026-11-13",
+      "citation": [
+        "https://guides.loc.gov/",
+        "https://www.archives.gov/research"
+      ],
+      "keywords": [
+        "world",
+        "how-to-read-history"
+      ]
+    }
+  ]
+}
