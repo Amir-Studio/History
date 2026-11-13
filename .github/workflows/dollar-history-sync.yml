@@ -1,6 +1,11 @@
 name: Dollar no-key archive intake
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - scripts/dollar-sync.mjs
+      - .github/workflows/dollar-history-sync.yml
   schedule:
     - cron: "17,47 * * * *"
   workflow_dispatch:
