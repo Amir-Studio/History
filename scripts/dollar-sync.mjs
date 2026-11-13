@@ -7,10 +7,11 @@ const NEWS_URL = process.env.DOLLAR_NEWS_URL ||
   "https://oolfbjxclhzlbwjmzxxx.supabase.co/functions/v1/market-api/news?read_only=1";
 const PRICE_URL = process.env.MARKET_DATA_URL ||
   "https://raw.githubusercontent.com/iran-market/iran-market.github.io/main/data/popular.json";
-const NEWS_DIR = "data/news";
-const PRICE_DIR = "data/prices";
-const NEWS_INDEX_PATH = join(NEWS_DIR, "index.json");
-const PRICE_INDEX_PATH = join(PRICE_DIR, "index.json");
+const PENDING_DIR = "data/pending-review";
+const NEWS_DIR = join(PENDING_DIR, "news");
+const PRICE_DIR = join(PENDING_DIR, "prices");
+const NEWS_INDEX_PATH = join(PENDING_DIR, "news-index.json");
+const PRICE_INDEX_PATH = join(PENDING_DIR, "prices-index.json");
 const NOW = new Date();
 
 const HIGH_VALUE_TERMS = [
@@ -201,7 +202,7 @@ for (const item of newsItems) {
       status: stored.status,
       published_at: stored.published_at,
       source_url: stored.source_url,
-      json_url: "https://amir-studio.github.io/History/data/news/" + stored.id + ".json"
+      json_url: "https://amir-studio.github.io/History/data/pending-review/news/" + stored.id + ".json"
     });
     existingNews.add(stored.id);
     existingNewsUrls.add(stored.source_url);
@@ -231,7 +232,7 @@ for (const item of marketItems) {
       market: stored.market,
       observed_at: stored.observed_at,
       status: stored.status,
-      json_url: "https://amir-studio.github.io/History/data/prices/" + stored.id + ".json"
+      json_url: "https://amir-studio.github.io/History/data/pending-review/prices/" + stored.id + ".json"
     });
     existingPrices.add(stored.id);
     existingPriceKeys.add(key);
