@@ -1,44 +1,80 @@
 {
-  "schema_version": "1.0.0",
+  "schema_version": "1.1.0",
   "project": "History",
+  "project_url": "https://amir-studio.github.io/History/",
   "updated_at": "2026-11-13",
-  "language": ["fa", "en"],
+  "description": "فهرست جامع و ماشین‌خوان پرونده‌های آرشیو History. هر رکورد دارای صفحه HTML مستقل و داده JSON کامل است.",
+  "language": [
+    "fa"
+  ],
   "items": [
     {
       "id": "iran-contemporary-history",
       "slug": "iran-contemporary-history",
       "title": "تاریخ معاصر ایران",
       "category": "iran",
-      "description": "خط زمانی و بررسی زمینه‌های سیاسی، اجتماعی و اقتصادی ایران معاصر؛ با تفکیک رویدادها از روایت‌ها و تفسیرها.",
-      "tags": ["ایران", "تاریخ معاصر", "جامعه", "سیاست"],
-      "status": "پروندهٔ پایه"
+      "description": "پرونده‌ای برای مطالعهٔ تحولات سیاسی، اجتماعی و اقتصادی ایران معاصر؛ با تفکیک اسناد، روایت‌های بازیگران و تحلیل‌های تاریخی.",
+      "status": "draft",
+      "status_label": "پروندهٔ پژوهشی اولیه",
+      "last_verified": "2026-11-13",
+      "html_url": "https://amir-studio.github.io/History/articles/iran-contemporary-history/",
+      "json_url": "https://amir-studio.github.io/History/data/articles/iran-contemporary-history.json",
+      "source_count": 3,
+      "keywords": [
+        "تاریخ معاصر ایران",
+        "iran"
+      ]
     },
     {
       "id": "history-of-us-dollar",
       "slug": "history-of-us-dollar",
       "title": "تاریخچهٔ دلار آمریکا",
       "category": "economy",
-      "description": "از شکل‌گیری نظام پولی آمریکا تا نقش دلار در اقتصاد جهانی؛ همراه با داده‌های تاریخی، منابع و زمینهٔ هر تغییر.",
-      "tags": ["دلار", "اقتصاد", "پول", "تورم"],
-      "status": "پروندهٔ پایه"
+      "description": "مسیر تحول پول آمریکا از اسکناس‌های اولیه تا نقش دلار در نظام مالی جهانی؛ با تمرکز بر نهادها، قواعد پولی و رویدادهای تعیین‌کننده.",
+      "status": "draft",
+      "status_label": "پروندهٔ پژوهشی اولیه",
+      "last_verified": "2026-11-13",
+      "html_url": "https://amir-studio.github.io/History/articles/history-of-us-dollar/",
+      "json_url": "https://amir-studio.github.io/History/data/articles/history-of-us-dollar.json",
+      "source_count": 4,
+      "keywords": [
+        "تاریخچهٔ دلار آمریکا",
+        "economy"
+      ]
     },
     {
       "id": "elon-musk",
       "slug": "elon-musk",
       "title": "ایلان ماسک",
       "category": "people",
-      "description": "زندگی‌نامهٔ مستند، مسیر حرفه‌ای، شرکت‌ها، تصمیم‌ها، اظهارنظرها، موفقیت‌ها و شکست‌ها؛ با ارجاع به منابع اولیه.",
-      "tags": ["ایلان ماسک", "کارآفرینی", "فناوری", "شرکت‌ها"],
-      "status": "پروندهٔ پایه"
+      "description": "پرونده‌ای مستقل برای بررسی زندگی، مسیر حرفه‌ای، شرکت‌ها، تصمیم‌ها، اظهارنظرها، موفقیت‌ها و شکست‌های ایلان ماسک؛ با تفکیک اسناد اولیه از روایت رسانه‌ای.",
+      "status": "draft",
+      "status_label": "پروندهٔ شخصیت — در حال گردآوری",
+      "last_verified": "2026-11-13",
+      "html_url": "https://amir-studio.github.io/History/articles/elon-musk/",
+      "json_url": "https://amir-studio.github.io/History/data/articles/elon-musk.json",
+      "source_count": 3,
+      "keywords": [
+        "ایلان ماسک",
+        "people"
+      ]
     },
     {
       "id": "how-to-read-history",
       "slug": "how-to-read-history",
       "title": "چگونه تاریخ را بخوانیم؟",
       "category": "world",
-      "description": "راهنمای روش‌شناسی آرشیو: منبع اولیه و ثانویه، اعتبارسنجی ادعا، سوگیری، زمینه و عدم‌قطعیت.",
-      "tags": ["روش پژوهش", "منابع", "تاریخ‌نگاری"],
-      "status": "راهنمای آرشیو"
+      "description": "راهنمای کوتاه برای تشخیص سند از تفسیر، سنجش اعتبار منابع، شناخت سوگیری و فهم محدودیت‌های تحلیل تاریخی.",
+      "status": "published",
+      "status_label": "راهنمای روش‌شناسی",
+      "last_verified": "2026-11-13",
+      "html_url": "https://amir-studio.github.io/History/articles/how-to-read-history/",
+      "json_url": "https://amir-studio.github.io/History/data/articles/how-to-read-history.json",
+      "source_count": 2,
+      "keywords": [
+        "چگونه تاریخ را بخوانیم؟",
+        "world"
+      ]
     }
   ]
 }
