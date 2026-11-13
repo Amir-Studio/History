@@ -1,0 +1,21 @@
+{
+  "id": "price-b2907c6fb8d7fde3f1",
+  "instrument": "دلار آمریکا (بازار آزاد)",
+  "symbol": "USD_IRR_FREE",
+  "market": "iran_free",
+  "value": 268600,
+  "unit": "IRT",
+  "currency": "IRT",
+  "observed_at": "2026-11-13T22:14:43.000Z",
+  "collected_at": "2026-11-13T22:37:15.731Z",
+  "source_name": "NerkhAra",
+  "source_url": "https://nerkhara.com/dollar/",
+  "provider_method": "average",
+  "provider_source_count": 2,
+  "provider_spread_pct": 1.27,
+  "provider_updated_at": "2026-11-13T22:14:43",
+  "methodology": "ثبت عین مشاهدهٔ منتشرشده در خوراک عمومی؛ واحد و زمان منبع حفظ می‌شود و هیچ مقدار کهنه‌ای جایگزین نمی‌شود.",
+  "status": "pending_review",
+  "supersedes": null,
+  "notes": "وضعیت بازار: در خوراک مشخص نشده | زمان تهران: ثبت نشده | تاریخ شمسی: ثبت نشده | زمان بررسی منبع: ثبت نشده | پرچم stale: false"
+}
