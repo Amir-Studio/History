@@ -151,6 +151,33 @@ function newsRecord(item, title, url, publisher, publishedAt, significance) {
     review_note: "پیش از تغییر وضعیت به verified، منبع اولیه و دست‌کم دو زنجیرهٔ گزارش‌دهی مستقل بررسی شوند."
   };
 }
+function conflictCandidates(items) {
+  const positive=["افزایش","رشد","صعود","بالا رفت","تقویت","increase","rise","surge","gain","up"];
+  const negative=["کاهش","افت","نزول","پایین آمد","تضعیف","decrease","fall","drop","decline","down"];
+  const stop=new Set(["the","and","for","from","with","that","this","در","از","به","با","برای","و","را","که","این","آن","یک","های","شد"]);
+  const tokens=value=>normalize(value).match(/[\\p{L}\\p{N}]{2,}/gu)?.filter(x=>!stop.has(x))||[];
+  const pairs=[];
+  for(let i=0;i<items.length;i++) for(let j=i+1;j<items.length;j++) {
+    const a=items[i],b=items[j],da=publisherFor(a,a.url),db=publisherFor(b,b.url);
+    if(!da||!db||da===db) continue;
+    const A=new Set(tokens(a.title||a.original_title)),B=new Set(tokens(b.title||b.original_title));
+    const shared=[...A].filter(x=>B.has(x)),similarity=shared.length/Math.max(1,new Set([...A,...B]).size);
+    if(shared.length<2||similarity<0.28) continue;
+    const ta=normalize(a.title||a.original_title),tb=normalize(b.title||b.original_title);
+    const polarity=t=>({up:positive.some(x=>t.includes(normalize(x))),down:negative.some(x=>t.includes(normalize(x)))});
+    const pa=polarity(ta),pb=polarity(tb);
+    const nums=t=>(t.match(/\\d+(?:[.,]\\d+)?/g)||[]).sort().join(",");
+    const opposite=(pa.up&&pb.down)||(pa.down&&pb.up),numeric=Boolean(nums(ta)&&nums(tb)&&nums(ta)!==nums(tb));
+    if(!opposite&&!numeric) continue;
+    pairs.push({headline_a:a.title||a.original_title,headline_b:b.title||b.original_title,
+      source_a:da,source_b:db,similarity:Number(similarity.toFixed(2)),
+      signals:[...(opposite?["opposing_direction_words"]:[]),...(numeric?["different_numeric_values"]:[])],
+      status:"needs_human_review",
+      note:"این هشدار الگوریتمی صرفاً موردی برای بررسی انسانی است؛ صحت یا تناقض واقعی را تعیین نمی‌کند."});
+    if(pairs.length>=20) return pairs;
+  }
+  return pairs;
+}
 function priceRecord(item, marketMeta) {
   const source = String(item.source || marketMeta.source || "unknown");
   const sourceName = source.toLowerCase() === "tgju" ? "TGJU" :
@@ -203,6 +230,19 @@ let newsAdded = 0;
 let pricesAdded = 0;
 const newsItems = Array.isArray(newsPayload?.items) ? newsPayload.items : [];
 newsItems.sort((a, b) => Date.parse(b.published_at || 0) - Date.parse(a.published_at || 0));
+const conflictReport = {
+  generated_at: NOW.toISOString(),
+  source_headlines: newsItems.length,
+  independent_publishers_seen: [...new Set(newsItems.map(item=>publisherFor(item,item.url)))].length,
+  candidate_count: 0,
+  candidates: [],
+  method: "Title-token overlap plus opposing direction terms or differing numeric strings. Candidate flags are not fact checks.",
+  status: "heuristic_screening_only"
+};
+conflictReport.candidates=conflictCandidates(newsItems);
+conflictReport.candidate_count=conflictReport.candidates.length;
+await mkdir(PENDING_DIR,{recursive:true});
+await writeFile(join(PENDING_DIR,"news-analysis.json"),JSON.stringify(conflictReport,null,2)+"\\n","utf8");
 for (const item of newsItems) {
   const title = String(item.title || item.original_title || "").trim();
   let url;
