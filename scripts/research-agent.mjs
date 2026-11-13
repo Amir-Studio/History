@@ -161,7 +161,7 @@ async function main() {
   const feedback = Array.isArray(feedbackDoc.items) ? feedbackDoc.items : [];
   const queue = candidates.filter(x => cleanUrl(x.url) && !known.has(cleanUrl(x.url))).slice(0, MAX_CANDIDATES);
   console.log("Dollar news candidates:", candidates.length, "new candidates selected for research:", queue.length);
-  let archived = 0, skipped = 0;
+  let archived = 0, skipped = 0;\n  const archivedRecords = [];
   for (const candidate of queue) {
     try {
       const { result, unique } = await research(candidate, feedback);
