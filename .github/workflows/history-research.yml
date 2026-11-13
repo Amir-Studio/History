@@ -1,0 +1,53 @@
+name: History research intake
+
+on:
+  workflow_dispatch:
+    inputs:
+      max_candidates:
+        description: "Maximum news candidates to investigate (1-5)"
+        required: false
+        default: "3"
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: history-research-intake
+  cancel-in-progress: false
+
+jobs:
+  research:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout archive
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: true
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Run research agent
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          HISTORY_MODEL: gpt-6-luna
+          MAX_CANDIDATES: ${{ inputs.max_candidates || '3' }}
+        run: node scripts/research-agent.mjs
+      - name: Validate JSON and diff
+        run: |
+          node --input-type=module -e "import fs from 'node:fs'; for (const f of fs.readdirSync('data/news').filter(x => x.endsWith('.json'))) JSON.parse(fs.readFileSync('data/news/'+f,'utf8')); JSON.parse(fs.readFileSync('data/news/index.json','utf8'));"
+          git diff --check
+      - name: Commit archive records
+        run: |
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "No new archive records."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/news
+          git commit -m "Archive researched historical news"
+          git push
