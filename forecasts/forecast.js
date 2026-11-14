@@ -74,7 +74,7 @@ function svgChart(rows){
  const pad=(hi-lo)*.12;lo-=pad;hi+=pad;
  const x=i=>L+(data.length<2?PW/2:i/(data.length-1)*PW),y=v=>T+(hi-v)/(hi-lo)*PH;
  const grid=Array.from({length:5},(_,i)=>{const v=hi-(hi-lo)*i/4,yy=T+PH*i/4;return '<line x1="'+L+'" y1="'+yy+'" x2="'+(W-R)+'" y2="'+yy+'" stroke="rgba(190,180,160,.14)"/><text x="'+(L-12)+'" y="'+(yy+4)+'" text-anchor="end" fill="#8d887f" font-size="11">'+esc(whole.format(v))+'</text>'}).join('');
- const line=(key)=>{const points=data.map((r,i)=>({x:x(i),y:y(numeric(r[key])),r})).filter(p=>Number.isFinite(p.y));return points.length?'<polyline fill="none" stroke="'+(key==='actual_price'?'#9ebc9c':'#e4cc9e')+'" stroke-width="'+(key==='actual_price'?3:2.4)+'" stroke-linecap="round" stroke-linejoin="round" points="'+points.map(p=>p.x+','+p.y).join(' ')+'"/>':''};
+ const line=(key)=>{const points=data.map((r,i)=>({i,v:numeric(r[key])})).filter(p=>p.v!==null).map(p=>({x:x(p.i),y:y(p.v)}));return points.length?'<polyline fill="none" stroke="'+(key==='actual_price'?'#9ebc9c':'#e4cc9e')+'" stroke-width="'+(key==='actual_price'?3:2.4)+'" stroke-linecap="round" stroke-linejoin="round" points="'+points.map(p=>p.x+','+p.y).join(' ')+'"/>':''};
  const rangePts=data.map((r,i)=>({x:x(i),lo:numeric(r.lower_price),hi:numeric(r.upper_price)})).filter(p=>p.lo!==null&&p.hi!==null);
  const band=rangePts.length>1?'<polygon fill="rgba(198,166,107,.13)" stroke="none" points="'+rangePts.map(p=>p.x+','+y(p.hi)).join(' ')+' '+rangePts.slice().reverse().map(p=>p.x+','+y(p.lo)).join(' ')+'"/>':'';
  const predicted=data.map((r,i)=>'<circle cx="'+x(i)+'" cy="'+y(numeric(r.predicted_price))+'" r="3.1" fill="#e4cc9e"><title>پیش‌بینی: '+esc(money(r.predicted_price))+' · '+esc(date(r.target_at))+'</title></circle>').join('');
@@ -160,7 +160,7 @@ async function load(){
   $('priceChart').innerHTML='<div class="empty error">دادهٔ نمودار دریافت نشد.</div>';
  }finally{btn.disabled=false;btn.innerHTML='به‌روزرسانی داده <span>↻</span>'}
 }
-$('refresh').addEventListener('click',load);$('asset').addEventListener('change',load);$('horizon').addEventListener('change',()=>{modelOptions();renderAll()});
+$('refresh').addEventListener('click',load);$('asset').addEventListener('change',load);$('horizon').addEventListener('change',()=>{state.horizon=Number($('horizon').value);modelOptions();renderAll()});
 ['period','status','model'].forEach(id=>$(id).addEventListener('change',renderAll));
 $('export').addEventListener('click',exportCsv);
 load();
