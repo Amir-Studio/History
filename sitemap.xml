@@ -3,6 +3,7 @@
 <url><loc>https://amir-studio.github.io/History/</loc><priority>1.0</priority></url>
 <url><loc>https://amir-studio.github.io/History/research.html</loc><priority>0.9</priority></url>
 <url><loc>https://amir-studio.github.io/History/news.html</loc><priority>0.9</priority></url>
+<url><loc>https://amir-studio.github.io/History/forecasts/</loc><priority>0.9</priority></url>
 <url><loc>https://amir-studio.github.io/History/data/research-methodology.json</loc><priority>0.8</priority></url>
 <url><loc>https://amir-studio.github.io/History/data/quality/evaluation.json</loc><priority>0.7</priority></url>
 <url><loc>https://amir-studio.github.io/History/llms.txt</loc><priority>0.9</priority></url>
