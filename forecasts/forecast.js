@@ -4,8 +4,8 @@ const API='https://oolfbjxclhzlbwjmzxxx.supabase.co/functions/v1/market-api';
 const assets={USD_IRR_FREE:'دلار آزاد',GOLD_18K_IRR:'طلای ۱۸ عیار',EUR_IRR_FREE:'یورو آزاد',COIN_EMAMI_IRR:'سکه امامی'};
 const nf=new Intl.NumberFormat('fa-IR',{maximumFractionDigits:2});
 const whole=new Intl.NumberFormat('fa-IR',{maximumFractionDigits:0});
-const pct=v=>v===null||v===undefined||!Number.isFinite(Number(v))?'—':nf.format(Number(v))+'٪';
-const money=v=>v===null||v===undefined||!Number.isFinite(Number(v))?'—':whole.format(Number(v))+' تومان';
+const pct=v=>numeric(v)===null?'—':nf.format(numeric(v))+'٪';
+const money=v=>numeric(v)===null?'—':whole.format(numeric(v))+' تومان';
 const date=v=>{if(!v)return'—';const d=new Date(v);return Number.isNaN(d.getTime())?'—':new Intl.DateTimeFormat('fa-IR',{dateStyle:'short',timeStyle:'short'}).format(d)};
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const state={byHorizon:{},filtered:[],asset:'USD_IRR_FREE',horizon:7,backtest:null,meta:null};
@@ -32,7 +32,7 @@ function directionIsCorrect(row){
  if(predicted===0||actual===0)return null;
  return Math.sign(predicted)===Math.sign(actual);
 }
-function evaluated(rows){return rows.filter(x=>x.status==='evaluated'&&numeric(x.actual_price)>0&&numeric(x.predicted_price)!==null&&numeric(x.reference_price)>0)}
+function evaluated(rows){return rows.filter(x=>x.status==='evaluated'&&numeric(x.actual_price)>0&&numeric(x.predicted_price)!==null)}
 function stats(rows){
  const done=evaluated(rows),errors=done.map(errorPct).filter(x=>x!==null);
  const signed=done.map(x=>(numeric(x.predicted_price)-numeric(x.actual_price))/numeric(x.actual_price)*100).filter(Number.isFinite);
@@ -42,11 +42,15 @@ function stats(rows){
  const directional=done.map(x=>directionIsCorrect(x)).filter(x=>x!==null);
  const ranged=done.filter(x=>numeric(x.lower_price)!==null&&numeric(x.upper_price)!==null&&numeric(x.lower_price)<=numeric(x.upper_price));
  const covered=ranged.filter(x=>numeric(x.actual_price)>=numeric(x.lower_price)&&numeric(x.actual_price)<=numeric(x.upper_price));
+ const sortedErrors=errors.slice().sort((a,b)=>a-b);
+ const quantile=q=>sortedErrors.length?sortedErrors[Math.min(sortedErrors.length-1,Math.ceil(q*sortedErrors.length)-1)]:null;
+ const median=sortedErrors.length?(sortedErrors.length%2?sortedErrors[(sortedErrors.length-1)/2]:(sortedErrors[sortedErrors.length/2-1]+sortedErrors[sortedErrors.length/2])/2):null;
+ const p90=quantile(.9);
  const mae=errors.length?errors.reduce((a,b)=>a+b,0)/errors.length:null;
  const rmse=errors.length?Math.sqrt(errors.reduce((a,b)=>a+b*b,0)/errors.length):null;
  const baseMae=base.length?base.reduce((a,b)=>a+b,0)/base.length:null;
  const pairedModelMae=modelOnBaseline.length?modelOnBaseline.reduce((a,b)=>a+b,0)/modelOnBaseline.length:null;
- return {samples:done.length,mae,rmse,baseMae,skill:pairedModelMae!==null&&baseMae>0?(1-pairedModelMae/baseMae)*100:null,
+ return {samples:done.length,mae,rmse,median,p90,baseMae,skill:pairedModelMae!==null&&baseMae>0?(1-pairedModelMae/baseMae)*100:null,
   directional:directional.length?directional.filter(Boolean).length/directional.length*100:null,
   directionalN:directional.length,coverage:ranged.length?covered.length/ranged.length*100:null,rangeN:ranged.length,
   bias:signed.length?signed.reduce((a,b)=>a+b,0)/signed.length:null,
@@ -73,7 +77,7 @@ function modelOptions(){
 }
 function renderStats(rows){
  const s=stats(rows),pending=rows.filter(x=>x.status==='pending').length,invalid=rows.filter(x=>x.status==='invalidated').length;
- set('samples',nf.format(s.samples));set('mae',pct(s.mae));set('rmse',pct(s.rmse));set('within2',pct(s.within2));set('within5',pct(s.within5));set('skill',pct(s.skill));
+ set('samples',nf.format(s.samples));set('mae',pct(s.mae));set('rmse',pct(s.rmse));set('medianError',pct(s.median));set('p90Error',pct(s.p90));set('within2',pct(s.within2));set('within5',pct(s.within5));set('skill',pct(s.skill));
  set('skillHint',s.skill===null?'برای مقایسه، نمونهٔ معتبر کافی نیست':s.skill>=0?'بهتر از مبنای بدون تغییر':'ضعیف‌تر از مبنای بدون تغییر');
  set('direction',pct(s.directional));set('directionHint','نمونهٔ جهت‌دار: '+nf.format(s.directionalN));
  set('coverage',pct(s.coverage));set('coverageHint','نمونهٔ دارای بازه: '+nf.format(s.rangeN));
@@ -164,9 +168,23 @@ function exportCsv(){
  const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'}),url=URL.createObjectURL(blob),a=document.createElement('a');
  a.href=url;a.download='dollar-forecast-audit-'+state.asset+'-'+state.horizon+'d.csv';document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
 }
+function renderNumericQuality(rows){
+ const valid=rows.filter(x=>numeric(x.reference_price)>0&&numeric(x.predicted_price)>0&&numeric(x.lower_price)!==null&&numeric(x.upper_price)!==null&&numeric(x.lower_price)<=numeric(x.upper_price)).length;
+ const actual=rows.filter(x=>x.status==='evaluated'&&numeric(x.actual_price)>0).length;
+ set('qualityValid',nf.format(valid));set('qualityInvalid',nf.format(rows.length-valid));set('qualityActual',nf.format(actual));
+}
+function renderNumberConverter(){
+ const input=$('rawNumber'),raw=input.value.trim(),n=numeric(raw),out=$('normalizedNumber'),local=$('localizedNumber'),copy=$('copyNumber');
+ if(n===null){out.textContent='—';local.textContent='نمایش محلی: —';copy.disabled=true;set('numberFeedback',raw?'قالب عددی قابل تشخیص نیست؛ ورودی را بررسی کن.':'ورودی خالی به‌عنوان عدد پذیرفته نمی‌شود.');return}
+ out.textContent=String(n);local.textContent='نمایش محلی: '+nf.format(n);copy.disabled=false;set('numberFeedback','عدد با موفقیت استاندارد شد؛ جداکننده‌ها و ارقام محلی تفسیر شدند.');
+}
+function parserSelfTest(){
+ const tests=[numeric(null)===null,numeric('')===null,numeric('۱۲٬۳۴۵')===12345,numeric('١٢٣٫٤٥')===123.45,numeric('1,234.56')===1234.56,numeric('1.234,56')===1234.56,numeric('12,5')===12.5];
+ return tests.every(Boolean);
+}
 function renderAll(){
  const rows=currentRows();state.filtered=rows;
- renderStats(rows);svgChart(rows);renderHistogram(rows);renderTrend(rows);renderLedger(rows);renderHorizons();
+ renderStats(rows);renderNumericQuality(rows);svgChart(rows);renderHistogram(rows);renderTrend(rows);renderLedger(rows);renderHorizons();
  set('scopeText','دارایی: '+assets[state.asset]+' · افق: '+nf.format(state.horizon)+' روز · بازه: '+$('period').selectedOptions[0].text+' · فیلتر وضعیت و نسخه روی دفتر همین افق اعمال شده‌اند.');
 }
 async function load(){
@@ -187,6 +205,9 @@ async function load(){
   $('priceChart').innerHTML='<div class="empty error">دادهٔ نمودار دریافت نشد.</div>';
  }finally{btn.disabled=false;btn.innerHTML='به‌روزرسانی داده <span>↻</span>'}
 }
+$('rawNumber').addEventListener('input',renderNumberConverter);
+$('copyNumber').addEventListener('click',async()=>{const n=numeric($('rawNumber').value);if(n===null)return;try{await navigator.clipboard.writeText(String(n));set('numberFeedback','عدد استاندارد کپی شد.')}catch(e){set('numberFeedback','کپی خودکار در این مرورگر در دسترس نیست؛ عدد استاندارد را انتخاب و کپی کن.')}});
+set('parserStatus',parserSelfTest()?'مبدل عددی: آزمون داخلی موفق':'مبدل عددی: خطای آزمون');
 $('refresh').addEventListener('click',load);$('asset').addEventListener('change',load);$('horizon').addEventListener('change',()=>{state.horizon=Number($('horizon').value);modelOptions();renderAll()});
 ['period','status','model'].forEach(id=>$(id).addEventListener('change',renderAll));
 $('export').addEventListener('click',exportCsv);
