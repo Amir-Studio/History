@@ -1,0 +1,48 @@
+{
+  "id": "news-a65373d54a78098330",
+  "headline": "قیمت نفت برنت به ۹۶ دلار رسید",
+  "publisher": "isna.ir",
+  "author": null,
+  "source_url": "https://www.isna.ir/news/1405082315393/%D9%82%DB%8C%D9%85%D8%AA-%D9%86%D9%81%D8%AA-%D8%A8%D8%B1%D9%86%D8%AA-%D8%A8%D9%87-%DB%B9%DB%B6-%D8%AF%D9%84%D8%A7%D8%B1-%D8%B1%D8%B3%DB%8C%D8%AF",
+  "published_at": "2026-11-14T06:39:52.000Z",
+  "collected_at": "2026-11-14T09:27:01.487Z",
+  "event_date": null,
+  "language": "fa",
+  "category": "economy",
+  "summary": "این رکورد در مرحلهٔ دریافت خودکار فقط تیتر و پیوند ناشر را ثبت می‌کند. متن کامل، سند اولیه و صحت ادعا هنوز مستقلاً بررسی نشده‌اند.",
+  "claims": [
+    {
+      "claim": "تیتر منتشرشدهٔ ناشر چنین گزارش می‌کند: قیمت نفت برنت به ۹۶ دلار رسید",
+      "evidence_grade": "unverified",
+      "supporting_sources": [
+        "https://www.isna.ir/news/1405082315393/%D9%82%DB%8C%D9%85%D8%AA-%D9%86%D9%81%D8%AA-%D8%A8%D8%B1%D9%86%D8%AA-%D8%A8%D9%87-%DB%B9%DB%B6-%D8%AF%D9%84%D8%A7%D8%B1-%D8%B1%D8%B3%DB%8C%D8%AF"
+      ],
+      "note": "ثبت تیتر به معنی تأیید ادعا نیست؛ بررسی متن کامل و سند پشتیبان لازم است."
+    }
+  ],
+  "status": "pending_review",
+  "significance_score": 59,
+  "significance_reason": "امتیاز صرفاً برای اولویت‌بندی بررسی آرشیوی و بر پایهٔ واژگان موضوعی است؛ معیار صحت یا بی‌طرفی نیست.",
+  "sources": [
+    {
+      "title": "قیمت نفت برنت به ۹۶ دلار رسید",
+      "publisher": "isna.ir",
+      "country": null,
+      "source_type": "other",
+      "original_reporting": null,
+      "ownership_or_mandate_note": "در دریافت خودکار بررسی نشده است.",
+      "url": "https://www.isna.ir/news/1405082315393/%D9%82%DB%8C%D9%85%D8%AA-%D9%86%D9%81%D8%AA-%D8%A8%D8%B1%D9%86%D8%AA-%D8%A8%D9%87-%DB%B9%DB%B6-%D8%AF%D9%84%D8%A7%D8%B1-%D8%B1%D8%B3%DB%8C%D8%AF",
+      "claim_supported": "تیتر منتشرشدهٔ ناشر چنین گزارش می‌کند: قیمت نفت برنت به ۹۶ دلار رسید",
+      "reporting_chain": "زنجیرهٔ گزارش‌دهی و استقلال منبع هنوز بررسی نشده است."
+    }
+  ],
+  "independent_domains": [],
+  "disagreements": [],
+  "limitations": [
+    "این رکورد بر پایهٔ تیتر و فرادادهٔ خوراک خبری ساخته شده است، نه بررسی متن کامل.",
+    "استقلال ناشر، مالکیت رسانه و بازنشر از خبرگزاری دیگر هنوز ارزیابی نشده است.",
+    "امتیاز اهمیت، احتمال صحت خبر نیست."
+  ],
+  "correction_watch": "برای اصلاحیه، تکذیبیه یا گزارش تکمیلی بعدی ناشر دوباره بررسی شود.",
+  "review_note": "پیش از تغییر وضعیت به verified، منبع اولیه و دست‌کم دو زنجیرهٔ گزارش‌دهی مستقل بررسی شوند."
+}

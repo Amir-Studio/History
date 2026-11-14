@@ -1,0 +1,21 @@
+{
+  "id": "price-7667125440bb17462a",
+  "instrument": "یورو",
+  "symbol": "EUR_IRR_FREE",
+  "market": "iran_free",
+  "value": 300055,
+  "unit": "IRT",
+  "currency": "IRT",
+  "observed_at": "2026-11-14T09:24:43.000Z",
+  "collected_at": "2026-11-14T09:27:01.487Z",
+  "source_name": "NerkhAra",
+  "source_url": "https://nerkhara.com/euro/",
+  "provider_method": "derived",
+  "provider_source_count": 0,
+  "provider_spread_pct": null,
+  "provider_updated_at": "2026-11-14T09:24:43",
+  "methodology": "ثبت عین مشاهدهٔ منتشرشده در خوراک عمومی؛ واحد و زمان منبع حفظ می‌شود و هیچ مقدار کهنه‌ای جایگزین نمی‌شود.",
+  "status": "pending_review",
+  "supersedes": null,
+  "notes": "وضعیت بازار: در خوراک مشخص نشده | زمان تهران: ثبت نشده | تاریخ شمسی: ثبت نشده | زمان بررسی منبع: ثبت نشده | پرچم stale: false"
+}
