@@ -8,7 +8,7 @@ const pct=v=>numeric(v)===null?'—':nf.format(numeric(v))+'٪';
 const money=v=>numeric(v)===null?'—':whole.format(numeric(v))+' تومان';
 const date=v=>{if(!v)return'—';const d=new Date(v);return Number.isNaN(d.getTime())?'—':new Intl.DateTimeFormat('fa-IR',{dateStyle:'short',timeStyle:'short'}).format(d)};
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const state={byHorizon:{},filtered:[],asset:'USD_IRR_FREE',horizon:7,backtest:null,meta:null};
+const state={byHorizon:{},filtered:[],asset:'USD_IRR_FREE',horizon:7,backtest:null,meta:null,learning:[]};
 function set(id,value){const el=$(id);if(el)el.textContent=value}
 function numeric(v){
  if(v===null||v===undefined||typeof v==='boolean')return null;
@@ -190,6 +190,35 @@ function renderAll(){
  renderStats(rows);renderNumericQuality(rows);svgChart(rows);renderHistogram(rows);renderTrend(rows);renderLedger(rows);renderHorizons();
  set('scopeText','دارایی: '+assets[state.asset]+' · افق: '+nf.format(state.horizon)+' روز · بازه: '+$('period').selectedOptions[0].text+' · فیلتر وضعیت و نسخه روی دفتر همین افق اعمال شده‌اند.');
 }
+function renderLearning(data){
+ const cycles=Array.isArray(data?.cycles)?data.cycles:[];
+ state.learning=cycles;
+ const latest=cycles[0]||null, metrics=latest?.asset_metrics||{};
+ const entries=Object.entries(metrics);
+ const warnings=entries.filter(([,m])=>m?.performance_drift===true).length;
+ set('learningCycles',nf.format(cycles.length));
+ set('learningSamples',nf.format(Number(latest?.evaluated_count)||0));
+ set('learningWarnings',nf.format(warnings));
+ set('learningLast',latest?.cycle_at?date(latest.cycle_at):'هنوز ثبت نشده');
+ set('learningStatus',cycles.length?'چرخهٔ یادگیری فعال':'آماده؛ منتظر خطای واقعی');
+ const rows=$('learningRows');
+ if(!entries.length){
+  rows.innerHTML='<tr><td colspan="7" class="empty">هنوز پیش‌بینی سررسیدشده‌ای برای یادگیری ثبت نشده است. چرخهٔ زمان‌بندی‌شده فعال است؛ اولین خطای واقعی پس از رسیدن پیش‌بینی به موعد، اینجا ثبت می‌شود.</td></tr>';
+  set('learningNote','بررسی زمان‌بندی‌شده هر ۱۵ دقیقه انجام می‌شود. تا پیش از رسیدن موعد پیش‌بینی، هیچ خطایی جعل یا حدس زده نمی‌شود. وزن‌های مدل نیز فقط با آزمون walk-forward و داده‌های بالغ‌شده بازآموزی می‌شوند.');
+  return;
+ }
+ rows.innerHTML=entries.map(([key,m])=>{
+  const [asset,horizon]=key.split(':');
+  const stateLabel=m.performance_drift?'هشدار افت کیفیت':(Number(m.samples)>=30&&Number(m.skill_vs_no_change_pct)>=2?'عملکرد بهتر از مبنا':'سیگنال جهت‌دار محدود');
+  const cls=m.performance_drift?'warn':(Number(m.samples)>=30&&Number(m.skill_vs_no_change_pct)>=2?'good':'muted');
+  return '<tr><td>'+esc(assets[asset]||asset)+' · '+nf.format(Number(horizon))+' روز</td><td>'+nf.format(m.samples||0)+'</td><td>'+pct(m.mae_pct)+'</td><td>'+pct(m.no_change_mae_pct)+'</td><td>'+pct(m.skill_vs_no_change_pct)+'</td><td>'+(m.directional_accuracy_pct===null?'—':pct(m.directional_accuracy_pct))+'</td><td><span class="learning-state '+cls+'">'+stateLabel+'</span></td></tr>';
+ }).join('');
+ set('learningNote','آخرین چرخه: '+date(latest.cycle_at)+' · نسخهٔ موتور: '+(latest.model_version||'—')+' · هشدارها فقط افت عملکرد اخیر را نشان می‌دهند و به‌تنهایی مجوز تغییر خودکار مدل نیستند.');
+}
+async function loadLearning(){
+ try{const data=await get('/forecast/learning');renderLearning(data)}
+ catch(e){set('learningStatus','گزارش در دسترس نیست');set('learningRows','');$('learningRows').innerHTML='<tr><td colspan="7" class="empty error">'+esc(e.message)+'</td></tr>'}
+}
 async function loadBacktest(){
  try{const perf=await get('/forecast/performance?asset='+encodeURIComponent(state.asset)+'&horizon_days='+state.horizon);renderBacktest(perf)}
  catch(e){renderBacktest(null);set('backtestNote','دادهٔ بک‌تست دریافت نشد: '+e.message+' · این خطا بر محاسبهٔ کارنامهٔ زنده اثر ندارد.')}
@@ -203,7 +232,7 @@ async function load(){
   [1,3,7].forEach((h,i)=>{state.byHorizon[String(h)]=Array.isArray(all[i].forecasts)?all[i].forecasts:[];if(h===state.horizon)state.meta=all[i].ledger_meta||{}});
   modelOptions();renderAll();
   set('updated','آخرین همگام‌سازی: '+date(new Date().toISOString())+' · '+nf.format(state.byHorizon[String(state.horizon)].length)+' رکورد · موتور فعال: '+(state.meta.active_model_version||'—'));
-  await loadBacktest();
+  await Promise.all([loadBacktest(),loadLearning()]);
  }catch(e){
   state.byHorizon={};state.meta=null;state.filtered=[];
   set('updated','اتصال ناموفق');set('scopeText','دریافت دفتر ثبت ناموفق بود: '+e.message);
