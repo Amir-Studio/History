@@ -42,6 +42,7 @@ function stats(rows){
  const directional=done.map(x=>directionIsCorrect(x)).filter(x=>x!==null);
  const ranged=done.filter(x=>numeric(x.lower_price)!==null&&numeric(x.upper_price)!==null&&numeric(x.lower_price)<=numeric(x.upper_price));
  const covered=ranged.filter(x=>numeric(x.actual_price)>=numeric(x.lower_price)&&numeric(x.actual_price)<=numeric(x.upper_price));
+ const widths=ranged.map(x=>numeric(x.reference_price)>0?(numeric(x.upper_price)-numeric(x.lower_price))/numeric(x.reference_price)*100:null).filter(x=>x!==null&&Number.isFinite(x)&&x>=0);
  const sortedErrors=errors.slice().sort((a,b)=>a-b);
  const quantile=q=>sortedErrors.length?sortedErrors[Math.min(sortedErrors.length-1,Math.ceil(q*sortedErrors.length)-1)]:null;
  const median=sortedErrors.length?(sortedErrors.length%2?sortedErrors[(sortedErrors.length-1)/2]:(sortedErrors[sortedErrors.length/2-1]+sortedErrors[sortedErrors.length/2])/2):null;
@@ -52,7 +53,7 @@ function stats(rows){
  const pairedModelMae=modelOnBaseline.length?modelOnBaseline.reduce((a,b)=>a+b,0)/modelOnBaseline.length:null;
  return {samples:done.length,mae,rmse,median,p90,baseMae,skill:pairedModelMae!==null&&baseMae>0?(1-pairedModelMae/baseMae)*100:null,
   directional:directional.length?directional.filter(Boolean).length/directional.length*100:null,
-  directionalN:directional.length,coverage:ranged.length?covered.length/ranged.length*100:null,rangeN:ranged.length,
+  directionalN:directional.length,coverage:ranged.length?covered.length/ranged.length*100:null,rangeN:ranged.length,rangeWidth:widths.length?widths.reduce((a,b)=>a+b,0)/widths.length:null,
   bias:signed.length?signed.reduce((a,b)=>a+b,0)/signed.length:null,
   within2:errors.length?errors.filter(x=>x<=2).length/errors.length*100:null,
   within5:errors.length?errors.filter(x=>x<=5).length/errors.length*100:null};
@@ -77,7 +78,7 @@ function modelOptions(){
 }
 function renderStats(rows){
  const s=stats(rows),pending=rows.filter(x=>x.status==='pending').length,invalid=rows.filter(x=>x.status==='invalidated').length;
- set('samples',nf.format(s.samples));set('mae',pct(s.mae));set('rmse',pct(s.rmse));set('medianError',pct(s.median));set('p90Error',pct(s.p90));set('within2',pct(s.within2));set('within5',pct(s.within5));set('skill',pct(s.skill));
+ set('samples',nf.format(s.samples));set('mae',pct(s.mae));set('rmse',pct(s.rmse));set('medianError',pct(s.median));set('p90Error',pct(s.p90));set('baseMae',pct(s.baseMae));set('rangeWidth',pct(s.rangeWidth));set('within2',pct(s.within2));set('within5',pct(s.within5));set('skill',pct(s.skill));
  set('skillHint',s.skill===null?'برای مقایسه، نمونهٔ معتبر کافی نیست':s.skill>=0?'بهتر از مبنای بدون تغییر':'ضعیف‌تر از مبنای بدون تغییر');
  set('direction',pct(s.directional));set('directionHint','نمونهٔ جهت‌دار: '+nf.format(s.directionalN));
  set('coverage',pct(s.coverage));set('coverageHint','نمونهٔ دارای بازه: '+nf.format(s.rangeN));
@@ -189,6 +190,10 @@ function renderAll(){
  renderStats(rows);renderNumericQuality(rows);svgChart(rows);renderHistogram(rows);renderTrend(rows);renderLedger(rows);renderHorizons();
  set('scopeText','دارایی: '+assets[state.asset]+' · افق: '+nf.format(state.horizon)+' روز · بازه: '+$('period').selectedOptions[0].text+' · فیلتر وضعیت و نسخه روی دفتر همین افق اعمال شده‌اند.');
 }
+async function loadBacktest(){
+ try{const perf=await get('/forecast/performance?asset='+encodeURIComponent(state.asset)+'&horizon_days='+state.horizon);renderBacktest(perf)}
+ catch(e){renderBacktest(null);set('backtestNote','دادهٔ بک‌تست دریافت نشد: '+e.message+' · این خطا بر محاسبهٔ کارنامهٔ زنده اثر ندارد.')}
+}
 async function load(){
  const btn=$('refresh');btn.disabled=true;btn.textContent='در حال دریافت…';set('updated','در حال همگام‌سازی دفتر ثبت…');
  state.asset=$('asset').value;state.horizon=Number($('horizon').value);
@@ -198,13 +203,12 @@ async function load(){
   [1,3,7].forEach((h,i)=>{state.byHorizon[String(h)]=Array.isArray(all[i].forecasts)?all[i].forecasts:[];if(h===state.horizon)state.meta=all[i].ledger_meta||{}});
   modelOptions();renderAll();
   set('updated','آخرین همگام‌سازی: '+date(new Date().toISOString())+' · '+nf.format(state.byHorizon[String(state.horizon)].length)+' رکورد · موتور فعال: '+(state.meta.active_model_version||'—'));
-  try{const perf=await get('/forecast/performance?asset='+encodeURIComponent(state.asset)+'&horizon_days='+state.horizon);renderBacktest(perf)}
-  catch(e){renderBacktest(null);set('backtestNote','دادهٔ بک‌تست دریافت نشد: '+e.message+' · این خطا بر محاسبهٔ کارنامهٔ زنده اثر ندارد.')}
+  await loadBacktest();
  }catch(e){
   state.byHorizon={};state.meta=null;state.filtered=[];
   set('updated','اتصال ناموفق');set('scopeText','دریافت دفتر ثبت ناموفق بود: '+e.message);
   $('ledgerRows').innerHTML='<tr><td colspan="13" class="empty error">'+esc(e.message)+'</td></tr>';$('mobileLedger').innerHTML='<div class="empty error">'+esc(e.message)+'</div>';
-  ['samples','mae','rmse','medianError','p90Error','within2','within5','skill','direction','coverage','bias','pending','qualityValid','qualityInvalid','qualityActual'].forEach(id=>set(id,'—'));
+  ['samples','mae','rmse','medianError','p90Error','baseMae','rangeWidth','within2','within5','skill','direction','coverage','bias','pending','qualityValid','qualityInvalid','qualityActual'].forEach(id=>set(id,'—'));
   $('priceChart').innerHTML='<div class="empty error">دادهٔ نمودار دریافت نشد.</div>';$('errorHistogram').innerHTML='<div class="empty error">داده دریافت نشد.</div>';$('errorTrend').innerHTML='<div class="empty error">داده دریافت نشد.</div>';
   $('ledgerCount').textContent='—';$('ledgerFoot').textContent='دفتر ثبت در دسترس نیست.';$('horizonTable').innerHTML='<tr><td colspan="7" class="empty error">داده دریافت نشد.</td></tr>';$('mobileHorizons').innerHTML='';renderBacktest(null);
   $('integrity').classList.remove('ready');set('integrityTitle','اتصال ناموفق');set('integrityText','تا زمان برقراری ارتباط، هیچ شاخص قدیمی به‌عنوان نتیجهٔ تازه نمایش داده نمی‌شود.');
@@ -213,7 +217,7 @@ async function load(){
 $('rawNumber').addEventListener('input',renderNumberConverter);
 $('copyNumber').addEventListener('click',async()=>{const n=numeric($('rawNumber').value);if(n===null)return;try{await navigator.clipboard.writeText(String(n));set('numberFeedback','عدد استاندارد کپی شد.')}catch(e){set('numberFeedback','کپی خودکار در این مرورگر در دسترس نیست؛ عدد استاندارد را انتخاب و کپی کن.')}});
 set('parserStatus',parserSelfTest()?'مبدل عددی: آزمون داخلی موفق':'مبدل عددی: خطای آزمون');
-$('refresh').addEventListener('click',load);$('asset').addEventListener('change',load);$('horizon').addEventListener('change',()=>{state.horizon=Number($('horizon').value);modelOptions();renderAll()});
+$('refresh').addEventListener('click',load);$('asset').addEventListener('change',load);$('horizon').addEventListener('change',()=>{state.horizon=Number($('horizon').value);modelOptions();renderAll();loadBacktest()});
 ['period','status','model'].forEach(id=>$(id).addEventListener('change',renderAll));
 $('export').addEventListener('click',exportCsv);
 load();
