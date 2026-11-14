@@ -3,6 +3,42 @@
   "updated_at": "2026-11-14",
   "items": [
     {
+      "id": "news-aedbb3bc992dd1e6cf",
+      "headline": "نظر کاربران درباره تدوین بودجه ۱۴۰۶/ کسری بودجه را از جیب مردم جبران نکنید",
+      "category": "economy",
+      "status": "pending_review",
+      "published_at": "2026-11-14T12:32:00.000Z",
+      "source_url": "https://www.khabaronline.ir/news/2301948/%D9%86%D8%B8%D8%B1-%DA%A9%D8%A7%D8%B1%D8%A8%D8%B1%D8%A7%D9%86-%D8%AF%D8%B1%D8%A8%D8%A7%D8%B1%D9%87-%D8%AA%D8%AF%D9%88%DB%8C%D9%86-%D8%A8%D9%88%D8%AF%D8%AC%D9%87-%DB%B1%DB%B4%DB%B0%DB%B6-%DA%A9%D8%B3%D8%B1%DB%8C-%D8%A8%D9%88%D8%AF%D8%AC%D9%87-%D8%B1%D8%A7-%D8%A7%D8%B2-%D8%AC%DB%8C%D8%A8-%D9%85%D8%B1%D8%AF%D9%85",
+      "json_url": "https://amir-studio.github.io/History/data/pending-review/news/news-aedbb3bc992dd1e6cf.json"
+    },
+    {
+      "id": "news-d99b47952cb8473b00",
+      "headline": "Interest rate rises likely in coming months, Bank of England’s chief economist says",
+      "category": "economy",
+      "status": "pending_review",
+      "published_at": "2026-11-14T14:42:27.000Z",
+      "source_url": "https://www.theguardian.com/business/2026/nov/14/interest-rate-rises-inflation-bank-of-england-chief-economist",
+      "json_url": "https://amir-studio.github.io/History/data/pending-review/news/news-d99b47952cb8473b00.json"
+    },
+    {
+      "id": "news-a0980adab60f114a24",
+      "headline": "طرح تورم صفر دسیسه های دشمن در برهم زدن قیمت‌ها را خنثی کرد",
+      "category": "economy",
+      "status": "pending_review",
+      "published_at": "2026-11-14T15:20:13.000Z",
+      "source_url": "https://www.mehrnews.com/news/7010816/%D8%B7%D8%B1%D8%AD-%D8%AA%D9%88%D8%B1%D9%85-%D8%B5%D9%81%D8%B1-%D8%AF%D8%B3%DB%8C%D8%B3%D9%87-%D9%87%D8%A7%DB%8C-%D8%AF%D8%B4%D9%85%D9%86-%D8%AF%D8%B1-%D8%A8%D8%B1%D9%87%D9%85-%D8%B2%D8%AF%D9%86-%D9%82%DB%8C%D9%85%D8%AA-%D9%87%D8%A7-%D8%B1%D8%A7-%D8%AE%D9%86%D8%AB%DB%8C-%DA%A9%D8%B1%D8%AF",
+      "json_url": "https://amir-studio.github.io/History/data/pending-review/news/news-a0980adab60f114a24.json"
+    },
+    {
+      "id": "news-3e8399b095a04fa214",
+      "headline": "بازتاب طرح تورم صفر؛ قیمت‌ها تا ۵ فروردین ۱۴۰۶ ثابت شد",
+      "category": "economy",
+      "status": "pending_review",
+      "published_at": "2026-11-14T15:31:03.000Z",
+      "source_url": "https://www.mehrnews.com/news/7010819/%D8%A8%D8%A7%D8%B2%D8%AA%D8%A7%D8%A8-%D8%B7%D8%B1%D8%AD-%D8%AA%D9%88%D8%B1%D9%85-%D8%B5%D9%81%D8%B1-%D8%AF%D8%B1%D8%B5%D8%AF-%D9%82%DB%8C%D9%85%D8%AA-%D9%87%D8%A7-%D8%AA%D8%A7-%DB%B5-%D9%81%D8%B1%D9%88%D8%B1%D8%AF%DB%8C%D9%86-%DB%B1%DB%B4%DB%B0%DB%B6-%D8%AB%D8%A7%D8%A8%D8%AA-%D8%B4%D8%AF",
+      "json_url": "https://amir-studio.github.io/History/data/pending-review/news/news-3e8399b095a04fa214.json"
+    },
+    {
       "id": "news-a65373d54a78098330",
       "headline": "قیمت نفت برنت به ۹۶ دلار رسید",
       "category": "economy",

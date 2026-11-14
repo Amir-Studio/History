@@ -1,0 +1,48 @@
+{
+  "id": "news-d99b47952cb8473b00",
+  "headline": "Interest rate rises likely in coming months, Bank of England’s chief economist says",
+  "publisher": "theguardian.com",
+  "author": null,
+  "source_url": "https://www.theguardian.com/business/2026/nov/14/interest-rate-rises-inflation-bank-of-england-chief-economist",
+  "published_at": "2026-11-14T14:42:27.000Z",
+  "collected_at": "2026-11-14T16:07:29.488Z",
+  "event_date": null,
+  "language": "en",
+  "category": "economy",
+  "summary": "این رکورد در مرحلهٔ دریافت خودکار فقط تیتر و پیوند ناشر را ثبت می‌کند. متن کامل، سند اولیه و صحت ادعا هنوز مستقلاً بررسی نشده‌اند.",
+  "claims": [
+    {
+      "claim": "تیتر منتشرشدهٔ ناشر چنین گزارش می‌کند: Interest rate rises likely in coming months, Bank of England’s chief economist says",
+      "evidence_grade": "unverified",
+      "supporting_sources": [
+        "https://www.theguardian.com/business/2026/nov/14/interest-rate-rises-inflation-bank-of-england-chief-economist"
+      ],
+      "note": "ثبت تیتر به معنی تأیید ادعا نیست؛ بررسی متن کامل و سند پشتیبان لازم است."
+    }
+  ],
+  "status": "pending_review",
+  "significance_score": 52,
+  "significance_reason": "امتیاز صرفاً برای اولویت‌بندی بررسی آرشیوی و بر پایهٔ واژگان موضوعی است؛ معیار صحت یا بی‌طرفی نیست.",
+  "sources": [
+    {
+      "title": "Interest rate rises likely in coming months, Bank of England’s chief economist says",
+      "publisher": "theguardian.com",
+      "country": null,
+      "source_type": "other",
+      "original_reporting": null,
+      "ownership_or_mandate_note": "در دریافت خودکار بررسی نشده است.",
+      "url": "https://www.theguardian.com/business/2026/nov/14/interest-rate-rises-inflation-bank-of-england-chief-economist",
+      "claim_supported": "تیتر منتشرشدهٔ ناشر چنین گزارش می‌کند: Interest rate rises likely in coming months, Bank of England’s chief economist says",
+      "reporting_chain": "زنجیرهٔ گزارش‌دهی و استقلال منبع هنوز بررسی نشده است."
+    }
+  ],
+  "independent_domains": [],
+  "disagreements": [],
+  "limitations": [
+    "این رکورد بر پایهٔ تیتر و فرادادهٔ خوراک خبری ساخته شده است، نه بررسی متن کامل.",
+    "استقلال ناشر، مالکیت رسانه و بازنشر از خبرگزاری دیگر هنوز ارزیابی نشده است.",
+    "امتیاز اهمیت، احتمال صحت خبر نیست."
+  ],
+  "correction_watch": "برای اصلاحیه، تکذیبیه یا گزارش تکمیلی بعدی ناشر دوباره بررسی شود.",
+  "review_note": "پیش از تغییر وضعیت به verified، منبع اولیه و دست‌کم دو زنجیرهٔ گزارش‌دهی مستقل بررسی شوند."
+}
