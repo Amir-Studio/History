@@ -3,6 +3,33 @@
   "updated_at": "2026-11-14",
   "items": [
     {
+      "id": "news-a6227852c400a58b8d",
+      "headline": "A rapid interest rate rise seems inevitable – and households are expected to pick up the tab",
+      "category": "economy",
+      "status": "pending_review",
+      "published_at": "2026-11-14T16:00:48.000Z",
+      "source_url": "https://www.theguardian.com/business/2026/nov/14/interest-rate-rise-phillip-inman-inflation-economy",
+      "json_url": "https://amir-studio.github.io/History/data/pending-review/news/news-a6227852c400a58b8d.json"
+    },
+    {
+      "id": "news-7cc4ea2c4c74b9cf50",
+      "headline": "افزایش ۳۵ درصدی حقوق در برابر تورم ۸۸ درصدی/قدرت خرید کارمندان و کارگران زیر فشار تورم",
+      "category": "economy",
+      "status": "pending_review",
+      "published_at": "2026-11-14T16:37:00.000Z",
+      "source_url": "https://www.khabaronline.ir/news/2301987/%D8%A7%D9%81%D8%B2%D8%A7%DB%8C%D8%B4-%DB%B3%DB%B5-%D8%AF%D8%B1%D8%B5%D8%AF%DB%8C-%D8%AD%D9%82%D9%88%D9%82-%D8%AF%D8%B1-%D8%A8%D8%B1%D8%A7%D8%A8%D8%B1-%D8%AA%D9%88%D8%B1%D9%85-%DB%B8%DB%B8-%D8%AF%D8%B1%D8%B5%D8%AF%DB%8C-%D9%82%D8%AF%D8%B1%D8%AA-%D8%AE%D8%B1%DB%8C%D8%AF-%DA%A9%D8%A7%D8%B1%D9%85%D9%86%D8%AF%D8%A7%D9%86",
+      "json_url": "https://amir-studio.github.io/History/data/pending-review/news/news-7cc4ea2c4c74b9cf50.json"
+    },
+    {
+      "id": "news-31c77ca1d699e3f08a",
+      "headline": "احتمال حمایت فدرال رزرو از افزایش نرخ بهره قوت گرفت",
+      "category": "economy",
+      "status": "pending_review",
+      "published_at": "2026-11-14T20:00:00.000Z",
+      "source_url": "https://www.khabaronline.ir/news/2302130/%D8%A7%D8%AD%D8%AA%D9%85%D8%A7%D9%84-%D8%AD%D9%85%D8%A7%DB%8C%D8%AA-%D9%81%D8%AF%D8%B1%D8%A7%D9%84-%D8%B1%D8%B2%D8%B1%D9%88-%D8%A7%D8%B2-%D8%A7%D9%81%D8%B2%D8%A7%DB%8C%D8%B4-%D9%86%D8%B1%D8%AE-%D8%A8%D9%87%D8%B1%D9%87-%D9%82%D9%88%D8%AA-%DA%AF%D8%B1%D9%81%D8%AA",
+      "json_url": "https://amir-studio.github.io/History/data/pending-review/news/news-31c77ca1d699e3f08a.json"
+    },
+    {
       "id": "news-aedbb3bc992dd1e6cf",
       "headline": "نظر کاربران درباره تدوین بودجه ۱۴۰۶/ کسری بودجه را از جیب مردم جبران نکنید",
       "category": "economy",

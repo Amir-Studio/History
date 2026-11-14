@@ -1,0 +1,48 @@
+{
+  "id": "news-31c77ca1d699e3f08a",
+  "headline": "احتمال حمایت فدرال رزرو از افزایش نرخ بهره قوت گرفت",
+  "publisher": "khabaronline.ir",
+  "author": null,
+  "source_url": "https://www.khabaronline.ir/news/2302130/%D8%A7%D8%AD%D8%AA%D9%85%D8%A7%D9%84-%D8%AD%D9%85%D8%A7%DB%8C%D8%AA-%D9%81%D8%AF%D8%B1%D8%A7%D9%84-%D8%B1%D8%B2%D8%B1%D9%88-%D8%A7%D8%B2-%D8%A7%D9%81%D8%B2%D8%A7%DB%8C%D8%B4-%D9%86%D8%B1%D8%AE-%D8%A8%D9%87%D8%B1%D9%87-%D9%82%D9%88%D8%AA-%DA%AF%D8%B1%D9%81%D8%AA",
+  "published_at": "2026-11-14T20:00:00.000Z",
+  "collected_at": "2026-11-14T20:43:21.017Z",
+  "event_date": null,
+  "language": "fa",
+  "category": "economy",
+  "summary": "این رکورد در مرحلهٔ دریافت خودکار فقط تیتر و پیوند ناشر را ثبت می‌کند. متن کامل، سند اولیه و صحت ادعا هنوز مستقلاً بررسی نشده‌اند.",
+  "claims": [
+    {
+      "claim": "تیتر منتشرشدهٔ ناشر چنین گزارش می‌کند: احتمال حمایت فدرال رزرو از افزایش نرخ بهره قوت گرفت",
+      "evidence_grade": "unverified",
+      "supporting_sources": [
+        "https://www.khabaronline.ir/news/2302130/%D8%A7%D8%AD%D8%AA%D9%85%D8%A7%D9%84-%D8%AD%D9%85%D8%A7%DB%8C%D8%AA-%D9%81%D8%AF%D8%B1%D8%A7%D9%84-%D8%B1%D8%B2%D8%B1%D9%88-%D8%A7%D8%B2-%D8%A7%D9%81%D8%B2%D8%A7%DB%8C%D8%B4-%D9%86%D8%B1%D8%AE-%D8%A8%D9%87%D8%B1%D9%87-%D9%82%D9%88%D8%AA-%DA%AF%D8%B1%D9%81%D8%AA"
+      ],
+      "note": "ثبت تیتر به معنی تأیید ادعا نیست؛ بررسی متن کامل و سند پشتیبان لازم است."
+    }
+  ],
+  "status": "pending_review",
+  "significance_score": 52,
+  "significance_reason": "امتیاز صرفاً برای اولویت‌بندی بررسی آرشیوی و بر پایهٔ واژگان موضوعی است؛ معیار صحت یا بی‌طرفی نیست.",
+  "sources": [
+    {
+      "title": "احتمال حمایت فدرال رزرو از افزایش نرخ بهره قوت گرفت",
+      "publisher": "khabaronline.ir",
+      "country": null,
+      "source_type": "other",
+      "original_reporting": null,
+      "ownership_or_mandate_note": "در دریافت خودکار بررسی نشده است.",
+      "url": "https://www.khabaronline.ir/news/2302130/%D8%A7%D8%AD%D8%AA%D9%85%D8%A7%D9%84-%D8%AD%D9%85%D8%A7%DB%8C%D8%AA-%D9%81%D8%AF%D8%B1%D8%A7%D9%84-%D8%B1%D8%B2%D8%B1%D9%88-%D8%A7%D8%B2-%D8%A7%D9%81%D8%B2%D8%A7%DB%8C%D8%B4-%D9%86%D8%B1%D8%AE-%D8%A8%D9%87%D8%B1%D9%87-%D9%82%D9%88%D8%AA-%DA%AF%D8%B1%D9%81%D8%AA",
+      "claim_supported": "تیتر منتشرشدهٔ ناشر چنین گزارش می‌کند: احتمال حمایت فدرال رزرو از افزایش نرخ بهره قوت گرفت",
+      "reporting_chain": "زنجیرهٔ گزارش‌دهی و استقلال منبع هنوز بررسی نشده است."
+    }
+  ],
+  "independent_domains": [],
+  "disagreements": [],
+  "limitations": [
+    "این رکورد بر پایهٔ تیتر و فرادادهٔ خوراک خبری ساخته شده است، نه بررسی متن کامل.",
+    "استقلال ناشر، مالکیت رسانه و بازنشر از خبرگزاری دیگر هنوز ارزیابی نشده است.",
+    "امتیاز اهمیت، احتمال صحت خبر نیست."
+  ],
+  "correction_watch": "برای اصلاحیه، تکذیبیه یا گزارش تکمیلی بعدی ناشر دوباره بررسی شود.",
+  "review_note": "پیش از تغییر وضعیت به verified، منبع اولیه و دست‌کم دو زنجیرهٔ گزارش‌دهی مستقل بررسی شوند."
+}
