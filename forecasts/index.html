@@ -13,14 +13,14 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="forecast.css?v=2.2">
+<link rel="stylesheet" href="forecast.css?v=2.3">
 <title>آزمایشگاه ارزیابی پیش‌بینی | History × Dollar</title>
 </head>
 <body>
 <div class="topline"><span>HISTORY / DOLLAR INTELLIGENCE</span><div><span class="live-dot"></span> PUBLIC PERFORMANCE LAB <a href="../">بازگشت به History ↗</a></div></div>
 <header class="header">
 <a class="brand" href="../"><span class="brand-mark">H</span><span>HISTORY<span class="gold">.</span><small>آرشیو داده و ارزیابی</small></span></a>
-<nav><a href="#overview">خلاصهٔ عملکرد</a><a href="#charts">نمودارها</a><a href="#ledger">دفتر ثبت</a><a href="#method">روش ارزیابی</a></nav>
+<nav><a href="#overview">خلاصهٔ عملکرد</a><a href="#learning">یادگیری مدل</a><a href="#charts">نمودارها</a><a href="#ledger">دفتر ثبت</a><a href="#method">روش ارزیابی</a></nav>
 <div class="header-note">FORECAST AUDIT <span>·</span> OPEN DATA</div>
 </header>
 <main class="shell">
@@ -58,6 +58,18 @@
  </div>
  <div class="numeric-quality"><div><span>ورودی‌های قیمت قابل‌تبدیل</span><strong id="qualityValid">—</strong></div><div><span>ورودی ناقص یا ناسازگار</span><strong id="qualityInvalid">—</strong></div><div><span>قیمت واقعی ثبت‌شده</span><strong id="qualityActual">—</strong></div></div>
  <div class="numeric-examples"><span>نمونه‌های تبدیل:</span><code>۲۷۱٬۰۵۰ ← 271050</code><code>١٢٣٫٤٥ ← 123.45</code><code>1.234,56 ← 1234.56</code><code>خالی / null ← نامعتبر</code></div>
+</section>
+
+<section class="panel learning-panel" id="learning">
+ <div class="section-head"><div><span class="kicker">CONTINUOUS LEARNING / 02B</span><h2>چرخهٔ یادگیری از خطا</h2><p>هر اجرای زمان‌بندی‌شده، نتیجه‌های سررسیدشده را بررسی می‌کند. وزن مدل فقط از آزمون خارج از نمونه و داده‌های بالغ‌شده می‌آید؛ افت کیفیت نیز ثبت می‌شود.</p></div><span class="tag" id="learningStatus">در حال بررسی…</span></div>
+ <div class="learning-stats">
+  <article><span>چرخه‌های ثبت‌شده</span><strong id="learningCycles">—</strong></article>
+  <article><span>پیش‌بینی‌های ارزیابی‌شده در آخرین چرخه</span><strong id="learningSamples">—</strong></article>
+  <article><span>گروه‌های دارای هشدار افت کیفیت</span><strong id="learningWarnings">—</strong></article>
+  <article><span>آخرین بررسی</span><strong id="learningLast">—</strong></article>
+ </div>
+ <div class="table-wrap learning-table"><table><thead><tr><th>دارایی / افق</th><th>نمونه</th><th>MAE زنده</th><th>خطای مبنا</th><th>مهارت نسبت به مبنا</th><th>درستی جهت</th><th>وضعیت</th></tr></thead><tbody id="learningRows"><tr><td colspan="7" class="empty">در انتظار نخستین ارزیابی معتبر…</td></tr></tbody></table></div>
+ <div class="learning-note" id="learningNote">تا زمانی که پیش‌بینی‌ای به زمان هدف نرسیده باشد، خطای واقعی آن معلوم نیست؛ بنابراین مدل اجازه ندارد از دادهٔ آینده‌نامعلوم یاد بگیرد.</div>
 </section>
 
 <section class="stats-grid" aria-live="polite">
@@ -148,6 +160,6 @@
 </section>
 </main>
 <footer><span>HISTORY × DOLLAR</span><span>DATA FIRST · EVIDENCE ALWAYS</span><a href="https://amir-studio.github.io/dollar/">بازگشت به داشبورد Dollar ↗</a><a href="../">History ↗</a></footer>
-<script src="forecast.js?v=2.2" defer></script>
+<script src="forecast.js?v=2.3" defer></script>
 </body>
 </html>
