@@ -49,7 +49,7 @@ function modelOptions(){
 }
 function renderStats(rows){
  const s=stats(rows),pending=rows.filter(x=>x.status==='pending').length,invalid=rows.filter(x=>x.status==='invalidated').length;
- set('samples',nf.format(s.samples));set('mae',pct(s.mae));set('rmse',pct(s.rmse));set('skill',pct(s.skill));
+ set('samples',nf.format(s.samples));set('mae',pct(s.mae));set('rmse',pct(s.rmse));set('within2',pct(s.within2));set('within5',pct(s.within5));set('skill',pct(s.skill));
  set('skillHint',s.skill===null?'برای مقایسه، نمونهٔ معتبر کافی نیست':s.skill>=0?'بهتر از مبنای بدون تغییر':'ضعیف‌تر از مبنای بدون تغییر');
  set('direction',pct(s.directional));set('directionHint','نمونهٔ جهت‌دار: '+nf.format(s.directionalN));
  set('coverage',pct(s.coverage));set('coverageHint','نمونهٔ دارای بازه: '+nf.format(s.rangeN));
@@ -156,7 +156,7 @@ async function load(){
  }catch(e){
   set('updated','اتصال ناموفق');set('scopeText','دریافت دفتر ثبت ناموفق بود: '+e.message);
   $('ledgerRows').innerHTML='<tr><td colspan="9" class="empty error">'+esc(e.message)+'</td></tr>';$('mobileLedger').innerHTML='<div class="empty error">'+esc(e.message)+'</div>';
-  ['samples','mae','rmse','skill','direction','coverage','bias','pending'].forEach(id=>set(id,'—'));
+  ['samples','mae','rmse','within2','within5','skill','direction','coverage','bias','pending'].forEach(id=>set(id,'—'));
   $('priceChart').innerHTML='<div class="empty error">دادهٔ نمودار دریافت نشد.</div>';
  }finally{btn.disabled=false;btn.innerHTML='به‌روزرسانی داده <span>↻</span>'}
 }
