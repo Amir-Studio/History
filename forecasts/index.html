@@ -13,7 +13,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="forecast.css?v=2.1">
+<link rel="stylesheet" href="forecast.css?v=2.2">
 <title>آزمایشگاه ارزیابی پیش‌بینی | History × Dollar</title>
 </head>
 <body>
@@ -47,9 +47,24 @@
 <div class="scope-note"><span class="scope-mark">i</span><span id="scopeText">فیلترها فقط نحوهٔ نمایش را تغییر می‌دهند؛ هیچ رکوردی از پایگاه داده حذف نمی‌شود.</span></div>
 </section>
 
+<section class="numeric-lab panel" id="numericLab">
+ <div class="numeric-lab-head"><div><span class="kicker">NUMERIC NORMALIZATION / 02A</span><h2>مترجم عددی و کنترل ورودی</h2><p>اعداد خام فارسی، عربی و انگلیسی به مقدار استاندارد تبدیل می‌شوند؛ جداکنندهٔ هزارگان و اعشار تشخیص داده می‌شود و مقدار خالی هرگز صفر فرض نمی‌شود.</p></div><span class="numeric-status" id="parserStatus">در حال آزمون مبدل…</span></div>
+ <div class="numeric-converter">
+  <label for="rawNumber">عدد خام را وارد کن</label>
+  <input id="rawNumber" type="text" inputmode="decimal" autocomplete="off" placeholder="مثلاً ۲۷۱٬۰۵۰ یا 1,234.56">
+  <div class="numeric-result"><span>عدد استاندارد (برای محاسبات و Excel)</span><strong id="normalizedNumber">—</strong><small id="localizedNumber">نمایش محلی: —</small></div>
+  <button id="copyNumber" type="button" disabled>کپی عدد استاندارد</button>
+  <span id="numberFeedback" aria-live="polite">ورودی خالی به‌عنوان عدد پذیرفته نمی‌شود.</span>
+ </div>
+ <div class="numeric-quality"><div><span>ورودی‌های قیمت قابل‌تبدیل</span><strong id="qualityValid">—</strong></div><div><span>ورودی ناقص یا ناسازگار</span><strong id="qualityInvalid">—</strong></div><div><span>قیمت واقعی ثبت‌شده</span><strong id="qualityActual">—</strong></div></div>
+ <div class="numeric-examples"><span>نمونه‌های تبدیل:</span><code>۲۷۱٬۰۵۰ ← 271050</code><code>١٢٣٫٤٥ ← 123.45</code><code>1.234,56 ← 1234.56</code><code>خالی / null ← نامعتبر</code></div>
+</section>
+
 <section class="stats-grid" aria-live="polite">
 <article class="stat panel"><span>نمونه‌های ارزیابی‌شده</span><strong id="samples">—</strong><small>فقط پیش‌بینی‌های سررسیدشده</small></article>
 <article class="stat panel"><span>میانگین خطای مطلق · MAE</span><strong id="mae">—</strong><small>کمتر بهتر است</small></article>
+<article class="stat panel"><span>میانهٔ خطا · MdAPE</span><strong id="medianError">—</strong><small>نقطهٔ میانی توزیع خطا</small></article>
+<article class="stat panel"><span>صدک ۹۰ خطا · P90</span><strong id="p90Error">—</strong><small>۹۰٪ نمونه‌ها خطایی کمتر از این مقدار دارند</small></article>
 <article class="stat panel"><span>ریشهٔ میانگین مربعات · RMSE</span><strong id="rmse">—</strong><small>به خطاهای بزرگ حساس‌تر</small></article>
 <article class="stat panel"><span>سهم خطاهای حداکثر ۲٪</span><strong id="within2">—</strong><small>از نمونه‌های ارزیابی‌شده</small></article>
 <article class="stat panel"><span>سهم خطاهای حداکثر ۵٪</span><strong id="within5">—</strong><small>از نمونه‌های ارزیابی‌شده</small></article>
@@ -131,6 +146,6 @@
 </section>
 </main>
 <footer><span>HISTORY × DOLLAR</span><span>DATA FIRST · EVIDENCE ALWAYS</span><a href="https://amir-studio.github.io/dollar/">بازگشت به داشبورد Dollar ↗</a><a href="../">History ↗</a></footer>
-<script src="forecast.js?v=2.1" defer></script>
+<script src="forecast.js?v=2.2" defer></script>
 </body>
 </html>
