@@ -10,20 +10,41 @@ const date=v=>{if(!v)return'—';const d=new Date(v);return Number.isNaN(d.getTi
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const state={byHorizon:{},filtered:[],asset:'USD_IRR_FREE',horizon:7,backtest:null,meta:null};
 function set(id,value){const el=$(id);if(el)el.textContent=value}
-function numeric(v){const n=Number(v);return Number.isFinite(n)?n:null}
-function evaluated(rows){return rows.filter(x=>x.status==='evaluated'&&numeric(x.actual_price)!==null&&numeric(x.predicted_price)!==null)}
+function numeric(v){
+ if(v===null||v===undefined||typeof v==='boolean')return null;
+ if(typeof v==='number')return Number.isFinite(v)?v:null;
+ let s=String(v).trim();if(!s)return null;
+ s=s.replace(/[۰-۹]/g,d=>String('۰۱۲۳۴۵۶۷۸۹'.indexOf(d))).replace(/[٠-٩]/g,d=>String('٠١٢٣٤٥٦٧٨٩'.indexOf(d)));
+ s=s.replace(/[\u00a0\u202f\s]/g,'').replace(/[٪%]/g,'').replace(/تومان|ریال|IRR|IRT/gi,'');
+ if(/^\(.*\)$/.test(s))s='-'+s.slice(1,-1);
+ s=s.replace(/٫/g,'.').replace(/٬/g,'');
+ if(s.includes('.')&&s.includes(',')){if(s.lastIndexOf(',')>s.lastIndexOf('.'))s=s.replace(/\./g,'').replace(',','.');else s=s.replace(/,/g,'')}
+ else if(s.includes(',')){const parts=s.split(',');if(parts.length>2||/^\d{1,3}(,\d{3})+$/.test(s))s=s.replace(/,/g,'');else s=s.replace(',','.')}
+ s=s.replace(/[^0-9eE+\-.]/g,'');
+ if(!s||!/[0-9]/.test(s))return null;
+ const n=Number(s);return Number.isFinite(n)?n:null;
+}
+function errorPct(row){const p=numeric(row?.predicted_price),a=numeric(row?.actual_price);return p!==null&&a!==null&&a>0?Math.abs((p-a)/a*100):null}
+function directionIsCorrect(row){
+ const p=numeric(row?.predicted_price),r=numeric(row?.reference_price),a=numeric(row?.actual_price);
+ if(p===null||r===null||a===null||r<=0)return null;
+ const predicted=p-r,actual=a-r;
+ if(predicted===0||actual===0)return null;
+ return Math.sign(predicted)===Math.sign(actual);
+}
+function evaluated(rows){return rows.filter(x=>x.status==='evaluated'&&numeric(x.actual_price)>0&&numeric(x.predicted_price)!==null&&numeric(x.reference_price)>0)}
 function stats(rows){
- const done=evaluated(rows),errors=done.map(x=>numeric(x.absolute_error_pct)).filter(x=>x!==null);
+ const done=evaluated(rows),errors=done.map(errorPct).filter(x=>x!==null);
  const signed=done.map(x=>(numeric(x.predicted_price)-numeric(x.actual_price))/numeric(x.actual_price)*100).filter(Number.isFinite);
  const base=done.map(x=>Math.abs((numeric(x.reference_price)-numeric(x.actual_price))/numeric(x.actual_price)*100)).filter(Number.isFinite);
- const directional=done.filter(x=>typeof x.direction_correct==='boolean');
- const ranged=done.filter(x=>numeric(x.lower_price)!==null&&numeric(x.upper_price)!==null);
+ const directional=done.map(x=>directionIsCorrect(x)).filter(x=>x!==null);
+ const ranged=done.filter(x=>numeric(x.lower_price)!==null&&numeric(x.upper_price)!==null&&numeric(x.lower_price)<=numeric(x.upper_price));
  const covered=ranged.filter(x=>numeric(x.actual_price)>=numeric(x.lower_price)&&numeric(x.actual_price)<=numeric(x.upper_price));
  const mae=errors.length?errors.reduce((a,b)=>a+b,0)/errors.length:null;
  const rmse=errors.length?Math.sqrt(errors.reduce((a,b)=>a+b*b,0)/errors.length):null;
  const baseMae=base.length?base.reduce((a,b)=>a+b,0)/base.length:null;
  return {samples:done.length,mae,rmse,baseMae,skill:mae!==null&&baseMae>0?(1-mae/baseMae)*100:null,
-  directional:directional.length?directional.filter(x=>x.direction_correct).length/directional.length*100:null,
+  directional:directional.length?directional.filter(Boolean).length/directional.length*100:null,
   directionalN:directional.length,coverage:ranged.length?covered.length/ranged.length*100:null,rangeN:ranged.length,
   bias:signed.length?signed.reduce((a,b)=>a+b,0)/signed.length:null,
   within2:errors.length?errors.filter(x=>x<=2).length/errors.length*100:null,
@@ -74,11 +95,12 @@ function svgChart(rows){
  const pad=(hi-lo)*.12;lo-=pad;hi+=pad;
  const x=i=>L+(data.length<2?PW/2:i/(data.length-1)*PW),y=v=>T+(hi-v)/(hi-lo)*PH;
  const grid=Array.from({length:5},(_,i)=>{const v=hi-(hi-lo)*i/4,yy=T+PH*i/4;return '<line x1="'+L+'" y1="'+yy+'" x2="'+(W-R)+'" y2="'+yy+'" stroke="rgba(190,180,160,.14)"/><text x="'+(L-12)+'" y="'+(yy+4)+'" text-anchor="end" fill="#8d887f" font-size="11">'+esc(whole.format(v))+'</text>'}).join('');
- const line=(key)=>{const points=data.map((r,i)=>({i,v:numeric(r[key])})).filter(p=>p.v!==null).map(p=>({x:x(p.i),y:y(p.v)}));return points.length?'<polyline fill="none" stroke="'+(key==='actual_price'?'#9ebc9c':'#e4cc9e')+'" stroke-width="'+(key==='actual_price'?3:2.4)+'" stroke-linecap="round" stroke-linejoin="round" points="'+points.map(p=>p.x+','+p.y).join(' ')+'"/>':''};
+ const line=(key)=>{const segments=[];let current=[];data.forEach((r,i)=>{const v=numeric(r[key]);if(v===null){if(current.length)segments.push(current);current=[]}else current.push({x:x(i),y:y(v)})});if(current.length)segments.push(current);return segments.filter(s=>s.length>1).map(points=>'<polyline fill="none" stroke="'+(key==='actual_price'?'#9ebc9c':'#e4cc9e')+'" stroke-width="'+(key==='actual_price'?3:2.4)+'" stroke-linecap="round" stroke-linejoin="round" points="'+points.map(p=>p.x+','+p.y).join(' ')+'"/>').join('')};
  const rangePts=data.map((r,i)=>({x:x(i),lo:numeric(r.lower_price),hi:numeric(r.upper_price)})).filter(p=>p.lo!==null&&p.hi!==null);
- const band=rangePts.length>1?'<polygon fill="rgba(198,166,107,.13)" stroke="none" points="'+rangePts.map(p=>p.x+','+y(p.hi)).join(' ')+' '+rangePts.slice().reverse().map(p=>p.x+','+y(p.lo)).join(' ')+'"/>':'';
+ const rangeSegments=[];let activeRange=[];data.forEach((r,i)=>{const a=numeric(r.lower_price),b=numeric(r.upper_price);if(a===null||b===null||a>b){if(activeRange.length)rangeSegments.push(activeRange);activeRange=[]}else activeRange.push({x:x(i),lo:a,hi:b})});if(activeRange.length)rangeSegments.push(activeRange);
+ const band=rangeSegments.filter(s=>s.length>1).map(seg=>'<polygon fill="rgba(198,166,107,.13)" stroke="none" points="'+seg.map(p=>p.x+','+y(p.hi)).join(' ')+' '+seg.slice().reverse().map(p=>p.x+','+y(p.lo)).join(' ')+'"/>').join('');
  const predicted=data.map((r,i)=>'<circle cx="'+x(i)+'" cy="'+y(numeric(r.predicted_price))+'" r="3.1" fill="#e4cc9e"><title>پیش‌بینی: '+esc(money(r.predicted_price))+' · '+esc(date(r.target_at))+'</title></circle>').join('');
- const actual=data.map((r,i)=>numeric(r.actual_price)!==null?'<circle cx="'+x(i)+'" cy="'+y(numeric(r.actual_price))+'" r="4" fill="#9ebc9c"><title>واقعی: '+esc(money(r.actual_price))+' · خطا: '+esc(pct(r.absolute_error_pct))+'</title></circle>':'').join('');
+ const actual=data.map((r,i)=>numeric(r.actual_price)!==null?'<circle cx="'+x(i)+'" cy="'+y(numeric(r.actual_price))+'" r="4" fill="#9ebc9c"><title>واقعی: '+esc(money(r.actual_price))+' · خطا: '+esc(pct(errorPct(r)))+'</title></circle>':'').join('');
  const step=Math.max(1,Math.ceil(data.length/6));
  const labels=data.map((r,i)=>i%step===0?'<text x="'+x(i)+'" y="'+(H-18)+'" text-anchor="middle" fill="#8d887f" font-size="10">'+esc(new Intl.DateTimeFormat('fa-IR',{month:'short',day:'numeric'}).format(new Date(r.target_at)))+'</text>':'').join('');
  el.innerHTML='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="مقایسه قیمت پیش‌بینی‌شده و واقعی">'+grid+band+line('predicted_price')+line('actual_price')+predicted+actual+labels+'</svg>';
@@ -86,7 +108,7 @@ function svgChart(rows){
  set('priceChartNote','تعداد نقاط پیش‌بینی: '+nf.format(data.length)+' · دارای قیمت واقعی: '+nf.format(done)+' · نوار سایه‌دار فقط در رکوردهایی رسم می‌شود که بازهٔ پایین و بالا ثبت شده باشد.');
 }
 function renderHistogram(rows){
- const el=$('errorHistogram'),errors=evaluated(rows).map(x=>numeric(x.absolute_error_pct)).filter(x=>x!==null);
+ const el=$('errorHistogram'),errors=evaluated(rows).map(errorPct).filter(x=>x!==null);
  if(!errors.length){el.innerHTML='<div class="empty">هنوز نمونهٔ سررسیدشده‌ای برای محاسبهٔ توزیع خطا وجود ندارد.</div>';return}
  const bins=[{label:'۰–۱٪',n:0,ok:true},{label:'۱–۲٪',n:0,ok:true},{label:'۲–۵٪',n:0,ok:false},{label:'۵–۱۰٪',n:0,ok:false},{label:'۱۰٪+',n:0,ok:false}];
  errors.forEach(e=>{const i=e<=1?0:e<=2?1:e<=5?2:e<=10?3:4;bins[i].n++});
@@ -94,10 +116,10 @@ function renderHistogram(rows){
  el.innerHTML='<div class="histogram">'+bins.map(b=>'<div class="hist-bin"><b>'+nf.format(b.n)+'</b><i style="height:'+Math.max(2,b.n/max*108)+'px;opacity:'+(b.ok?'.95':'.62')+'"></i><small>'+b.label+'</small></div>').join('')+'</div>';
 }
 function renderTrend(rows){
- const el=$('errorTrend'),data=evaluated(rows).filter(x=>numeric(x.absolute_error_pct)!==null).sort((a,b)=>Date.parse(a.actual_at||a.target_at)-Date.parse(b.actual_at||b.target_at));
+ const el=$('errorTrend'),data=evaluated(rows).filter(x=>errorPct(x)!==null).sort((a,b)=>Date.parse(a.actual_at||a.target_at)-Date.parse(b.actual_at||b.target_at));
  if(data.length<2){el.innerHTML='<div class="empty">برای نمایش روند، دست‌کم دو پیش‌بینی ارزیابی‌شده لازم است.</div>';return}
  const groups=[];const size=Math.max(2,Math.ceil(data.length/10));
- for(let i=0;i<data.length;i+=size){const part=data.slice(i,i+size),avg=part.reduce((s,x)=>s+Number(x.absolute_error_pct),0)/part.length;groups.push({avg,date:part[part.length-1].actual_at||part[part.length-1].target_at,n:part.length})}
+ for(let i=0;i<data.length;i+=size){const part=data.slice(i,i+size),avg=part.reduce((s,x)=>s+errorPct(x),0)/part.length;groups.push({avg,date:part[part.length-1].actual_at||part[part.length-1].target_at,n:part.length})}
  const W=560,H=190,L=48,R=12,T=15,B=36,PW=W-L-R,PH=H-T-B,max=Math.max(2,...groups.map(x=>x.avg))*1.15;
  const pts=groups.map((g,i)=>({x:L+(groups.length===1?PW/2:i/(groups.length-1)*PW),y:T+(max-g.avg)/max*PH,g}));
  const grid=[0,1,2,3].map(i=>{const v=max*i/3,yy=T+PH-i/3*PH;return '<line x1="'+L+'" y1="'+yy+'" x2="'+(W-R)+'" y2="'+yy+'" stroke="rgba(190,180,160,.13)"/><text x="'+(L-8)+'" y="'+(yy+4)+'" text-anchor="end" fill="#8d887f" font-size="9">'+nf.format(v)+'٪</text>'}).join('');
@@ -109,12 +131,12 @@ function renderLedger(rows){
  set('ledgerCount',nf.format(rows.length)+' رکورد');
  if(!rows.length){body.innerHTML='<tr><td colspan="13" class="empty">برای این فیلتر رکوردی وجود ندارد.</td></tr>';mobile.innerHTML='<div class="empty">رکوردی وجود ندارد.</div>';return}
  body.innerHTML=rows.map(x=>{
-  const done=x.status==='evaluated',err=numeric(x.absolute_error_pct),status=x.status||'';
+  const done=x.status==='evaluated',err=errorPct(x),status=x.status||'';
   const technical=esc(JSON.stringify({quote_source:x.quote_source||null,quote_observed_at:x.quote_observed_at||null,lower_price:x.lower_price??null,upper_price:x.upper_price??null,model_weights:x.model_weights||{},validation:x.validation||{}},null,2));
-  return '<tr><td>'+esc(date(x.issued_at))+'</td><td>'+esc(date(x.target_at))+'</td><td>'+esc(x.model_version||'—')+'</td><td>'+esc(x.quote_source||'—')+'</td><td>'+esc(date(x.quote_observed_at))+'</td><td>'+esc(money(x.reference_price))+'</td><td>'+esc(money(x.predicted_price))+'</td><td>'+esc(money(x.lower_price))+' تا '+esc(money(x.upper_price))+'</td><td>'+esc(done?money(x.actual_price):'—')+'</td><td class="'+(done?(err<=2?'good':err>5?'bad':''):'')+'">'+(done?esc(pct(err)):'—')+'</td><td>'+esc(x.direction||'—')+'</td><td><span class="status '+esc(status)+'">'+esc(statusLabel(status))+'</span></td><td><details class="record-details"><summary>مشاهدهٔ JSON</summary><pre>'+technical+'</pre></details></td></tr>';
+  return '<tr><td>'+esc(date(x.issued_at))+'</td><td>'+esc(date(x.target_at))+'</td><td>'+esc(x.model_version||'—')+'</td><td>'+esc(x.quote_source||'—')+'</td><td>'+esc(date(x.quote_observed_at))+'</td><td>'+esc(money(x.reference_price))+'</td><td>'+esc(money(x.predicted_price))+'</td><td>'+esc(money(x.lower_price))+' تا '+esc(money(x.upper_price))+'</td><td>'+esc(done?money(x.actual_price):'—')+'</td><td class="'+(done?(err<=2?'good':err>5?'bad':''):'')+'">'+(done?esc(pct(err)):'—')+'</td><td>'+esc(directionIsCorrect(x)===null?(x.direction||'—'):(directionIsCorrect(x)?'درست':'نادرست'))+'</td><td><span class="status '+esc(status)+'">'+esc(statusLabel(status))+'</span></td><td><details class="record-details"><summary>مشاهدهٔ JSON</summary><pre>'+technical+'</pre></details></td></tr>';
  }).join('');
  mobile.innerHTML=rows.map(x=>{
-  const done=x.status==='evaluated',err=numeric(x.absolute_error_pct),status=x.status||'';
+  const done=x.status==='evaluated',err=errorPct(x),status=x.status||'';
   const technical=esc(JSON.stringify({quote_source:x.quote_source||null,quote_observed_at:x.quote_observed_at||null,lower_price:x.lower_price??null,upper_price:x.upper_price??null,model_weights:x.model_weights||{},validation:x.validation||{}},null,2));
   return '<article class="mobile-record"><div class="mobile-record-head"><span>ثبت: '+esc(date(x.issued_at))+'</span><span class="status '+esc(status)+'">'+esc(statusLabel(status))+'</span></div><div class="mobile-record-grid"><div><span>زمان هدف</span><b>'+esc(date(x.target_at))+'</b></div><div><span>نسخهٔ مدل</span><b>'+esc(x.model_version||'—')+'</b></div><div><span>منبع قیمت</span><b>'+esc(x.quote_source||'—')+'</b></div><div><span>زمان مشاهدهٔ مرجع</span><b>'+esc(date(x.quote_observed_at))+'</b></div><div><span>قیمت مرجع</span><b>'+esc(money(x.reference_price))+'</b></div><div><span>پیش‌بینی</span><b>'+esc(money(x.predicted_price))+'</b></div><div><span>بازهٔ ثبت‌شده</span><b>'+esc(money(x.lower_price))+' تا '+esc(money(x.upper_price))+'</b></div><div><span>قیمت واقعی</span><b>'+esc(done?money(x.actual_price):'—')+'</b></div><div><span>خطای مطلق</span><b class="'+(done?(err<=2?'good':err>5?'bad':''):'')+'">'+(done?esc(pct(err)):'—')+'</b></div></div><details class="record-details"><summary>جزئیات فنی و وزن مدل‌ها</summary><pre>'+technical+'</pre></details></article>';
  }).join('');
@@ -133,9 +155,9 @@ function renderBacktest(data){
 }
 function exportCsv(){
  const rows=state.filtered;if(!rows.length){set('scopeText','برای خروجی، ابتدا رکوردی در فیلتر فعلی انتخاب کن.');return}
- const cols=[['issued_at','زمان صدور'],['target_at','زمان هدف'],['asset','دارایی'],['horizon_days','افق روز'],['model_version','نسخه مدل'],['quote_source','منبع قیمت'],['quote_observed_at','زمان مشاهده قیمت مرجع'],['reference_price','قیمت مرجع'],['predicted_price','قیمت پیش‌بینی'],['actual_price','قیمت واقعی'],['lower_price','حد پایین'],['upper_price','حد بالا'],['absolute_error_pct','خطای مطلق درصد'],['direction','جهت پیش‌بینی'],['direction_correct','جهت درست'],['status','وضعیت'],['model_weights','وزن مدل‌ها'],['validation','جزئیات ارزیابی']];
+ const cols=[['issued_at','زمان صدور'],['target_at','زمان هدف'],['asset','دارایی'],['computed_error_pct','خطای محاسبه‌شده درصد'],['horizon_days','افق روز'],['model_version','نسخه مدل'],['quote_source','منبع قیمت'],['quote_observed_at','زمان مشاهده قیمت مرجع'],['reference_price','قیمت مرجع'],['predicted_price','قیمت پیش‌بینی'],['actual_price','قیمت واقعی'],['lower_price','حد پایین'],['upper_price','حد بالا'],['absolute_error_pct','خطای مطلق درصد'],['direction','جهت پیش‌بینی'],['direction_correct','جهت درست'],['status','وضعیت'],['model_weights','وزن مدل‌ها'],['validation','جزئیات ارزیابی']];
  const quote=v=>'"'+String(v&&typeof v==='object'?JSON.stringify(v):(v??'')).replace(/"/g,'""')+'"';
- const csv='\uFEFF'+[cols.map(x=>quote(x[1])).join(','),...rows.map(r=>cols.map(c=>quote(r[c[0]]??'')).join(','))].join('\r\n');
+ const csv='\uFEFF'+[cols.map(x=>quote(x[1])).join(','),...rows.map(r=>cols.map(c=>quote(c[0]==='computed_error_pct'?errorPct(r):(r[c[0]]??''))).join(','))].join('\r\n');
  const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'}),url=URL.createObjectURL(blob),a=document.createElement('a');
  a.href=url;a.download='dollar-forecast-audit-'+state.asset+'-'+state.horizon+'d.csv';document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
 }
