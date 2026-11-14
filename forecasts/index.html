@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#090a0b">
+<meta name="description" content="کارنامهٔ شفاف پیش‌بینی‌های Dollar؛ مقایسهٔ پیش‌بینی ثبت‌شده با قیمت واقعی و محاسبهٔ خطای هر پیش‌بینی.">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="forecast.css">
+<title>کارنامهٔ پیش‌بینی‌ها | History × Dollar</title>
+</head>
+<body>
+<div class="topline"><span>HISTORY / DOLLAR INTELLIGENCE</span><a href="../">بازگشت به History ↗</a></div>
+<header class="header">
+<a class="brand" href="../"><span class="brand-mark">H</span><span>HISTORY<span class="gold">.</span><small>آرشیو داده و ارزیابی</small></span></a>
+<div class="header-note">FORECAST AUDIT <span>·</span> LIVE LEDGER</div>
+</header>
+<main class="shell">
+<section class="hero">
+<div class="eyebrow">INDEPENDENT PERFORMANCE TRACKING / 01</div>
+<h1>پیش‌بینی را ثبت کن؛<br><em>با واقعیت بسنج.</em></h1>
+<p>تمام پیش‌بینی‌های ثبت‌شدهٔ موتور Dollar در این صفحه قابل پیگیری‌اند. پس از رسیدن زمان هدف، قیمت واقعی ثبت می‌شود و خطای هر پیش‌بینی جداگانه محاسبه خواهد شد.</p>
+<div class="hero-meta"><span><i class="dot"></i> دادهٔ زنده از دفتر ثبت پیش‌بینی</span><span>بدون حذف یا بازنویسی پیش‌بینی‌های قبلی</span></div>
+</section>
+<section class="controls panel">
+<div><label for="asset">دارایی</label><select id="asset"><option value="USD_IRR_FREE">دلار آزاد</option><option value="GOLD_18K_IRR">طلای ۱۸ عیار</option><option value="EUR_IRR_FREE">یورو آزاد</option><option value="COIN_EMAMI_IRR">سکه امامی</option></select></div>
+<div><label for="horizon">افق زمانی</label><select id="horizon"><option value="1">۱ روزه</option><option value="3">۳ روزه</option><option value="7" selected>۷ روزه</option></select></div>
+<button id="refresh" type="button">به‌روزرسانی <span>↻</span></button>
+<div class="updated" id="updated">در انتظار دریافت اطلاعات…</div>
+</section>
+<section class="stats-grid" aria-live="polite">
+<article class="stat panel"><span>پیش‌بینی‌های ارزیابی‌شده</span><strong id="samples">—</strong><small>فقط رکوردهای سررسیدشده</small></article>
+<article class="stat panel"><span>میانگین خطای مطلق</span><strong id="mae">—</strong><small>درصد خطا نسبت به قیمت واقعی</small></article>
+<article class="stat panel"><span>خطای حداکثر ۲٪</span><strong id="within2">—</strong><small>سهم پیش‌بینی‌های نزدیک به واقعیت</small></article>
+<article class="stat panel"><span>خطای حداکثر ۵٪</span><strong id="within5">—</strong><small>سهم پیش‌بینی‌های قابل‌قبول‌تر</small></article>
+<article class="stat panel"><span>درستی جهت حرکت</span><strong id="direction">—</strong><small id="directionCount">نمونهٔ جهت‌دار: —</small></article>
+</section>
+<section class="panel chart-panel">
+<div class="section-head"><div><span class="kicker">ERROR DISTRIBUTION / 02</span><h2>خطای پیش‌بینی‌ها</h2></div><span class="legend"><i></i> درصد خطای هر رکورد</span></div>
+<div id="errorChart" class="error-chart"><p class="muted">در انتظار داده‌های ارزیابی‌شده…</p></div>
+<p class="chart-caption">هر ستون یک پیش‌بینی سررسیدشده است. مقدار کمتر یعنی فاصلهٔ کمتر پیش‌بینی از قیمت واقعی. پیش‌بینی‌های هنوز سررسیدنشده در این نمودار محاسبه نمی‌شوند.</p>
+</section>
+<section class="panel ledger-panel">
+<div class="section-head"><div><span class="kicker">IMMUTABLE FORECAST LOG / 03</span><h2>دفتر پیش‌بینی‌ها</h2></div><span id="ledgerCount" class="count">—</span></div>
+<div class="table-wrap"><table><thead><tr><th>زمان ثبت</th><th>زمان هدف</th><th>قیمت مبنا</th><th>پیش‌بینی</th><th>قیمت واقعی</th><th>خطا</th><th>وضعیت</th></tr></thead><tbody id="ledger"><tr><td colspan="7" class="muted">در حال بارگیری دفتر ثبت…</td></tr></tbody></table></div>
+<div class="mobile-ledger" id="mobileLedger"></div>
+</section>
+<section class="panel backtest-panel">
+<div class="section-head"><div><span class="kicker">WALK-FORWARD / 04</span><h2>آزمون تاریخی مدل</h2></div><span class="tag">جدا از عملکرد زنده</span></div>
+<p class="muted">این بخش نتیجهٔ آزمون روی داده‌های تاریخی است؛ با کارنامهٔ پیش‌بینی‌هایی که واقعاً در سایت ثبت شده‌اند اشتباه گرفته نمی‌شود.</p>
+<div class="backtest-grid">
+<div><span>نمونه‌های آزمون</span><strong id="btSamples">—</strong></div>
+<div><span>خطای مدل در آزمون</span><strong id="btMae">—</strong></div>
+<div><span>خطای مدل بدون تغییر</span><strong id="btNaive">—</strong></div>
+<div><span>بهبود نسبت به مبنا</span><strong id="btSkill">—</strong></div>
+</div>
+</section>
+<section class="method">
+<h2>روش محاسبه</h2>
+<ul>
+<li><b>خطای درصدی مطلق:</b> قدرمطلق اختلاف پیش‌بینی و قیمت واقعی، تقسیم بر قیمت واقعی و ضرب در ۱۰۰.</li>
+<li><b>درستی جهت:</b> مقایسهٔ جهت پیش‌بینی با تغییر قیمت واقعی نسبت به قیمت مبنا؛ فقط برای پیش‌بینی‌های جهت‌دار.</li>
+<li><b>عدم دست‌کاری:</b> پیش‌بینی با زمان صدور و قیمت مرجع ثبت می‌شود؛ نتیجه بعد از سررسید به همان رکورد اضافه می‌شود.</li>
+<li><b>تفکیک عملکرد:</b> کارنامهٔ زنده و آزمون تاریخی جدا نمایش داده می‌شوند تا درصدهای بک‌تست به‌جای دقت واقعی جا زده نشوند.</li>
+</ul>
+<p class="disclaimer">این داشبورد ابزار ارزیابی فنی است و توصیهٔ سرمایه‌گذاری یا تضمین عملکرد آینده نیست. اگر تعداد نمونه‌ها کم باشد، درصدها قابل تعمیم نیستند.</p>
+</section>
+</main>
+<footer><span>HISTORY × DOLLAR</span><span>DATA FIRST · EVIDENCE ALWAYS</span><a href="https://amir-studio.github.io/dollar/">بازگشت به داشبورد Dollar ↗</a></footer>
+<script src="forecast.js" defer></script>
+</body>
+</html>
