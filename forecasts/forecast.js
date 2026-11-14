@@ -107,14 +107,16 @@ function statusLabel(s){return s==='evaluated'?'ارزیابی‌شده':s==='pe
 function renderLedger(rows){
  const body=$('ledgerRows'),mobile=$('mobileLedger');
  set('ledgerCount',nf.format(rows.length)+' رکورد');
- if(!rows.length){body.innerHTML='<tr><td colspan="9" class="empty">برای این فیلتر رکوردی وجود ندارد.</td></tr>';mobile.innerHTML='<div class="empty">رکوردی وجود ندارد.</div>';return}
+ if(!rows.length){body.innerHTML='<tr><td colspan="13" class="empty">برای این فیلتر رکوردی وجود ندارد.</td></tr>';mobile.innerHTML='<div class="empty">رکوردی وجود ندارد.</div>';return}
  body.innerHTML=rows.map(x=>{
   const done=x.status==='evaluated',err=numeric(x.absolute_error_pct),status=x.status||'';
-  return '<tr><td>'+esc(date(x.issued_at))+'</td><td>'+esc(date(x.target_at))+'</td><td>'+esc(x.model_version||'—')+'</td><td>'+esc(money(x.reference_price))+'</td><td>'+esc(money(x.predicted_price))+'</td><td>'+esc(done?money(x.actual_price):'—')+'</td><td class="'+(done?(err<=2?'good':err>5?'bad':''):'')+'">'+(done?esc(pct(err)):'—')+'</td><td>'+esc(x.direction||'—')+'</td><td><span class="status '+esc(status)+'">'+esc(statusLabel(status))+'</span></td></tr>';
+  const technical=esc(JSON.stringify({quote_source:x.quote_source||null,quote_observed_at:x.quote_observed_at||null,lower_price:x.lower_price??null,upper_price:x.upper_price??null,model_weights:x.model_weights||{},validation:x.validation||{}},null,2));
+  return '<tr><td>'+esc(date(x.issued_at))+'</td><td>'+esc(date(x.target_at))+'</td><td>'+esc(x.model_version||'—')+'</td><td>'+esc(x.quote_source||'—')+'</td><td>'+esc(date(x.quote_observed_at))+'</td><td>'+esc(money(x.reference_price))+'</td><td>'+esc(money(x.predicted_price))+'</td><td>'+esc(money(x.lower_price))+' تا '+esc(money(x.upper_price))+'</td><td>'+esc(done?money(x.actual_price):'—')+'</td><td class="'+(done?(err<=2?'good':err>5?'bad':''):'')+'">'+(done?esc(pct(err)):'—')+'</td><td>'+esc(x.direction||'—')+'</td><td><span class="status '+esc(status)+'">'+esc(statusLabel(status))+'</span></td><td><details class="record-details"><summary>مشاهدهٔ JSON</summary><pre>'+technical+'</pre></details></td></tr>';
  }).join('');
  mobile.innerHTML=rows.map(x=>{
   const done=x.status==='evaluated',err=numeric(x.absolute_error_pct),status=x.status||'';
-  return '<article class="mobile-record"><div class="mobile-record-head"><span>ثبت: '+esc(date(x.issued_at))+'</span><span class="status '+esc(status)+'">'+esc(statusLabel(status))+'</span></div><div class="mobile-record-grid"><div><span>زمان هدف</span><b>'+esc(date(x.target_at))+'</b></div><div><span>نسخهٔ مدل</span><b>'+esc(x.model_version||'—')+'</b></div><div><span>قیمت مرجع</span><b>'+esc(money(x.reference_price))+'</b></div><div><span>پیش‌بینی</span><b>'+esc(money(x.predicted_price))+'</b></div><div><span>قیمت واقعی</span><b>'+esc(done?money(x.actual_price):'—')+'</b></div><div><span>خطای مطلق</span><b class="'+(done?(err<=2?'good':err>5?'bad':''):'')+'">'+(done?esc(pct(err)):'—')+'</b></div></div></article>';
+  const technical=esc(JSON.stringify({quote_source:x.quote_source||null,quote_observed_at:x.quote_observed_at||null,lower_price:x.lower_price??null,upper_price:x.upper_price??null,model_weights:x.model_weights||{},validation:x.validation||{}},null,2));
+  return '<article class="mobile-record"><div class="mobile-record-head"><span>ثبت: '+esc(date(x.issued_at))+'</span><span class="status '+esc(status)+'">'+esc(statusLabel(status))+'</span></div><div class="mobile-record-grid"><div><span>زمان هدف</span><b>'+esc(date(x.target_at))+'</b></div><div><span>نسخهٔ مدل</span><b>'+esc(x.model_version||'—')+'</b></div><div><span>منبع قیمت</span><b>'+esc(x.quote_source||'—')+'</b></div><div><span>زمان مشاهدهٔ مرجع</span><b>'+esc(date(x.quote_observed_at))+'</b></div><div><span>قیمت مرجع</span><b>'+esc(money(x.reference_price))+'</b></div><div><span>پیش‌بینی</span><b>'+esc(money(x.predicted_price))+'</b></div><div><span>بازهٔ ثبت‌شده</span><b>'+esc(money(x.lower_price))+' تا '+esc(money(x.upper_price))+'</b></div><div><span>قیمت واقعی</span><b>'+esc(done?money(x.actual_price):'—')+'</b></div><div><span>خطای مطلق</span><b class="'+(done?(err<=2?'good':err>5?'bad':''):'')+'">'+(done?esc(pct(err)):'—')+'</b></div></div><details class="record-details"><summary>جزئیات فنی و وزن مدل‌ها</summary><pre>'+technical+'</pre></details></article>';
  }).join('');
  const meta=state.meta||{};set('ledgerFoot','نمایش '+nf.format(rows.length)+' رکورد از حداکثر '+nf.format(meta.limit||500)+' رکورد آخر این دارایی و افق. '+(meta.truncated?'احتمال وجود سوابق قدیمی‌تر خارج از این صفحه وجود دارد.':'داده‌های دریافتی در سقف درخواست کامل‌اند.')+' زمان همگام‌سازی: '+date(meta.generated_at));
 }
@@ -131,7 +133,7 @@ function renderBacktest(data){
 }
 function exportCsv(){
  const rows=state.filtered;if(!rows.length){set('scopeText','برای خروجی، ابتدا رکوردی در فیلتر فعلی انتخاب کن.');return}
- const cols=[['issued_at','زمان صدور'],['target_at','زمان هدف'],['asset','دارایی'],['horizon_days','افق روز'],['model_version','نسخه مدل'],['reference_price','قیمت مرجع'],['predicted_price','قیمت پیش‌بینی'],['actual_price','قیمت واقعی'],['lower_price','حد پایین'],['upper_price','حد بالا'],['absolute_error_pct','خطای مطلق درصد'],['direction','جهت پیش‌بینی'],['direction_correct','جهت درست'],['status','وضعیت']];
+ const cols=[['issued_at','زمان صدور'],['target_at','زمان هدف'],['asset','دارایی'],['horizon_days','افق روز'],['model_version','نسخه مدل'],['quote_source','منبع قیمت'],['quote_observed_at','زمان مشاهده قیمت مرجع'],['reference_price','قیمت مرجع'],['predicted_price','قیمت پیش‌بینی'],['actual_price','قیمت واقعی'],['lower_price','حد پایین'],['upper_price','حد بالا'],['absolute_error_pct','خطای مطلق درصد'],['direction','جهت پیش‌بینی'],['direction_correct','جهت درست'],['status','وضعیت'],['model_weights','وزن مدل‌ها'],['validation','جزئیات ارزیابی']];
  const quote=v=>'"'+String(v??'').replace(/"/g,'""')+'"';
  const csv='\uFEFF'+[cols.map(x=>quote(x[1])).join(','),...rows.map(r=>cols.map(c=>quote(r[c[0]]??'')).join(','))].join('\r\n');
  const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'}),url=URL.createObjectURL(blob),a=document.createElement('a');
@@ -155,7 +157,7 @@ async function load(){
   catch(e){renderBacktest(null);set('backtestNote','دادهٔ بک‌تست دریافت نشد: '+e.message+' · این خطا بر محاسبهٔ کارنامهٔ زنده اثر ندارد.')}
  }catch(e){
   set('updated','اتصال ناموفق');set('scopeText','دریافت دفتر ثبت ناموفق بود: '+e.message);
-  $('ledgerRows').innerHTML='<tr><td colspan="9" class="empty error">'+esc(e.message)+'</td></tr>';$('mobileLedger').innerHTML='<div class="empty error">'+esc(e.message)+'</div>';
+  $('ledgerRows').innerHTML='<tr><td colspan="13" class="empty error">'+esc(e.message)+'</td></tr>';$('mobileLedger').innerHTML='<div class="empty error">'+esc(e.message)+'</div>';
   ['samples','mae','rmse','within2','within5','skill','direction','coverage','bias','pending'].forEach(id=>set(id,'—'));
   $('priceChart').innerHTML='<div class="empty error">دادهٔ نمودار دریافت نشد.</div>';
  }finally{btn.disabled=false;btn.innerHTML='به‌روزرسانی داده <span>↻</span>'}
