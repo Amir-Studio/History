@@ -162,9 +162,11 @@ function renderBacktest(data){
 }
 function exportCsv(){
  const rows=state.filtered;if(!rows.length){set('scopeText','برای خروجی، ابتدا رکوردی در فیلتر فعلی انتخاب کن.');return}
- const cols=[['issued_at','زمان صدور'],['target_at','زمان هدف'],['asset','دارایی'],['computed_error_pct','خطای محاسبه‌شده درصد'],['horizon_days','افق روز'],['model_version','نسخه مدل'],['quote_source','منبع قیمت'],['quote_observed_at','زمان مشاهده قیمت مرجع'],['reference_price','قیمت مرجع'],['predicted_price','قیمت پیش‌بینی'],['actual_price','قیمت واقعی'],['lower_price','حد پایین'],['upper_price','حد بالا'],['absolute_error_pct','خطای مطلق درصد'],['direction','جهت پیش‌بینی'],['direction_correct','جهت درست'],['status','وضعیت'],['model_weights','وزن مدل‌ها'],['validation','جزئیات ارزیابی']];
+ const cols=[['issued_at','زمان صدور'],['target_at','زمان هدف'],['asset','دارایی'],['horizon_days','افق روز'],['model_version','نسخه مدل'],['quote_source','منبع قیمت'],['quote_observed_at','زمان مشاهده قیمت مرجع'],['reference_price','قیمت مرجع'],['predicted_price','قیمت پیش‌بینی'],['actual_price','قیمت واقعی'],['lower_price','حد پایین'],['upper_price','حد بالا'],['absolute_error_pct','خطای مطلق محاسبه‌شده درصد'],['direction','جهت پیش‌بینی'],['direction_correct','جهت درست'],['status','وضعیت'],['model_weights','وزن مدل‌ها'],['validation','جزئیات ارزیابی']];
+ const numericColumns=new Set(['horizon_days','reference_price','predicted_price','actual_price','lower_price','upper_price','absolute_error_pct']);
  const quote=v=>'"'+String(v&&typeof v==='object'?JSON.stringify(v):(v??'')).replace(/"/g,'""')+'"';
- const csv='\uFEFF'+[cols.map(x=>quote(x[1])).join(','),...rows.map(r=>cols.map(c=>quote(c[0]==='computed_error_pct'?errorPct(r):(r[c[0]]??''))).join(','))].join('\r\n');
+ const csvCell=(key,row)=>{if(!numericColumns.has(key))return quote(row[key]??'');const value=key==='absolute_error_pct'?errorPct(row):numeric(row[key]);return value===null?'':String(value)};
+ const csv='\uFEFF'+[cols.map(x=>quote(x[1])).join(','),...rows.map(r=>cols.map(c=>csvCell(c[0],r)).join(','))].join('\r\n');
  const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'}),url=URL.createObjectURL(blob),a=document.createElement('a');
  a.href=url;a.download='dollar-forecast-audit-'+state.asset+'-'+state.horizon+'d.csv';document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
 }
@@ -199,10 +201,13 @@ async function load(){
   try{const perf=await get('/forecast/performance?asset='+encodeURIComponent(state.asset)+'&horizon_days='+state.horizon);renderBacktest(perf)}
   catch(e){renderBacktest(null);set('backtestNote','دادهٔ بک‌تست دریافت نشد: '+e.message+' · این خطا بر محاسبهٔ کارنامهٔ زنده اثر ندارد.')}
  }catch(e){
+  state.byHorizon={};state.meta=null;state.filtered=[];
   set('updated','اتصال ناموفق');set('scopeText','دریافت دفتر ثبت ناموفق بود: '+e.message);
   $('ledgerRows').innerHTML='<tr><td colspan="13" class="empty error">'+esc(e.message)+'</td></tr>';$('mobileLedger').innerHTML='<div class="empty error">'+esc(e.message)+'</div>';
-  ['samples','mae','rmse','within2','within5','skill','direction','coverage','bias','pending'].forEach(id=>set(id,'—'));
-  $('priceChart').innerHTML='<div class="empty error">دادهٔ نمودار دریافت نشد.</div>';
+  ['samples','mae','rmse','medianError','p90Error','within2','within5','skill','direction','coverage','bias','pending','qualityValid','qualityInvalid','qualityActual'].forEach(id=>set(id,'—'));
+  $('priceChart').innerHTML='<div class="empty error">دادهٔ نمودار دریافت نشد.</div>';$('errorHistogram').innerHTML='<div class="empty error">داده دریافت نشد.</div>';$('errorTrend').innerHTML='<div class="empty error">داده دریافت نشد.</div>';
+  $('ledgerCount').textContent='—';$('ledgerFoot').textContent='دفتر ثبت در دسترس نیست.';$('horizonTable').innerHTML='<tr><td colspan="7" class="empty error">داده دریافت نشد.</td></tr>';$('mobileHorizons').innerHTML='';renderBacktest(null);
+  $('integrity').classList.remove('ready');set('integrityTitle','اتصال ناموفق');set('integrityText','تا زمان برقراری ارتباط، هیچ شاخص قدیمی به‌عنوان نتیجهٔ تازه نمایش داده نمی‌شود.');
  }finally{btn.disabled=false;btn.innerHTML='به‌روزرسانی داده <span>↻</span>'}
 }
 $('rawNumber').addEventListener('input',renderNumberConverter);
