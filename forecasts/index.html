@@ -64,6 +64,17 @@
 <p id="integrityText">پس از دریافت رکوردها، تعداد نمونه و محدودیت آماری نتیجه اینجا نمایش داده می‌شود.</p>
 </div>
 
+<section class="pipeline panel">
+<div class="pipeline-title"><span class="kicker">AUDIT TRAIL / HOW IT WORKS</span><h2>از پیش‌بینی تا نتیجه؛ هیچ مرحله‌ای پنهان نیست.</h2></div>
+<div class="pipeline-steps">
+<article><b>01</b><strong>صدور پیش‌بینی</strong><small>قیمت مرجع، زمان، نسخه و بازهٔ عدم‌قطعیت ثبت می‌شود.</small></article>
+<article><b>02</b><strong>ثبت تغییرناپذیر</strong><small>رکورد اولیه نگهداری می‌شود؛ پیش‌بینی بعداً جایگزین نمی‌شود.</small></article>
+<article><b>03</b><strong>رسیدن زمان هدف</strong><small>تا موعد مقرر، رکورد در وضعیت انتظار باقی می‌ماند.</small></article>
+<article><b>04</b><strong>سنجش با واقعیت</strong><small>قیمت مشاهده‌شده با پیش‌بینی و بازهٔ ثبت‌شده مقایسه می‌شود.</small></article>
+<article><b>05</b><strong>محاسبهٔ کارنامه</strong><small>خطا، سوگیری، جهت و پوشش بازه به شاخص‌های قابل بررسی تبدیل می‌شوند.</small></article>
+</div>
+</section>
+
 <section class="panel chart-panel" id="charts">
 <div class="section-head"><div><span class="kicker">FORECAST VS OBSERVED / 03</span><h2>پیش‌بینی در برابر واقعیت</h2><p>هر نقطه یک پیش‌بینی ثبت‌شده است؛ خط واقعی فقط پس از سررسید و ثبت مشاهده ظاهر می‌شود.</p></div><div class="chart-legend"><span><i class="legend-forecast"></i> قیمت پیش‌بینی‌شده</span><span><i class="legend-actual"></i> قیمت واقعی</span><span><i class="legend-range"></i> بازهٔ عدم‌قطعیت</span></div></div>
 <div id="priceChart" class="chart-frame"><div class="empty">در حال آماده‌سازی نمودار…</div></div>
@@ -89,7 +100,7 @@
 
 <section class="panel ledger-panel" id="ledger">
 <div class="section-head"><div><span class="kicker">IMMUTABLE FORECAST LEDGER / 07</span><h2>دفتر کامل پیش‌بینی‌ها</h2><p>رکوردهای فیلترشده؛ شامل نتیجه، خطا و وضعیت هر پیش‌بینی</p></div><span id="ledgerCount" class="count">—</span></div>
-<div class="table-wrap"><table><thead><tr><th>زمان صدور</th><th>زمان هدف</th><th>نسخه</th><th>قیمت مرجع</th><th>پیش‌بینی</th><th>واقعیت</th><th>خطای مطلق</th><th>جهت</th><th>وضعیت</th></tr></thead><tbody id="ledgerRows"><tr><td colspan="9" class="empty">در حال بارگیری دفتر ثبت…</td></tr></tbody></table></div>
+<div class="table-wrap"><table><thead><tr><th>زمان صدور</th><th>زمان هدف</th><th>نسخه</th><th>منبع قیمت</th><th>زمان مشاهدهٔ مرجع</th><th>قیمت مرجع</th><th>پیش‌بینی</th><th>بازهٔ ثبت‌شده</th><th>واقعیت</th><th>خطای مطلق</th><th>جهت</th><th>وضعیت</th><th>جزئیات فنی</th></tr></thead><tbody id="ledgerRows"><tr><td colspan="13" class="empty">در حال بارگیری دفتر ثبت…</td></tr></tbody></table></div>
 <div class="mobile-ledger" id="mobileLedger"></div>
 <div class="ledger-foot" id="ledgerFoot">در حال دریافت اطلاعات دفتر…</div>
 </section>
