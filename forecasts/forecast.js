@@ -36,14 +36,17 @@ function evaluated(rows){return rows.filter(x=>x.status==='evaluated'&&numeric(x
 function stats(rows){
  const done=evaluated(rows),errors=done.map(errorPct).filter(x=>x!==null);
  const signed=done.map(x=>(numeric(x.predicted_price)-numeric(x.actual_price))/numeric(x.actual_price)*100).filter(Number.isFinite);
- const base=done.map(x=>Math.abs((numeric(x.reference_price)-numeric(x.actual_price))/numeric(x.actual_price)*100)).filter(Number.isFinite);
+ const baselineRows=done.filter(x=>numeric(x.reference_price)!==null&&numeric(x.reference_price)>0);
+ const modelOnBaseline=baselineRows.map(errorPct).filter(x=>x!==null);
+ const base=baselineRows.map(x=>Math.abs((numeric(x.reference_price)-numeric(x.actual_price))/numeric(x.actual_price)*100)).filter(Number.isFinite);
  const directional=done.map(x=>directionIsCorrect(x)).filter(x=>x!==null);
  const ranged=done.filter(x=>numeric(x.lower_price)!==null&&numeric(x.upper_price)!==null&&numeric(x.lower_price)<=numeric(x.upper_price));
  const covered=ranged.filter(x=>numeric(x.actual_price)>=numeric(x.lower_price)&&numeric(x.actual_price)<=numeric(x.upper_price));
  const mae=errors.length?errors.reduce((a,b)=>a+b,0)/errors.length:null;
  const rmse=errors.length?Math.sqrt(errors.reduce((a,b)=>a+b*b,0)/errors.length):null;
  const baseMae=base.length?base.reduce((a,b)=>a+b,0)/base.length:null;
- return {samples:done.length,mae,rmse,baseMae,skill:mae!==null&&baseMae>0?(1-mae/baseMae)*100:null,
+ const pairedModelMae=modelOnBaseline.length?modelOnBaseline.reduce((a,b)=>a+b,0)/modelOnBaseline.length:null;
+ return {samples:done.length,mae,rmse,baseMae,skill:pairedModelMae!==null&&baseMae>0?(1-pairedModelMae/baseMae)*100:null,
   directional:directional.length?directional.filter(Boolean).length/directional.length*100:null,
   directionalN:directional.length,coverage:ranged.length?covered.length/ranged.length*100:null,rangeN:ranged.length,
   bias:signed.length?signed.reduce((a,b)=>a+b,0)/signed.length:null,
