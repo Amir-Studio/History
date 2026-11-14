@@ -134,7 +134,7 @@ function renderBacktest(data){
 function exportCsv(){
  const rows=state.filtered;if(!rows.length){set('scopeText','برای خروجی، ابتدا رکوردی در فیلتر فعلی انتخاب کن.');return}
  const cols=[['issued_at','زمان صدور'],['target_at','زمان هدف'],['asset','دارایی'],['horizon_days','افق روز'],['model_version','نسخه مدل'],['quote_source','منبع قیمت'],['quote_observed_at','زمان مشاهده قیمت مرجع'],['reference_price','قیمت مرجع'],['predicted_price','قیمت پیش‌بینی'],['actual_price','قیمت واقعی'],['lower_price','حد پایین'],['upper_price','حد بالا'],['absolute_error_pct','خطای مطلق درصد'],['direction','جهت پیش‌بینی'],['direction_correct','جهت درست'],['status','وضعیت'],['model_weights','وزن مدل‌ها'],['validation','جزئیات ارزیابی']];
- const quote=v=>'"'+String(v??'').replace(/"/g,'""')+'"';
+ const quote=v=>'"'+String(v&&typeof v==='object'?JSON.stringify(v):(v??'')).replace(/"/g,'""')+'"';
  const csv='\uFEFF'+[cols.map(x=>quote(x[1])).join(','),...rows.map(r=>cols.map(c=>quote(r[c[0]]??'')).join(','))].join('\r\n');
  const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'}),url=URL.createObjectURL(blob),a=document.createElement('a');
  a.href=url;a.download='dollar-forecast-audit-'+state.asset+'-'+state.horizon+'d.csv';document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
@@ -152,7 +152,7 @@ async function load(){
   const all=await Promise.all(qs);
   [1,3,7].forEach((h,i)=>{state.byHorizon[String(h)]=Array.isArray(all[i].forecasts)?all[i].forecasts:[];if(h===state.horizon)state.meta=all[i].ledger_meta||{}});
   modelOptions();renderAll();
-  set('updated','آخرین همگام‌سازی: '+date(new Date().toISOString())+' · '+nf.format(state.byHorizon[String(state.horizon)].length)+' رکورد');
+  set('updated','آخرین همگام‌سازی: '+date(new Date().toISOString())+' · '+nf.format(state.byHorizon[String(state.horizon)].length)+' رکورد · موتور فعال: '+(state.meta.active_model_version||'—'));
   try{const perf=await get('/forecast/performance?asset='+encodeURIComponent(state.asset)+'&horizon_days='+state.horizon);renderBacktest(perf)}
   catch(e){renderBacktest(null);set('backtestNote','دادهٔ بک‌تست دریافت نشد: '+e.message+' · این خطا بر محاسبهٔ کارنامهٔ زنده اثر ندارد.')}
  }catch(e){
