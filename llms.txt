@@ -18,6 +18,14 @@ History is a public, source-led archive. Its machine-readable records are the pr
 13. Human-reviewed correction ledger: https://amir-studio.github.io/History/data/quality/feedback.json
 14. Accuracy evaluation status: https://amir-studio.github.io/History/data/quality/evaluation.json
 
+## Unknown vocabulary memory
+- Vocabulary page: https://amir-studio.github.io/History/vocabulary.html
+- Machine-readable index: https://amir-studio.github.io/History/data/vocabulary/index.json
+- Record schema: https://amir-studio.github.io/History/data/vocabulary/schema.json
+- When an agent genuinely does not know a meaningful term, propose one record with its language, exact context, timestamp, and source; default status is `unknown` (بلد نیستم).
+- Deduplicate by language + normalized term; increment occurrences and append contexts on repeats.
+- Never invent a definition. Keep candidate meanings separate from human-verified meanings; only a human can mark a term learned.
+
 ## Article records
 - Static HTML: https://amir-studio.github.io/History/articles/{id}/
 - JSON: https://amir-studio.github.io/History/data/articles/{id}.json
