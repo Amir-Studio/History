@@ -72,7 +72,7 @@ test("cross-language transfer only returns reviewed equivalents attached to the 
   const state = await core.snapshot();
   const ar = state.lexical_entries.find(item => item.language === "ar");
   ar.concept_id = "economics.inflation";
-  await core.reviewEntry({ term: "التضخم", language: "ar", verifiedMeaning: "ارتفاع مستمر في المستوى العام للأسعار", reviewer: "human-review", sources: ["https://example.org/ar"] });
+  await core.reviewEntry({ term: "التضخم", language: "ar", verifiedMeaning: "ارتفاع مستمر في المستوى العام للأسعار", reviewer: "human-review", sources: ["https://example.org/ar"], conceptId: "economics.inflation" });
   const transfer = await core.transferConcept({ conceptId: "economics.inflation", targetLanguage: "ar" });
   assert.equal(transfer.equivalents.length, 1);
   assert.equal(transfer.equivalents[0].term, "التضخم");
