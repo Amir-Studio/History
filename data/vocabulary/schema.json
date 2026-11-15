@@ -3,39 +3,192 @@
   "$id": "https://amir-studio.github.io/History/data/vocabulary/schema.json",
   "title": "History Unknown Vocabulary Record",
   "type": "object",
-  "required": ["id", "term", "normalized_term", "language", "status", "first_seen_at", "last_seen_at", "occurrences", "contexts"],
+  "required": [
+    "id",
+    "term",
+    "normalized_term",
+    "language",
+    "status",
+    "first_seen_at",
+    "last_seen_at",
+    "occurrences",
+    "contexts"
+  ],
   "properties": {
-    "id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]{2,90}$"},
-    "term": {"type": "string", "minLength": 1, "maxLength": 180},
-    "normalized_term": {"type": "string", "minLength": 1, "maxLength": 180},
-    "language": {"type": "string", "minLength": 2, "maxLength": 35},
-    "part_of_speech": {"type": ["string", "null"]},
-    "domain": {"type": "array", "items": {"type": "string"}, "default": []},
-    "status": {"enum": ["unknown", "learning_pending", "learned", "dismissed"]},
-    "first_seen_at": {"type": "string", "format": "date-time"},
-    "last_seen_at": {"type": "string", "format": "date-time"},
-    "occurrences": {"type": "integer", "minimum": 1},
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]{2,90}$"
+    },
+    "term": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 180
+    },
+    "normalized_term": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 180
+    },
+    "language": {
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 35
+    },
+    "part_of_speech": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "domain": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "status": {
+      "enum": [
+        "unknown",
+        "learning_pending",
+        "learned",
+        "dismissed"
+      ]
+    },
+    "first_seen_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "last_seen_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "occurrences": {
+      "type": "integer",
+      "minimum": 1
+    },
     "contexts": {
       "type": "array",
       "minItems": 1,
       "items": {
         "type": "object",
-        "required": ["text", "captured_at"],
+        "required": [
+          "text",
+          "captured_at"
+        ],
         "properties": {
-          "text": {"type": "string", "maxLength": 1200},
-          "source_url": {"type": ["string", "null"], "format": "uri"},
-          "source_title": {"type": ["string", "null"]},
-          "captured_at": {"type": "string", "format": "date-time"}
+          "text": {
+            "type": "string",
+            "maxLength": 1200
+          },
+          "source_url": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uri"
+          },
+          "source_title": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "captured_at": {
+            "type": "string",
+            "format": "date-time"
+          }
         },
         "additionalProperties": false
       }
     },
-    "candidate_meaning": {"type": ["string", "null"], "maxLength": 1200},
-    "verified_meaning": {"type": ["string", "null"], "maxLength": 1600},
-    "related_terms": {"type": "array", "items": {"type": "string"}},
-    "notes": {"type": "string", "maxLength": 1600},
-    "reviewed_at": {"type": ["string", "null"], "format": "date-time"},
-    "reviewed_by": {"type": ["string", "null"]}
+    "candidate_meaning": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "maxLength": 1200
+    },
+    "verified_meaning": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "maxLength": 1600
+    },
+    "related_terms": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "notes": {
+      "type": "string",
+      "maxLength": 1600
+    },
+    "reviewed_at": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "reviewed_by": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "concept_id": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "maxLength": 160
+    },
+    "review_sources": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "format": "uri"
+      },
+      "maxItems": 10,
+      "default": []
+    },
+    "attempts": {
+      "type": "array",
+      "maxItems": 200,
+      "items": {
+        "type": "object",
+        "required": [
+          "correct",
+          "context",
+          "attempted_at"
+        ],
+        "properties": {
+          "correct": {
+            "type": "boolean"
+          },
+          "context": {
+            "type": "string",
+            "maxLength": 1200
+          },
+          "evidence": {
+            "type": [
+              "string",
+              "object",
+              "null"
+            ]
+          },
+          "attempted_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "default": []
+    }
   },
   "additionalProperties": false
 }
