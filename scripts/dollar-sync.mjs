@@ -108,6 +108,7 @@ async function saveRecord(directory, id, record) {
 }
 function newsRecord(item, title, url, publisher, publishedAt, significance) {
   const claim = "تیتر منتشرشدهٔ ناشر چنین گزارش می‌کند: " + title;
+  const aiSelected = ["keep","summarize"].includes(String(item.triage_status || ""));
   return {
     id: "news-" + hash(url),
     headline: title,
