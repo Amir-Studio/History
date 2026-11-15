@@ -54,7 +54,9 @@
    if(!news.length)newsRoot.append(node('p','source-empty','خبر تازه‌ای در صف بازبینی نیست.'));
    news.forEach(item=>{
     const card=node('article','source-card');card.append(node('b','',item.headline||'بدون عنوان'));
-    card.append(node('div','source-meta',[item.category,'در انتظار بررسی',fmtDate(item.published_at)].filter(Boolean).join(' · ')));
+    const score=Number(item.triage_score);
+    card.append(node('div','source-meta',[item.category,item.triage_status?'غربال Dollar: '+item.triage_status:'در انتظار بررسی',Number.isFinite(score)?'ارتباط با بازار: '+new Intl.NumberFormat('fa-IR').format(score)+'/۱۰۰':null,fmtDate(item.published_at)].filter(Boolean).join(' · ')));
+    if(item.summary)card.append(node('p','',String(item.summary).slice(0,1200)));
     addLink(card,item.source_url);newsRoot.append(card);
    });
    priceRoot.replaceChildren();
