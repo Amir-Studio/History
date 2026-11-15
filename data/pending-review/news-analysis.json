@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-11-15T14:47:17.118Z",
+  "generated_at": "2026-11-15T20:23:59.222Z",
   "source_headlines": 100,
-  "independent_publishers_seen": 7,
+  "independent_publishers_seen": 13,
   "candidate_count": 0,
   "candidates": [],
   "method": "Title-token overlap plus opposing direction terms or differing numeric strings. Candidate flags are not fact checks.",
