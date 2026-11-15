@@ -134,8 +134,8 @@ function newsRecord(item, title, url, publisher, publishedAt, significance) {
       note: "ثبت تیتر به معنی تأیید ادعا نیست؛ بررسی متن کامل و سند پشتیبان لازم است."
     }],
     status: "pending_review",
-    significance_score: significance,
-    significance_reason: aiSelected ? "این امتیاز از غربال معنایی چندزبانهٔ Dollar و سیگنال‌های کیفیت/تازگی آمده است؛ معیار صحت خبر نیست و بازبینی انسانی همچنان لازم است." : "امتیاز صرفاً برای اولویت‌بندی بررسی آرشیوی است؛ معیار صحت یا بی‌طرفی نیست.",
+    significance_score: item.triage_status ? null : significance,
+    significance_reason: aiSelected ? "امتیاز اهمیت تاریخی هنوز ارزیابی نشده است. امتیاز Dollar در dollar_triage فقط ارتباط موضوعی خبر با بازار را نشان می‌دهد و معیار اهمیت تاریخی یا صحت نیست." : "امتیاز صرفاً برای اولویت‌بندی بررسی آرشیوی است؛ معیار صحت یا بی‌طرفی نیست.",
     sources: [{
       title,
       publisher,
@@ -262,10 +262,10 @@ for (const item of newsItems) {
   const triageStatus = String(item.triage_status || "");
   const aiSelected = triageStatus === "keep" || triageStatus === "summarize";
   if (triageStatus && !aiSelected) continue;
-  const significance = Number.isFinite(Number(item.triage_score)) ? Number(item.triage_score) : scoreHeadline(title);
-  if ((!aiSelected && significance < 52) || existingNewsUrls.has(url)) continue;
+  const legacyPriority = scoreHeadline(title);
+  if ((!aiSelected && legacyPriority < 52) || existingNewsUrls.has(url)) continue;
   const publisher = publisherFor(item, url);
-  const record = newsRecord(item, title, url, publisher, publishedAt, significance);
+  const record = newsRecord(item, title, url, publisher, publishedAt, legacyPriority);
   if (existingNews.has(record.id)) continue;
   const created = await saveRecord(NEWS_DIR, record.id, record);
   const stored = created ? record : JSON.parse(await readFile(join(NEWS_DIR, record.id + ".json"), "utf8"));
