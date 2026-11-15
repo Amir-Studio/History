@@ -220,7 +220,7 @@ export function createEnglishNeuralCore({ encoder = null, storage, ...options } 
     return { status: entry.status, attempts: entry.attempts.length, human_review_required: true };
   }
 
-  async function reviewEntry({ term, language = "en", verifiedMeaning, reviewer, sources = [] }) {
+  async function reviewEntry({ term, language = "en", verifiedMeaning, reviewer, sources = [], conceptId = null }) {
     if (!String(reviewer || "").trim()) throw new TypeError("reviewer is required");
     if (!String(verifiedMeaning || "").trim()) throw new TypeError("verifiedMeaning is required");
     if (!Array.isArray(sources) || sources.length === 0) throw new TypeError("at least one review source is required");
@@ -228,7 +228,7 @@ export function createEnglishNeuralCore({ encoder = null, storage, ...options } 
     const state = await readState();
     const entry = state.lexical_entries.find(item => item.language === language && item.normalized_term === normalized);
     if (!entry) throw new Error("Vocabulary entry not found");
-    entry.verified_meaning = String(verifiedMeaning).trim().slice(0, 1600);
+    entry.verified_meaning = String(verifiedMeaning).trim().slice(0, 1600);\n    if (conceptId) {\n      if (!state.concepts.some(item => item.id === conceptId)) throw new Error("Concept not found");\n      entry.concept_id = String(conceptId);\n    }
     entry.reviewed_by = String(reviewer).trim().slice(0, 120);
     entry.reviewed_at = safeIso();
     entry.review_sources = sources.map(String).slice(0, 10);
