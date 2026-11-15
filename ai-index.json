@@ -10,6 +10,9 @@
     "https://amir-studio.github.io/History/data/graph.jsonld",
     "https://amir-studio.github.io/History/data/news/index.json",
     "https://amir-studio.github.io/History/data/prices/index.json",
+    "https://amir-studio.github.io/History/data/vocabulary/index.json",
+    "https://amir-studio.github.io/History/data/vocabulary/schema.json",
+    "https://amir-studio.github.io/History/vocabulary.html",
     "https://amir-studio.github.io/History/data/news/schema.json",
     "https://amir-studio.github.io/History/data/prices/schema.json",
     "https://amir-studio.github.io/History/feed.xml",
@@ -64,5 +67,17 @@
     "auto_publish": false,
     "auto_verify": false,
     "auto_delete_source_items": false
+  },
+  "vocabulary": {
+    "page": "https://amir-studio.github.io/History/vocabulary.html",
+    "index": "https://amir-studio.github.io/History/data/vocabulary/index.json",
+    "schema": "https://amir-studio.github.io/History/data/vocabulary/schema.json",
+    "default_status": "unknown",
+    "deduplication_key": [
+      "language",
+      "normalized_term"
+    ],
+    "human_approval_required_for_learned": true,
+    "ai_may_mark_learned": false
   }
 }
