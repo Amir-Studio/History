@@ -238,23 +238,24 @@ function renderDiagnostics(data){
  set('diagnosticStatus',rows.length?nf.format(rows.length)+' گزارش':'هنوز گزارشی ثبت نشده');
  const body=$('diagnosticRows');
  if(!rows.length){
-  body.innerHTML='<tr><td colspan="6" class="empty">برای این دارایی و افق، هنوز گزارش تشخیصی ذخیره نشده است.</td></tr>';
+  body.innerHTML='<tr><td colspan="7" class="empty">برای این دارایی، هنوز گزارش تشخیصی ذخیره نشده است.</td></tr>';
   set('diagnosticNote','گزارش‌ها در اولین چرخه‌ای ثبت می‌شوند که پیش‌بینی جدید واقعاً ارزیابی شود. پیش‌بینی‌های قدیمی با شواهد ناقص بازسازی نمی‌شوند.');return;
  }
  body.innerHTML=rows.map(x=>{
   const m=x.error_metrics||{},candidates=Array.isArray(x.root_cause_candidates)?x.root_cause_candidates:[];
   const labels=candidates.slice(0,3).map(c=>c.code||'نشانه نامشخص').join('، ')||'شواهد کافی ثبت نشده';
   const improvement=numeric(m.improvement_vs_no_change_pct);
-  return '<tr><td>'+esc(date(x.diagnosed_at))+'</td><td><code>'+esc(x.model_version||'—')+'</code></td><td>'+esc(pct(m.absolute_error_pct))+'</td><td>'+esc(pct(m.no_change_error_pct))+'</td><td class="'+(improvement!==null&&improvement>=0?'good':'bad')+'">'+esc(pct(improvement))+'</td><td>'+esc(labels)+'</td></tr>';
+  return '<tr><td>'+esc(date(x.diagnosed_at))+'</td><td>'+esc(assets[x.asset]||x.asset)+' · '+nf.format(Number(x.horizon_days))+' روز</td><td><code>'+esc(x.model_version||'—')+'</code></td><td>'+esc(pct(m.absolute_error_pct))+'</td><td>'+esc(pct(m.no_change_error_pct))+'</td><td class="'+(improvement!==null&&improvement>=0?'good':'bad')+'">'+esc(pct(improvement))+'</td><td>'+esc(labels)+'</td></tr>';
  }).join('');
  set('diagnosticNote',nf.format(rows.length)+' گزارش از جدول تشخیص خطا دریافت شد. نشانه‌های اولیه با اطمینان پایین هستند و علت قطعی محسوب نمی‌شوند.');
 }
 async function loadDiagnostics(){
  try{
-  const data=await get('/forecast/diagnostics?asset='+encodeURIComponent(state.asset)+'&horizon_days='+state.horizon+'&limit=100');
-  renderDiagnostics(data);
+  const responses=await Promise.all([1,3,7].map(h=>get('/forecast/diagnostics?asset='+encodeURIComponent(state.asset)+'&horizon_days='+h+'&limit=100')));
+  const diagnostics=responses.flatMap(x=>Array.isArray(x.diagnostics)?x.diagnostics:[]).sort((a,b)=>Date.parse(b.diagnosed_at||0)-Date.parse(a.diagnosed_at||0));
+  renderDiagnostics({diagnostics});
  }catch(e){
-  set('diagnosticStatus','دریافت ناموفق');$('diagnosticRows').innerHTML='<tr><td colspan="6" class="empty error">'+esc(e.message)+'</td></tr>';
+  set('diagnosticStatus','دریافت ناموفق');$('diagnosticRows').innerHTML='<tr><td colspan="7" class="empty error">'+esc(e.message)+'</td></tr>';
   set('diagnosticNote','گزارش تشخیصی در دسترس نیست؛ کارنامهٔ اصلی پیش‌بینی‌ها مستقل باقی می‌ماند.');
  }
 }
