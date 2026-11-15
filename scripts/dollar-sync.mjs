@@ -4,7 +4,7 @@ import { existsSync } from "node:fs";
 import { join } from "node:path";
 
 const NEWS_URL = process.env.DOLLAR_NEWS_URL ||
-  "https://oolfbjxclhzlbwjmzxxx.supabase.co/functions/v1/market-api/news?read_only=1";
+  "https://dollar-market-intelligence.kabiri1489.workers.dev/news/triage?limit=30";
 const PRICE_URL = process.env.MARKET_DATA_URL ||
   "https://raw.githubusercontent.com/iran-market/iran-market.github.io/main/data/popular.json";
 const NERKHARA_URL = process.env.NERKHARA_URL || "https://nerkhara.com/api/v1/latest.json";
@@ -119,7 +119,14 @@ function newsRecord(item, title, url, publisher, publishedAt, significance) {
     event_date: null,
     language: item.language_code || "und",
     category: categoryFor(title),
-    summary: "این رکورد در مرحلهٔ دریافت خودکار فقط تیتر و پیوند ناشر را ثبت می‌کند. متن کامل، سند اولیه و صحت ادعا هنوز مستقلاً بررسی نشده‌اند.",
+    summary: String(item.summary_fa || item.summary_original || "این رکورد فقط یک نامزد آرشیوی است؛ متن کامل و صحت ادعا هنوز مستقلاً بررسی نشده‌اند.").slice(0, 1600),
+    dollar_triage: {
+      status: String(item.triage_status || "not_scored"),
+      relevance_score: Number.isFinite(Number(item.triage_score)) ? Number(item.triage_score) : null,
+      model_version: item.triage_model_version || null,
+      reason: item.triage_reason || {},
+      semantic_concepts: Array.isArray(item.semantic_concepts) ? item.semantic_concepts.slice(0, 8) : []
+    },
     claims: [{
       claim,
       evidence_grade: "unverified",
@@ -128,7 +135,7 @@ function newsRecord(item, title, url, publisher, publishedAt, significance) {
     }],
     status: "pending_review",
     significance_score: significance,
-    significance_reason: "امتیاز صرفاً برای اولویت‌بندی بررسی آرشیوی و بر پایهٔ واژگان موضوعی است؛ معیار صحت یا بی‌طرفی نیست.",
+    significance_reason: aiSelected ? "این امتیاز از غربال معنایی چندزبانهٔ Dollar و سیگنال‌های کیفیت/تازگی آمده است؛ معیار صحت خبر نیست و بازبینی انسانی همچنان لازم است." : "امتیاز صرفاً برای اولویت‌بندی بررسی آرشیوی است؛ معیار صحت یا بی‌طرفی نیست.",
     sources: [{
       title,
       publisher,
@@ -252,8 +259,11 @@ for (const item of newsItems) {
   if (!title || title.length < 8 || !publishedAt) continue;
   const age = NOW.getTime() - Date.parse(publishedAt);
   if (age < -5 * 60 * 1000 || age > 72 * 60 * 60 * 1000) continue;
-  const significance = scoreHeadline(title);
-  if (significance < 52 || existingNewsUrls.has(url)) continue;
+  const triageStatus = String(item.triage_status || "");
+  const aiSelected = triageStatus === "keep" || triageStatus === "summarize";
+  if (triageStatus && !aiSelected) continue;
+  const significance = Number.isFinite(Number(item.triage_score)) ? Number(item.triage_score) : scoreHeadline(title);
+  if ((!aiSelected && significance < 52) || existingNewsUrls.has(url)) continue;
   const publisher = publisherFor(item, url);
   const record = newsRecord(item, title, url, publisher, publishedAt, significance);
   if (existingNews.has(record.id)) continue;
