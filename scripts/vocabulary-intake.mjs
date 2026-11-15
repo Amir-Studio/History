@@ -14,7 +14,7 @@ if (!term || term.length > 180 || !language || language.length > 35 || contextTe
 }
 const sourceUrl = incoming.source_url ? new URL(String(incoming.source_url)) : null;
 if (sourceUrl && !["http:", "https:"].includes(sourceUrl.protocol)) throw new Error("Invalid source URL");
-const normalizedTerm = term.toLocaleLowerCase(language).replace(/[\u200c\s]+/gu, " ").trim();
+const normalizedTerm = term.toLowerCase().replace(/[\u200c\s]+/gu, " ").trim();
 if (!normalizedTerm) throw new Error("Term normalizes to empty text");
 const slug = normalizedTerm.normalize("NFKD").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 48) || "term";
 const digest = createHash("sha256").update(language + "\n" + normalizedTerm).digest("hex").slice(0, 12);
@@ -29,7 +29,7 @@ const index = JSON.parse(await readFile(indexPath, "utf8"));
 if (!Array.isArray(index.items)) throw new Error("Vocabulary index items must be an array");
 const existing = index.items.find(item =>
   String(item.language).toLowerCase() === language &&
-  String(item.normalized_term || "").normalize("NFKC").toLocaleLowerCase(language).replace(/[\u200c\s]+/gu, " ").trim() === normalizedTerm
+  String(item.normalized_term || "").normalize("NFKC").toLowerCase().replace(/[\u200c\s]+/gu, " ").trim() === normalizedTerm
 );
 if (existing) {
   existing.occurrences = Math.max(1, Number(existing.occurrences) || 1) + 1;
