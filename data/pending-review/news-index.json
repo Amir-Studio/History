@@ -3,6 +3,33 @@
   "updated_at": "2026-11-15",
   "items": [
     {
+      "id": "news-c8b521f24218b1e77a",
+      "headline": "قیمت طلا امروز ۲۴ آبان ۱۴۰۵ در زمان بازگشایی بازار/ هر گرم طلای ۱۸عیار به قیمت ۲۴ میلیون و ۷۷۵ هزار تومان فروش رفت+ جدول",
+      "category": "economy",
+      "status": "pending_review",
+      "published_at": "2026-11-15T04:31:04.000Z",
+      "source_url": "https://www.khabaronline.ir/news/2302221/%D9%82%DB%8C%D9%85%D8%AA-%D8%B7%D9%84%D8%A7-%D8%A7%D9%85%D8%B1%D9%88%D8%B2-%DB%B2%DB%B4-%D8%A2%D8%A8%D8%A7%D9%86-%DB%B1%DB%B4%DB%B0%DB%B5-%D8%AF%D8%B1-%D8%B2%D9%85%D8%A7%D9%86-%D8%A8%D8%A7%D8%B2%DA%AF%D8%B4%D8%A7%DB%8C%DB%8C-%D8%A8%D8%A7%D8%B2%D8%A7%D8%B1-%D9%87%D8%B1-%DA%AF%D8%B1%D9%85-%D8%B7%D9%84%D8%A7%DB%8C",
+      "json_url": "https://amir-studio.github.io/History/data/pending-review/news/news-c8b521f24218b1e77a.json"
+    },
+    {
+      "id": "news-5ea1d2baf39638187d",
+      "headline": "ریشه گرانی تخم‌مرغ در بازار به بی‌ثباتی نرخ ارز برمی‌گردد",
+      "category": "economy",
+      "status": "pending_review",
+      "published_at": "2026-11-15T04:38:08.000Z",
+      "source_url": "https://www.mehrnews.com/news/7010513/%D8%B1%DB%8C%D8%B4%D9%87-%DA%AF%D8%B1%D8%A7%D9%86%DB%8C-%D8%AA%D8%AE%D9%85-%D9%85%D8%B1%D8%BA-%D8%AF%D8%B1-%D8%A8%D8%A7%D8%B2%D8%A7%D8%B1-%D8%A8%D9%87-%D8%A8%DB%8C-%D8%AB%D8%A8%D8%A7%D8%AA%DB%8C-%D9%86%D8%B1%D8%AE-%D8%A7%D8%B1%D8%B2-%D8%A8%D8%B1%D9%85%DB%8C-%DA%AF%D8%B1%D8%AF%D8%AF",
+      "json_url": "https://amir-studio.github.io/History/data/pending-review/news/news-5ea1d2baf39638187d.json"
+    },
+    {
+      "id": "news-1c37756659b151d1ec",
+      "headline": "اویل‌پرایس: کاهش موقت قیمت نفت هم آمریکا را از تورم نجات نخواهد داد",
+      "category": "economy",
+      "status": "pending_review",
+      "published_at": "2026-11-15T05:30:00.000Z",
+      "source_url": "https://www.irna.ir/news/86321666/%D8%A7%D9%88%DB%8C%D9%84-%D9%BE%D8%B1%D8%A7%DB%8C%D8%B3-%DA%A9%D8%A7%D9%87%D8%B4-%D9%85%D9%88%D9%82%D8%AA-%D9%82%DB%8C%D9%85%D8%AA-%D9%86%D9%81%D8%AA-%D9%87%D9%85-%D8%A2%D9%85%D8%B1%DB%8C%DA%A9%D8%A7-%D8%B1%D8%A7-%D8%A7%D8%B2-%D8%AA%D9%88%D8%B1%D9%85-%D9%86%D8%AC%D8%A7%D8%AA-%D9%86%D8%AE%D9%88%D8%A7%D9%87%D8%AF",
+      "json_url": "https://amir-studio.github.io/History/data/pending-review/news/news-1c37756659b151d1ec.json"
+    },
+    {
       "id": "news-42b61910fa1e49e801",
       "headline": "قیمت طلا ۲۳ آبان ۱۴۰۵ در زمان بسته شدن بازار/ هر مثقال به قیمت ۱۰۷ میلیون و ۳۲۰ هزار تومان رسید + جدول",
       "category": "economy",
