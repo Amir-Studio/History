@@ -3,6 +3,87 @@
   "updated_at": "2026-11-15",
   "items": [
     {
+      "id": "news-de2a0c78220aa61fe4",
+      "headline": "عقب‌نشینی از پیش‌بینی قبلی قیمت طلا/ اونس طلا در پایان سال ۴.۶۵۰ دلار می‌شود",
+      "category": "economy",
+      "status": "pending_review",
+      "published_at": "2026-11-15T06:52:00.000Z",
+      "source_url": "https://www.khabaronline.ir/news/2302270/%D8%B9%D9%82%D8%A8-%D9%86%D8%B4%DB%8C%D9%86%DB%8C-%D8%A7%D8%B2-%D9%BE%DB%8C%D8%B4-%D8%A8%DB%8C%D9%86%DB%8C-%D9%82%D8%A8%D9%84%DB%8C-%D9%82%DB%8C%D9%85%D8%AA-%D8%B7%D9%84%D8%A7-%D8%A7%D9%88%D9%86%D8%B3-%D8%B7%D9%84%D8%A7-%D8%B0%D8%B1-%D9%BE%D8%A7%DB%8C%D8%A7%D9%86-%D8%B3%D8%A7%D9%84-%DB%B4-%DB%B6%DB%B5%DB%B0",
+      "json_url": "https://amir-studio.github.io/History/data/pending-review/news/news-de2a0c78220aa61fe4.json"
+    },
+    {
+      "id": "news-b93e8e18dae081afee",
+      "headline": "سروری: طرح تورم صفر تا فروردین ۱۴۰۶ ادامه دارد",
+      "category": "economy",
+      "status": "pending_review",
+      "published_at": "2026-11-15T07:04:44.000Z",
+      "source_url": "https://www.mehrnews.com/news/7011284/%D8%B3%D8%B1%D9%88%D8%B1%DB%8C-%D8%B7%D8%B1%D8%AD-%D8%AA%D9%88%D8%B1%D9%85-%D8%B5%D9%81%D8%B1-%D8%AA%D8%A7-%D9%81%D8%B1%D9%88%D8%B1%D8%AF%DB%8C%D9%86-%DB%B1%DB%B4%DB%B0%DB%B6-%D8%A7%D8%AF%D8%A7%D9%85%D9%87-%D8%AF%D8%A7%D8%B1%D8%AF",
+      "json_url": "https://amir-studio.github.io/History/data/pending-review/news/news-b93e8e18dae081afee.json"
+    },
+    {
+      "id": "news-6b958eb2658b507238",
+      "headline": "انتقاد از بی‌توجهی دستگاه‌ها به قانون هوای پاک/ تورم صفر تا فروردین ۱۴۰۶ ادامه دارد",
+      "category": "economy",
+      "status": "pending_review",
+      "published_at": "2026-11-15T08:02:28.000Z",
+      "source_url": "https://www.irna.ir/news/86322071/%D8%A7%D9%86%D8%AA%D9%82%D8%A7%D8%AF-%D8%A7%D8%B2-%D8%A8%DB%8C-%D8%AA%D9%88%D8%AC%D9%87%DB%8C-%D8%AF%D8%B3%D8%AA%DA%AF%D8%A7%D9%87-%D9%87%D8%A7-%D8%A8%D9%87-%D9%82%D8%A7%D9%86%D9%88%D9%86-%D9%87%D9%88%D8%A7%DB%8C-%D9%BE%D8%A7%DA%A9-%D8%AA%D9%88%D8%B1%D9%85-%D8%B5%D9%81%D8%B1-%D8%AA%D8%A7-%D9%81%D8%B1%D9%88%D8%B1%D8%AF%DB%8C%D9%86",
+      "json_url": "https://amir-studio.github.io/History/data/pending-review/news/news-6b958eb2658b507238.json"
+    },
+    {
+      "id": "news-b7af0c8581615a2973",
+      "headline": "پول چگونه خلق می‌شود؛ نقش بانک مرکزی و بانک‌ها چیست؟",
+      "category": "economy",
+      "status": "pending_review",
+      "published_at": "2026-11-15T08:09:12.000Z",
+      "source_url": "https://www.mehrnews.com/news/7011433/%D9%BE%D9%88%D9%84-%DA%86%DA%AF%D9%88%D9%86%D9%87-%D8%AE%D9%84%D9%82-%D9%85%DB%8C-%D8%B4%D9%88%D8%AF-%D9%86%D9%82%D8%B4-%D8%A8%D8%A7%D9%86%DA%A9-%D9%85%D8%B1%DA%A9%D8%B2%DB%8C-%D9%88-%D8%A8%D8%A7%D9%86%DA%A9-%D9%87%D8%A7-%DA%86%DB%8C%D8%B3%D8%AA",
+      "json_url": "https://amir-studio.github.io/History/data/pending-review/news/news-b7af0c8581615a2973.json"
+    },
+    {
+      "id": "news-c3b80f93b0f5ea77f1",
+      "headline": "قیمت طلا ظهر امروز ۲۴ آبان ۱۴۰۵/ هر مثقال طلا به قیمت ۱۰۶ میلیون و ۸۶۰ هزار تومان رسید + جدول",
+      "category": "economy",
+      "status": "pending_review",
+      "published_at": "2026-11-15T09:22:00.000Z",
+      "source_url": "https://www.khabaronline.ir/news/2302319/%D9%82%DB%8C%D9%85%D8%AA-%D8%B7%D9%84%D8%A7-%D8%B8%D9%87%D8%B1-%D8%A7%D9%85%D8%B1%D9%88%D8%B2-%DB%B2%DB%B4-%D8%A2%D8%A8%D8%A7%D9%86-%DB%B1%DB%B4%DB%B0%DB%B5-%D9%87%D8%B1-%D9%85%D8%AB%D9%82%D8%A7%D9%84-%D8%B7%D9%84%D8%A7-%D8%A8%D9%87-%D9%82%DB%8C%D9%85%D8%AA-%DB%B1%DB%B0%DB%B6-%D9%85%DB%8C%D9%84%DB%8C%D9%88%D9%86",
+      "json_url": "https://amir-studio.github.io/History/data/pending-review/news/news-c3b80f93b0f5ea77f1.json"
+    },
+    {
+      "id": "news-0acc6b91e586199e38",
+      "headline": "قیمت طلا و سکه امروز ۲۴ آبان؛ سکه ارزان شد",
+      "category": "economy",
+      "status": "pending_review",
+      "published_at": "2026-11-15T09:43:18.000Z",
+      "source_url": "https://www.mehrnews.com/news/7011609/%D9%82%DB%8C%D9%85%D8%AA-%D8%B7%D9%84%D8%A7-%D9%88-%D8%B3%DA%A9%D9%87-%D8%A7%D9%85%D8%B1%D9%88%D8%B2-%DB%B2%DB%B4-%D8%A2%D8%A8%D8%A7%D9%86-%D8%B3%DA%A9%D9%87-%D8%A7%D8%B1%D8%B2%D8%A7%D9%86-%D8%B4%D8%AF",
+      "json_url": "https://amir-studio.github.io/History/data/pending-review/news/news-0acc6b91e586199e38.json"
+    },
+    {
+      "id": "news-3efe725201a6ff7fc6",
+      "headline": "قیمت طلا و سکه امروز 24 آبان/ بازار طلا در حال تخلیه فشار خرید است؛ عجله نکنید!",
+      "category": "economy",
+      "status": "pending_review",
+      "published_at": "2026-11-15T09:58:14.000Z",
+      "source_url": "https://tabnak.ir/fa/news/4202009/%D9%82%DB%8C%D9%85%D8%AA-%D8%B7%D9%84%D8%A7-%D9%88-%D8%B3%DA%A9%D9%87-%D8%A7%D9%85%D8%B1%D9%88%D8%B2-24-%D8%A2%D8%A8%D8%A7%D9%86-%D8%A8%D8%A7%D8%B2%D8%A7%D8%B1-%D8%B7%D9%84%D8%A7-%D8%AF%D8%B1-%D8%AD%D8%A7%D9%84-%D8%AA%D8%AE%D9%84%DB%8C%D9%87-%D9%81%D8%B4%D8%A7%D8%B1-%D8%AE%D8%B1%DB%8C%D8%AF-%D8%A7%D8%B3%D8%AA-%D8%B9%D8%AC%D9%84%D9%87-%D9%86%DA%A9%D9%86%DB%8C%D8%AF-443b67de2e6f4e1b8e4ab1d1",
+      "json_url": "https://amir-studio.github.io/History/data/pending-review/news/news-3efe725201a6ff7fc6.json"
+    },
+    {
+      "id": "news-62752843ec1f8e56e9",
+      "headline": "از «تورم صفر» تا مدیریت بحران جنگ؛ روایت تجربه‌های نوآورانه تهران",
+      "category": "economy",
+      "status": "pending_review",
+      "published_at": "2026-11-15T10:04:30.000Z",
+      "source_url": "https://www.mehrnews.com/news/7011637/%D8%A7%D8%B2-%D8%AA%D9%88%D8%B1%D9%85-%D8%B5%D9%81%D8%B1-%D8%AA%D8%A7-%D9%85%D8%AF%DB%8C%D8%B1%DB%8C%D8%AA-%D8%A8%D8%AD%D8%B1%D8%A7%D9%86-%D8%AC%D9%86%DA%AF-%D8%B1%D9%88%D8%A7%DB%8C%D8%AA-%D8%AA%D8%AC%D8%B1%D8%A8%D9%87-%D9%87%D8%A7%DB%8C-%D9%86%D9%88%D8%A2%D9%88%D8%B1%D8%A7%D9%86%D9%87-%D8%AA%D9%87%D8%B1%D8%A7%D9%86",
+      "json_url": "https://amir-studio.github.io/History/data/pending-review/news/news-62752843ec1f8e56e9.json"
+    },
+    {
+      "id": "news-0ededdf45fcd4b54dc",
+      "headline": "ممنوعیت چاپ اسکناس و مدیریت نقدینگی دو پیش‌شرط مهار تورم",
+      "category": "economy",
+      "status": "pending_review",
+      "published_at": "2026-11-15T11:05:51.000Z",
+      "source_url": "https://www.isna.ir/news/1405082416549/%D9%85%D9%85%D9%86%D9%88%D8%B9%DB%8C%D8%AA-%DA%86%D8%A7%D9%BE-%D8%A7%D8%B3%DA%A9%D9%86%D8%A7%D8%B3-%D9%88-%D9%85%D8%AF%DB%8C%D8%B1%DB%8C%D8%AA-%D9%86%D9%82%D8%AF%DB%8C%D9%86%DA%AF%DB%8C-%D8%AF%D9%88-%D9%BE%DB%8C%D8%B4-%D8%B4%D8%B1%D8%B7-%D9%85%D9%87%D8%A7%D8%B1-%D8%AA%D9%88%D8%B1%D9%85",
+      "json_url": "https://amir-studio.github.io/History/data/pending-review/news/news-0ededdf45fcd4b54dc.json"
+    },
+    {
       "id": "news-c8b521f24218b1e77a",
       "headline": "قیمت طلا امروز ۲۴ آبان ۱۴۰۵ در زمان بازگشایی بازار/ هر گرم طلای ۱۸عیار به قیمت ۲۴ میلیون و ۷۷۵ هزار تومان فروش رفت+ جدول",
       "category": "economy",
