@@ -1,7 +1,16 @@
 {
   "schema_version": "1.0.0",
-  "updated_at": "2026-11-14",
+  "updated_at": "2026-11-15",
   "items": [
+    {
+      "id": "news-42b61910fa1e49e801",
+      "headline": "قیمت طلا ۲۳ آبان ۱۴۰۵ در زمان بسته شدن بازار/ هر مثقال به قیمت ۱۰۷ میلیون و ۳۲۰ هزار تومان رسید + جدول",
+      "category": "economy",
+      "status": "pending_review",
+      "published_at": "2026-11-14T21:33:00.000Z",
+      "source_url": "https://www.khabaronline.ir/news/2302135/%D9%82%DB%8C%D9%85%D8%AA-%D8%B7%D9%84%D8%A7-%DB%B2%DB%B3-%D8%A2%D8%A8%D8%A7%D9%86-%DB%B1%DB%B4%DB%B0%DB%B5-%D8%AF%D8%B1-%D8%B2%D9%85%D8%A7%D9%86-%D8%A8%D8%B3%D8%AA%D9%87-%D8%B4%D8%AF%D9%86-%D8%A8%D8%A7%D8%B2%D8%A7%D8%B1-%D9%87%D8%B1-%D9%85%D8%AB%D9%82%D8%A7%D9%84-%D8%A8%D9%87-%D9%82%DB%8C%D9%85%D8%AA",
+      "json_url": "https://amir-studio.github.io/History/data/pending-review/news/news-42b61910fa1e49e801.json"
+    },
     {
       "id": "news-a6227852c400a58b8d",
       "headline": "A rapid interest rate rise seems inevitable – and households are expected to pick up the tab",
