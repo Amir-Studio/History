@@ -1,0 +1,43 @@
+name: Receive unknown vocabulary from Dollar
+
+on:
+  repository_dispatch:
+    types: [unknown-vocabulary]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: history-vocabulary-intake
+  cancel-in-progress: false
+
+jobs:
+  append-vocabulary:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check out History
+        uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Validate and append unknown term
+        env:
+          VOCABULARY_RECORD: ${{ toJson(github.event.client_payload.record) }}
+        run: |
+          node --check scripts/vocabulary-intake.mjs
+          node scripts/vocabulary-intake.mjs
+      - name: Commit vocabulary ledger
+        run: |
+          if [ -z "$(git status --porcelain -- data/vocabulary/index.json)" ]; then
+            echo "No vocabulary changes."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/vocabulary/index.json
+          git commit -m "Record unknown vocabulary from Dollar"
+          git push origin HEAD:main
