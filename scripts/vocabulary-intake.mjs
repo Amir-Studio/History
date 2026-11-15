@@ -44,14 +44,16 @@ if (existing) {
     existing.domain = [...new Set([...(existing.domain || []), ...incoming.domain.map(x => String(x).slice(0, 80))])].slice(0, 12);
   }
   if (!existing.candidate_meaning && incoming.candidate_meaning) existing.candidate_meaning = String(incoming.candidate_meaning).slice(0, 1200);
-  // Preserve "learned" and "dismissed" states; a new sighting never reverses review.
+  // A successful dictionary lookup moves an unknown term to learning_pending, never to learned.
+  if(existing.status==="unknown" && incoming.status==="learning_pending") existing.status="learning_pending";
+  // Preserve "learned" and "dismissed" states; a new sighting never reverses human review.
   console.log("Updated existing vocabulary term:", existing.id, "occurrences:", existing.occurrences);
 } else {
   index.items.push({
     id, term, normalized_term: normalizedTerm, language,
     part_of_speech: incoming.part_of_speech ? String(incoming.part_of_speech).slice(0, 80) : null,
     domain: Array.isArray(incoming.domain) ? [...new Set(incoming.domain.map(x => String(x).slice(0, 80)))].slice(0, 12) : [],
-    status: "unknown",
+    status: incoming.status === "learning_pending" ? "learning_pending" : "unknown",
     first_seen_at: capturedAt,
     last_seen_at: capturedAt,
     occurrences: 1,
