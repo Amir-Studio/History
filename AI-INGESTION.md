@@ -65,3 +65,23 @@ The scheduled workflow `.github/workflows/dollar-history-sync.yml` uses only pub
 ## Project separation
 
 History is independent of Dollar and Moon Shop. Do not read, modify, delete, or migrate their Supabase data as part of History ingestion. If a separate History database is later approved, it must have its own project, credentials, and retention policy.
+
+## Unknown vocabulary intake (required for Dollar and research agents)
+
+When an agent encounters a meaningful term it cannot define confidently in the current context, it must explicitly admit that it does not know the term and propose a vocabulary record in History. Do not create records for ordinary words, proper names that are merely unfamiliar, spelling noise, or terms whose meaning is already clear. If a term has multiple possible senses, preserve the original sentence and record the ambiguity rather than guessing.
+
+Canonical files:
+- Index: `data/vocabulary/index.json`
+- Schema: `data/vocabulary/schema.json`
+- Public review/search page: `vocabulary.html`
+
+Record contract:
+1. Use one record per language + normalized term. Normalize Unicode consistently, trim whitespace, and use case-folding for case-insensitive scripts; do not merge different languages or genuinely different terms.
+2. Required fields: `id`, `term`, `normalized_term`, `language`, `status`, `first_seen_at`, `last_seen_at`, `occurrences`, and `contexts`. Use an ISO-8601 timestamp with timezone.
+3. New records start with `status: "unknown"`, `occurrences: 1`, one context containing the exact short sentence, capture time, and source URL/title when available. Set `candidate_meaning` to null if genuinely unknown; never fabricate a definition.
+4. On a repeat encounter, update the existing record: increment `occurrences`, update `last_seen_at`, and append a new context (keep a bounded, useful set of contexts, retaining the earliest and most informative examples). Never create a duplicate record.
+5. Keep candidate and verified meanings separate. Only a human reviewer may set `verified_meaning`, `reviewed_at`, `reviewed_by`, and `status: "learned"`. An AI may set `learning_pending` only when a learning task has actually been queued; it must not claim that the word has been learned.
+6. Do not erase history or silently overwrite a reviewed definition. Corrections must retain an audit trail.
+7. After writing a record, validate it against the schema and update the index atomically in the same repository change. Do not write to Dollar or Moon Shop Supabase for this feature.
+
+Important integration boundary: the static History page only displays the committed index. A Dollar runtime can persist words only if it has an authorized write path to this repository (for example, its connected GitHub repository tools or a secured intake service). Never pretend a word was saved merely because it was detected; confirm the repository write succeeded.
