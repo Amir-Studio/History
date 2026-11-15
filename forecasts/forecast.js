@@ -196,6 +196,7 @@ function renderLearning(data){
  state.learning=cycles;
  const latest=cycles[0]||null, metrics=latest?.asset_metrics||{};
  const entries=Object.entries(metrics);
+ renderBeforeAfter(metrics);
  const warnings=entries.filter(([,m])=>m?.performance_drift===true).length;
  set('learningCycles',nf.format(cycles.length));
  set('learningSamples',nf.format(Number(latest?.evaluated_count)||0));
@@ -215,6 +216,35 @@ function renderLearning(data){
   return '<tr><td>'+esc(assets[asset]||asset)+' · '+nf.format(Number(horizon))+' روز</td><td>'+nf.format(m.samples||0)+'</td><td>'+pct(m.mae_pct)+'</td><td>'+pct(m.no_change_mae_pct)+'</td><td>'+pct(m.skill_vs_no_change_pct)+'</td><td>'+(m.directional_accuracy_pct===null?'—':pct(m.directional_accuracy_pct))+'</td><td><span class="learning-state '+cls+'">'+stateLabel+'</span></td></tr>';
  }).join('');
  set('learningNote','آخرین چرخه: '+date(latest.cycle_at)+' · نسخهٔ موتور: '+(latest.model_version||'—')+' · هشدارها فقط افت عملکرد اخیر را نشان می‌دهند و به‌تنهایی مجوز تغییر خودکار مدل نیستند.');
+}
+function renderBeforeAfter(metrics){
+ const body=$('beforeAfterRows');
+ const note=$('beforeAfterNote');
+ if(!body||!note)return;
+ const rows=Object.entries(metrics||{}).map(([key,m])=>{
+  const [asset,horizon,version]=key.split(':');
+  const samples=Math.max(0,Number(m?.samples)||0);
+  const recentN=Math.min(20,samples),previousN=Math.min(40,Math.max(0,samples-20));
+  const recent=numeric(m?.recent_20_mae_pct),previous=numeric(m?.previous_40_mae_pct);
+  const comparable=recentN>=10&&previousN>=10&&recent!==null&&previous!==null;
+  const delta=comparable?recent-previous:null;
+  return {key,asset,horizon,version,samples,recentN,previousN,recent,previous,delta,comparable};
+ }).sort((a,b)=>a.asset.localeCompare(b.asset)||Number(a.horizon)-Number(b.horizon)||a.version.localeCompare(b.version));
+ if(!rows.length){
+  body.innerHTML='<tr><td colspan="7" class="empty">هنوز داده‌ای برای مقایسه ثبت نشده است.</td></tr>';
+  note.textContent='مقایسه فقط پس از ثبت و ارزیابی پیش‌بینی‌های بالغ‌شده ممکن است.';
+  return;
+ }
+ body.innerHTML=rows.map(x=>{
+  const label=(assets[x.asset]||x.asset)+' · '+nf.format(Number(x.horizon))+' روز · '+x.version;
+  const result=!x.comparable?'نمونه ناکافی':x.delta<0?'خطای کمتر در بازه اخیر':x.delta>0?'خطای بیشتر در بازه اخیر':'بدون تغییر قابل‌اندازه‌گیری';
+  const cls=!x.comparable?'muted':x.delta<0?'good':x.delta>0?'warn':'muted';
+  return '<tr><td><code>'+esc(label)+'</code></td><td>'+nf.format(x.recentN)+'</td><td>'+esc(pct(x.recent))+'</td><td>'+nf.format(x.previousN)+'</td><td>'+esc(pct(x.previous))+'</td><td class="'+(x.comparable?(x.delta<0?'good':x.delta>0?'bad':''):'')+'">'+(x.comparable?esc((x.delta>0?'+':'')+pct(x.delta)):'—')+'</td><td><span class="learning-state '+cls+'">'+result+'</span></td></tr>';
+ }).join('');
+ const valid=rows.filter(x=>x.comparable).length;
+ note.textContent=valid
+  ? valid+' گروه شرایط حداقلی مقایسه را دارند. تغییر MAE فقط تغییر عملکرد در دو بازهٔ زمانی است؛ به‌تنهایی ثابت نمی‌کند چرخهٔ یادگیری علت آن بوده است. هیچ وزن یا پارامتری با این گزارش تغییر نمی‌کند.'
+  : 'هنوز هیچ گروهی حداقل ۱۰ نمونه در هر دو بازه ندارد. برای جلوگیری از نتیجه‌گیری زودهنگام، بهبود یا افت یادگیری اعلام نمی‌شود.';
 }
 async function loadLearning(){
  try{const data=await get('/forecast/learning');renderLearning(data)}
