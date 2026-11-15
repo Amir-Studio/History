@@ -228,7 +228,11 @@ export function createEnglishNeuralCore({ encoder = null, storage, ...options } 
     const state = await readState();
     const entry = state.lexical_entries.find(item => item.language === language && item.normalized_term === normalized);
     if (!entry) throw new Error("Vocabulary entry not found");
-    entry.verified_meaning = String(verifiedMeaning).trim().slice(0, 1600);\n    if (conceptId) {\n      if (!state.concepts.some(item => item.id === conceptId)) throw new Error("Concept not found");\n      entry.concept_id = String(conceptId);\n    }
+    entry.verified_meaning = String(verifiedMeaning).trim().slice(0, 1600);
+    if (conceptId) {
+      if (!state.concepts.some(item => item.id === conceptId)) throw new Error("Concept not found");
+      entry.concept_id = String(conceptId);
+    }
     entry.reviewed_by = String(reviewer).trim().slice(0, 120);
     entry.reviewed_at = safeIso();
     entry.review_sources = sources.map(String).slice(0, 10);
