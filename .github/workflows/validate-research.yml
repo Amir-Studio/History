@@ -24,6 +24,8 @@ jobs:
         run: |
           node --check scripts/research-agent.mjs
           node --check scripts/evaluate-quality.mjs
+          node --check scripts/vocabulary-intake.mjs
+          node --check assets/vocabulary.js
           node --check assets/news.js
           node --check assets/research.js
           node --check assets/app.js
