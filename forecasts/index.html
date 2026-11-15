@@ -13,7 +13,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="forecast.css?v=2.3">
+<link rel="stylesheet" href="forecast.css?v=2.4">
 <title>آزمایشگاه ارزیابی پیش‌بینی | History × Dollar</title>
 </head>
 <body>
@@ -70,6 +70,18 @@
  </div>
  <div class="table-wrap learning-table"><table><thead><tr><th>دارایی / افق</th><th>نمونه</th><th>MAE زنده</th><th>خطای مبنا</th><th>مهارت نسبت به مبنا</th><th>درستی جهت</th><th>وضعیت</th></tr></thead><tbody id="learningRows"><tr><td colspan="7" class="empty">در انتظار نخستین ارزیابی معتبر…</td></tr></tbody></table></div>
  <div class="learning-note" id="learningNote">تا زمانی که پیش‌بینی‌ای به زمان هدف نرسیده باشد، خطای واقعی آن معلوم نیست؛ بنابراین مدل اجازه ندارد از دادهٔ آینده‌نامعلوم یاد بگیرد.</div>
+</section>
+
+
+<section class="panel version-audit-panel" id="versionAudit">
+ <div class="section-head"><div><span class="kicker">MODEL VERSION COMPARISON / 02C</span><h2>مقایسهٔ عملکرد نسخه‌ها</h2><p>نسخه‌های قبلی و جدید روی پیش‌بینی‌های سررسیدشده و همین فیلتر مقایسه می‌شوند؛ تفاوت نتایج به‌تنهایی اثبات نمی‌کند که یادگیری علت بهبود بوده است.</p></div><span class="tag">COHORT COMPARISON</span></div>
+ <div class="table-wrap"><table><thead><tr><th>نسخهٔ مدل</th><th>نمونهٔ بالغ</th><th>MAE</th><th>خطای مبنا</th><th>مهارت نسبت به مبنا</th><th>درستی جهت</th><th>بازهٔ صدور</th></tr></thead><tbody id="versionRows"><tr><td colspan="7" class="empty">در حال مقایسهٔ نسخه‌ها…</td></tr></tbody></table></div>
+ <p class="learning-note" id="versionNote">مقایسه فقط وقتی معتبرتر است که نسخه‌ها روی بازه‌ها و شرایط بازار قابل‌مقایسه ارزیابی شده باشند.</p>
+</section>
+<section class="panel diagnostics-panel" id="errorDiagnostics">
+ <div class="section-head"><div><span class="kicker">ERROR FORENSICS / 02D</span><h2>کالبدشکافی خطاهای ثبت‌شده</h2><p>علت‌های احتمالی از شواهد ذخیره‌شده استخراج می‌شوند؛ «همبستگی» به‌عنوان علت قطعی معرفی نمی‌شود.</p></div><span class="tag" id="diagnosticStatus">در حال دریافت…</span></div>
+ <div class="table-wrap"><table><thead><tr><th>زمان تشخیص</th><th>نسخه</th><th>خطای مدل</th><th>خطای مبنا</th><th>تغییر نسبت به مبنا</th><th>نشانه‌های بررسی</th></tr></thead><tbody id="diagnosticRows"><tr><td colspan="6" class="empty">در انتظار دادهٔ تشخیصی…</td></tr></tbody></table></div>
+ <p class="learning-note" id="diagnosticNote">گزارش‌ها پس از ارزیابی واقعی پیش‌بینی ساخته می‌شوند؛ پیش از سررسید، خطای واقعی وجود ندارد.</p>
 </section>
 
 <section class="stats-grid" aria-live="polite">
@@ -160,6 +172,6 @@
 </section>
 </main>
 <footer><span>HISTORY × DOLLAR</span><span>DATA FIRST · EVIDENCE ALWAYS</span><a href="https://amir-studio.github.io/dollar/">بازگشت به داشبورد Dollar ↗</a><a href="../">History ↗</a></footer>
-<script src="forecast.js?v=2.3" defer></script>
+<script src="forecast.js?v=2.4" defer></script>
 </body>
 </html>

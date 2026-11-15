@@ -8,7 +8,7 @@ const pct=v=>numeric(v)===null?'—':nf.format(numeric(v))+'٪';
 const money=v=>numeric(v)===null?'—':whole.format(numeric(v))+' تومان';
 const date=v=>{if(!v)return'—';const d=new Date(v);return Number.isNaN(d.getTime())?'—':new Intl.DateTimeFormat('fa-IR',{dateStyle:'short',timeStyle:'short'}).format(d)};
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const state={byHorizon:{},filtered:[],asset:'USD_IRR_FREE',horizon:7,backtest:null,meta:null,learning:[]};
+const state={byHorizon:{},filtered:[],asset:'USD_IRR_FREE',horizon:7,backtest:null,meta:null,learning:[],diagnostics:[]};
 function set(id,value){const el=$(id);if(el)el.textContent=value}
 function numeric(v){
  if(v===null||v===undefined||typeof v==='boolean')return null;
@@ -188,6 +188,7 @@ function parserSelfTest(){
 function renderAll(){
  const rows=currentRows();state.filtered=rows;
  renderStats(rows);renderNumericQuality(rows);svgChart(rows);renderHistogram(rows);renderTrend(rows);renderLedger(rows);renderHorizons();
+ renderVersionComparison(rows);
  set('scopeText','دارایی: '+assets[state.asset]+' · افق: '+nf.format(state.horizon)+' روز · بازه: '+$('period').selectedOptions[0].text+' · فیلتر وضعیت و نسخه روی دفتر همین افق اعمال شده‌اند.');
 }
 function renderLearning(data){
@@ -219,6 +220,44 @@ async function loadLearning(){
  try{const data=await get('/forecast/learning');renderLearning(data)}
  catch(e){set('learningStatus','گزارش در دسترس نیست');set('learningRows','');$('learningRows').innerHTML='<tr><td colspan="7" class="empty error">'+esc(e.message)+'</td></tr>'}
 }
+function renderVersionComparison(rows){
+ const groups=new Map();
+ for(const row of rows){const key=row.model_version||"نسخه نامشخص";if(!groups.has(key))groups.set(key,[]);groups.get(key).push(row)}
+ const entries=[...groups.entries()].map(([version,list])=>({version,list,s:stats(list)})).sort((a,b)=>Date.parse(a.list[0]?.issued_at||0)-Date.parse(b.list[0]?.issued_at||0));
+ const body=$('versionRows');
+ if(!entries.length){body.innerHTML='<tr><td colspan="7" class="empty">رکوردی برای مقایسهٔ نسخه‌ها وجود ندارد.</td></tr>';set('versionNote','با دریافت پیش‌بینی‌های ارزیابی‌شده، مقایسه به‌صورت خودکار تکمیل می‌شود.');return}
+ body.innerHTML=entries.map(x=>{
+  const dates=x.list.map(r=>Date.parse(r.issued_at||'')).filter(Number.isFinite);
+  const range=dates.length?date(Math.min(...dates))+' تا '+date(Math.max(...dates)):'—';
+  return '<tr><td><code>'+esc(x.version)+'</code></td><td>'+nf.format(x.s.samples)+'</td><td>'+esc(pct(x.s.mae))+'</td><td>'+esc(pct(x.s.baseMae))+'</td><td>'+esc(pct(x.s.skill))+'</td><td>'+esc(pct(x.s.directional))+'</td><td>'+esc(range)+'</td></tr>';
+ }).join('');
+ set('versionNote','نسخه‌های حاضر در فیلتر: '+nf.format(entries.length)+' · این جدول مقایسهٔ گروهی است، نه آزمایش علّی کنترل‌شده.');
+}
+function renderDiagnostics(data){
+ const rows=Array.isArray(data?.diagnostics)?data.diagnostics:[];state.diagnostics=rows;
+ set('diagnosticStatus',rows.length?nf.format(rows.length)+' گزارش':'هنوز گزارشی ثبت نشده');
+ const body=$('diagnosticRows');
+ if(!rows.length){
+  body.innerHTML='<tr><td colspan="6" class="empty">برای این دارایی و افق، هنوز گزارش تشخیصی ذخیره نشده است.</td></tr>';
+  set('diagnosticNote','گزارش‌ها در اولین چرخه‌ای ثبت می‌شوند که پیش‌بینی جدید واقعاً ارزیابی شود. پیش‌بینی‌های قدیمی با شواهد ناقص بازسازی نمی‌شوند.');return;
+ }
+ body.innerHTML=rows.map(x=>{
+  const m=x.error_metrics||{},candidates=Array.isArray(x.root_cause_candidates)?x.root_cause_candidates:[];
+  const labels=candidates.slice(0,3).map(c=>c.code||'نشانه نامشخص').join('، ')||'شواهد کافی ثبت نشده';
+  const improvement=numeric(m.improvement_vs_no_change_pct);
+  return '<tr><td>'+esc(date(x.diagnosed_at))+'</td><td><code>'+esc(x.model_version||'—')+'</code></td><td>'+esc(pct(m.absolute_error_pct))+'</td><td>'+esc(pct(m.no_change_error_pct))+'</td><td class="'+(improvement!==null&&improvement>=0?'good':'bad')+'">'+esc(pct(improvement))+'</td><td>'+esc(labels)+'</td></tr>';
+ }).join('');
+ set('diagnosticNote',nf.format(rows.length)+' گزارش از جدول تشخیص خطا دریافت شد. نشانه‌های اولیه با اطمینان پایین هستند و علت قطعی محسوب نمی‌شوند.');
+}
+async function loadDiagnostics(){
+ try{
+  const data=await get('/forecast/diagnostics?asset='+encodeURIComponent(state.asset)+'&horizon_days='+state.horizon+'&limit=100');
+  renderDiagnostics(data);
+ }catch(e){
+  set('diagnosticStatus','دریافت ناموفق');$('diagnosticRows').innerHTML='<tr><td colspan="6" class="empty error">'+esc(e.message)+'</td></tr>';
+  set('diagnosticNote','گزارش تشخیصی در دسترس نیست؛ کارنامهٔ اصلی پیش‌بینی‌ها مستقل باقی می‌ماند.');
+ }
+}
 async function loadBacktest(){
  try{const perf=await get('/forecast/performance?asset='+encodeURIComponent(state.asset)+'&horizon_days='+state.horizon);renderBacktest(perf)}
  catch(e){renderBacktest(null);set('backtestNote','دادهٔ بک‌تست دریافت نشد: '+e.message+' · این خطا بر محاسبهٔ کارنامهٔ زنده اثر ندارد.')}
@@ -232,7 +271,7 @@ async function load(){
   [1,3,7].forEach((h,i)=>{state.byHorizon[String(h)]=Array.isArray(all[i].forecasts)?all[i].forecasts:[];if(h===state.horizon)state.meta=all[i].ledger_meta||{}});
   modelOptions();renderAll();
   set('updated','آخرین همگام‌سازی: '+date(new Date().toISOString())+' · '+nf.format(state.byHorizon[String(state.horizon)].length)+' رکورد · موتور فعال: '+(state.meta.active_model_version||'—'));
-  await Promise.all([loadBacktest(),loadLearning()]);
+  await Promise.all([loadBacktest(),loadLearning(),loadDiagnostics()]);
  }catch(e){
   state.byHorizon={};state.meta=null;state.filtered=[];
   set('updated','اتصال ناموفق');set('scopeText','دریافت دفتر ثبت ناموفق بود: '+e.message);
