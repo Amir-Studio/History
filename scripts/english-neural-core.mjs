@@ -16,7 +16,7 @@ const DEFAULTS = Object.freeze({
 export function normalizeTerm(value, language = "en") {
   const text = String(value ?? "").normalize("NFKC").trim();
   if (!text) return "";
-  return text.toLocaleLowerCase(language).replace(/[\\s\\u200b\\u200c]+/gu, " ");
+  return text.toLocaleLowerCase(language).replace(/[\s\u200b\u200c]+/gu, " ");
 }
 
 export function cosineSimilarity(left, right) {
