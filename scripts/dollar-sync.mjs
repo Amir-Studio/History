@@ -276,6 +276,9 @@ for (const item of newsItems) {
       headline: stored.headline,
       category: stored.category,
       status: stored.status,
+      triage_status: stored.dollar_triage?.status || null,
+      triage_score: stored.dollar_triage?.relevance_score ?? null,
+      summary: stored.summary || null,
       published_at: stored.published_at,
       source_url: stored.source_url,
       json_url: "https://amir-studio.github.io/History/data/pending-review/news/" + stored.id + ".json"
