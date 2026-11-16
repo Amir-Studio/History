@@ -1,0 +1,154 @@
+{
+  "id": "news-943ec0fdf5af1c7834",
+  "headline": "گمرک باشماق مریوان به مرکز تخصصی واردات پارچه و تلفن همراه تبدیل شد + فیلم",
+  "publisher": "tabnak.ir",
+  "author": null,
+  "source_url": "https://tabnak.ir/fa/news/4202108/%DA%AF%D9%85%D8%B1%DA%A9-%D8%A8%D8%A7%D8%B4%D9%85%D8%A7%D9%82-%D9%85%D8%B1%DB%8C%D9%88%D8%A7%D9%86-%D8%A8%D9%87-%D9%85%D8%B1%DA%A9%D8%B2-%D8%AA%D8%AE%D8%B5%D8%B5%DB%8C-%D9%88%D8%A7%D8%B1%D8%AF%D8%A7%D8%AA-%D9%BE%D8%A7%D8%B1%DA%86%D9%87-%D9%88-%D8%AA%D9%84%D9%81%D9%86-%D9%87%D9%85%D8%B1%D8%A7%D9%87-%D8%AA%D8%A8%D8%AF%DB%8C%D9%84-%D8%B4%D8%AF-%D9%81%DB%8C%D9%84%D9%85-05285650f60744c9acb9767a",
+  "published_at": "2026-11-15T17:29:17.000Z",
+  "collected_at": "2026-11-16T17:28:33.779Z",
+  "event_date": null,
+  "language": "fa",
+  "category": "world",
+  "summary": "به گزارش خبرنگار تابناک در استان کردستان، در راستای توسعه ظرفیت‌های تجاری استان و تقویت جایگاه مرز بین‌المللی باشماق در مبادلات بازرگانی کشور، گمرک باشماق مریوان به‌عنوان گمرک تخصصی واردات پارچه و تلفن همراه تعیین شد. این تصمیم در پی بخشنامه گمرک استان کردستان و با موافقت معاون امور گمرکی گمرک جمهوری اسلامی ایران اتخاذ شده و زمینه را برای تسهیل واردات این دو گروه کالایی از طریق مرز باشماق فراهم می‌کند. وی افزود: توسعه دامنه فعالیت‌های تخصصی این گمرک می‌تواند در تقویت زیرساخت‌های تجاری استان و افزایش سهم کردستان از مبادلات بازرگانی نقش مؤثری داشته باشد.",
+  "dollar_triage": {
+    "status": "summarize",
+    "relevance_score": 42.44,
+    "model_version": "dollar-news-triage-1.1.0+bge-m3-fallback",
+    "reason": {
+      "themes": [],
+      "recency": 0.9431298784722222,
+      "age_days": 0.8,
+      "rationale": "BGE-M3 multilingual semantic match plus topic, source-context, recency, extraction and attribution signals.",
+      "duplicate_of": null,
+      "text_quality": 0.7268181818181818,
+      "model_concepts": [
+        {
+          "id": "trade_route",
+          "term": "trade route",
+          "score": 0.39702
+        },
+        {
+          "id": "maritime_chokepoint",
+          "term": "maritime chokepoint",
+          "score": 0.39351
+        },
+        {
+          "id": "commodity_market",
+          "term": "commodity market",
+          "score": 0.3685
+        },
+        {
+          "id": "trade_balance",
+          "term": "trade balance",
+          "score": 0.36749
+        },
+        {
+          "id": "foreign_reserves",
+          "term": "foreign exchange reserves",
+          "score": 0.35553
+        },
+        {
+          "id": "economic_embargo",
+          "term": "economic embargo",
+          "score": 0.35489
+        },
+        {
+          "id": "arms_embargo",
+          "term": "arms embargo",
+          "score": 0.35253
+        },
+        {
+          "id": "imports",
+          "term": "imports",
+          "score": 0.34902
+        }
+      ],
+      "semantic_score": 0.39702,
+      "source_context": 1,
+      "theme_coverage": 0,
+      "decision_source": "neural_encoder_plus_transparent_fallback",
+      "semantic_status": "neural_semantic_analysis_complete",
+      "duplicate_signal": 0,
+      "attribution_signal": 0,
+      "learned_prediction": null,
+      "quantitative_anchor": 0
+    },
+    "semantic_concepts": [
+      {
+        "id": "trade_route",
+        "term": "trade route",
+        "score": 0.39702
+      },
+      {
+        "id": "maritime_chokepoint",
+        "term": "maritime chokepoint",
+        "score": 0.39351
+      },
+      {
+        "id": "commodity_market",
+        "term": "commodity market",
+        "score": 0.3685
+      },
+      {
+        "id": "trade_balance",
+        "term": "trade balance",
+        "score": 0.36749
+      },
+      {
+        "id": "foreign_reserves",
+        "term": "foreign exchange reserves",
+        "score": 0.35553
+      },
+      {
+        "id": "economic_embargo",
+        "term": "economic embargo",
+        "score": 0.35489
+      },
+      {
+        "id": "arms_embargo",
+        "term": "arms embargo",
+        "score": 0.35253
+      },
+      {
+        "id": "imports",
+        "term": "imports",
+        "score": 0.34902
+      }
+    ]
+  },
+  "claims": [
+    {
+      "claim": "تیتر منتشرشدهٔ ناشر چنین گزارش می‌کند: گمرک باشماق مریوان به مرکز تخصصی واردات پارچه و تلفن همراه تبدیل شد + فیلم",
+      "evidence_grade": "unverified",
+      "supporting_sources": [
+        "https://tabnak.ir/fa/news/4202108/%DA%AF%D9%85%D8%B1%DA%A9-%D8%A8%D8%A7%D8%B4%D9%85%D8%A7%D9%82-%D9%85%D8%B1%DB%8C%D9%88%D8%A7%D9%86-%D8%A8%D9%87-%D9%85%D8%B1%DA%A9%D8%B2-%D8%AA%D8%AE%D8%B5%D8%B5%DB%8C-%D9%88%D8%A7%D8%B1%D8%AF%D8%A7%D8%AA-%D9%BE%D8%A7%D8%B1%DA%86%D9%87-%D9%88-%D8%AA%D9%84%D9%81%D9%86-%D9%87%D9%85%D8%B1%D8%A7%D9%87-%D8%AA%D8%A8%D8%AF%DB%8C%D9%84-%D8%B4%D8%AF-%D9%81%DB%8C%D9%84%D9%85-05285650f60744c9acb9767a"
+      ],
+      "note": "ثبت تیتر به معنی تأیید ادعا نیست؛ بررسی متن کامل و سند پشتیبان لازم است."
+    }
+  ],
+  "status": "pending_review",
+  "significance_score": null,
+  "significance_reason": "امتیاز اهمیت تاریخی هنوز ارزیابی نشده است. امتیاز Dollar در dollar_triage فقط ارتباط موضوعی خبر با بازار را نشان می‌دهد و معیار اهمیت تاریخی یا صحت نیست.",
+  "sources": [
+    {
+      "title": "گمرک باشماق مریوان به مرکز تخصصی واردات پارچه و تلفن همراه تبدیل شد + فیلم",
+      "publisher": "tabnak.ir",
+      "country": null,
+      "source_type": "other",
+      "original_reporting": null,
+      "ownership_or_mandate_note": "در دریافت خودکار بررسی نشده است.",
+      "url": "https://tabnak.ir/fa/news/4202108/%DA%AF%D9%85%D8%B1%DA%A9-%D8%A8%D8%A7%D8%B4%D9%85%D8%A7%D9%82-%D9%85%D8%B1%DB%8C%D9%88%D8%A7%D9%86-%D8%A8%D9%87-%D9%85%D8%B1%DA%A9%D8%B2-%D8%AA%D8%AE%D8%B5%D8%B5%DB%8C-%D9%88%D8%A7%D8%B1%D8%AF%D8%A7%D8%AA-%D9%BE%D8%A7%D8%B1%DA%86%D9%87-%D9%88-%D8%AA%D9%84%D9%81%D9%86-%D9%87%D9%85%D8%B1%D8%A7%D9%87-%D8%AA%D8%A8%D8%AF%DB%8C%D9%84-%D8%B4%D8%AF-%D9%81%DB%8C%D9%84%D9%85-05285650f60744c9acb9767a",
+      "claim_supported": "تیتر منتشرشدهٔ ناشر چنین گزارش می‌کند: گمرک باشماق مریوان به مرکز تخصصی واردات پارچه و تلفن همراه تبدیل شد + فیلم",
+      "reporting_chain": "زنجیرهٔ گزارش‌دهی و استقلال منبع هنوز بررسی نشده است."
+    }
+  ],
+  "independent_domains": [],
+  "disagreements": [],
+  "limitations": [
+    "این رکورد بر پایهٔ تیتر و فرادادهٔ خوراک خبری ساخته شده است، نه بررسی متن کامل.",
+    "استقلال ناشر، مالکیت رسانه و بازنشر از خبرگزاری دیگر هنوز ارزیابی نشده است.",
+    "امتیاز اهمیت، احتمال صحت خبر نیست."
+  ],
+  "correction_watch": "برای اصلاحیه، تکذیبیه یا گزارش تکمیلی بعدی ناشر دوباره بررسی شود.",
+  "review_note": "پیش از تغییر وضعیت به verified، منبع اولیه و دست‌کم دو زنجیرهٔ گزارش‌دهی مستقل بررسی شوند."
+}

@@ -1,0 +1,154 @@
+{
+  "id": "news-d80bcc4a3ffc7b7245",
+  "headline": "New Orleans port sues owners of tanker involved in Mississippi crash",
+  "publisher": "npr.org",
+  "author": null,
+  "source_url": "https://www.npr.org/2026/11/15/nx-s1-6041677/new-orleans-port-sues-miracle-mississippi-cruise-ship",
+  "published_at": "2026-11-15T17:45:27.000Z",
+  "collected_at": "2026-11-16T17:28:33.779Z",
+  "event_date": null,
+  "language": "en",
+  "category": "world",
+  "summary": "Gerald Herbert/AP hide caption The Board of Commissioners of the Port of New Orleans is seeking at least $1 million in damages from people connected to the tanker, which is called Atlantic Asphalt. All passengers and crew survived, including more than 100 who were rescued from the river, leading New Orleans Mayor Helena Moreno to dub the incident \"the miracle on the Mississippi.\" \"The extent of said damage remains under investigation, but physical damage is currently estimated to exceed [$1 million], with additional substantial direct, indirect and consequential damages anticipated,\" the lawsuit reads. Burnham said it is estimated there are 160,000 gallons of fuel on board the ship.",
+  "dollar_triage": {
+    "status": "summarize",
+    "relevance_score": 54.42,
+    "model_version": "dollar-news-triage-1.1.0+bge-m3-fallback",
+    "reason": {
+      "themes": [],
+      "recency": 0.943932052744709,
+      "age_days": 0.78,
+      "rationale": "BGE-M3 multilingual semantic match plus topic, source-context, recency, extraction and attribution signals.",
+      "duplicate_of": null,
+      "text_quality": 1,
+      "model_concepts": [
+        {
+          "id": "maritime_chokepoint",
+          "term": "maritime chokepoint",
+          "score": 0.35929
+        },
+        {
+          "id": "oil_supply_disruption",
+          "term": "oil supply disruption",
+          "score": 0.35652
+        },
+        {
+          "id": "humanitarian_crisis",
+          "term": "humanitarian crisis",
+          "score": 0.33914
+        },
+        {
+          "id": "supply_chain_disruption",
+          "term": "supply chain disruption",
+          "score": 0.32565
+        },
+        {
+          "id": "safe_haven",
+          "term": "safe-haven asset",
+          "score": 0.31209
+        },
+        {
+          "id": "oil_price",
+          "term": "crude oil price",
+          "score": 0.30825
+        },
+        {
+          "id": "cyber_incident",
+          "term": "cyber incident",
+          "score": 0.30794
+        },
+        {
+          "id": "ceasefire_violation",
+          "term": "ceasefire violation",
+          "score": 0.30423
+        }
+      ],
+      "semantic_score": 0.35929,
+      "source_context": 1,
+      "theme_coverage": 0,
+      "decision_source": "neural_encoder_plus_transparent_fallback",
+      "semantic_status": "neural_semantic_analysis_complete",
+      "duplicate_signal": 0,
+      "attribution_signal": 1,
+      "learned_prediction": null,
+      "quantitative_anchor": 1
+    },
+    "semantic_concepts": [
+      {
+        "id": "maritime_chokepoint",
+        "term": "maritime chokepoint",
+        "score": 0.35929
+      },
+      {
+        "id": "oil_supply_disruption",
+        "term": "oil supply disruption",
+        "score": 0.35652
+      },
+      {
+        "id": "humanitarian_crisis",
+        "term": "humanitarian crisis",
+        "score": 0.33914
+      },
+      {
+        "id": "supply_chain_disruption",
+        "term": "supply chain disruption",
+        "score": 0.32565
+      },
+      {
+        "id": "safe_haven",
+        "term": "safe-haven asset",
+        "score": 0.31209
+      },
+      {
+        "id": "oil_price",
+        "term": "crude oil price",
+        "score": 0.30825
+      },
+      {
+        "id": "cyber_incident",
+        "term": "cyber incident",
+        "score": 0.30794
+      },
+      {
+        "id": "ceasefire_violation",
+        "term": "ceasefire violation",
+        "score": 0.30423
+      }
+    ]
+  },
+  "claims": [
+    {
+      "claim": "تیتر منتشرشدهٔ ناشر چنین گزارش می‌کند: New Orleans port sues owners of tanker involved in Mississippi crash",
+      "evidence_grade": "unverified",
+      "supporting_sources": [
+        "https://www.npr.org/2026/11/15/nx-s1-6041677/new-orleans-port-sues-miracle-mississippi-cruise-ship"
+      ],
+      "note": "ثبت تیتر به معنی تأیید ادعا نیست؛ بررسی متن کامل و سند پشتیبان لازم است."
+    }
+  ],
+  "status": "pending_review",
+  "significance_score": null,
+  "significance_reason": "امتیاز اهمیت تاریخی هنوز ارزیابی نشده است. امتیاز Dollar در dollar_triage فقط ارتباط موضوعی خبر با بازار را نشان می‌دهد و معیار اهمیت تاریخی یا صحت نیست.",
+  "sources": [
+    {
+      "title": "New Orleans port sues owners of tanker involved in Mississippi crash",
+      "publisher": "npr.org",
+      "country": null,
+      "source_type": "other",
+      "original_reporting": null,
+      "ownership_or_mandate_note": "در دریافت خودکار بررسی نشده است.",
+      "url": "https://www.npr.org/2026/11/15/nx-s1-6041677/new-orleans-port-sues-miracle-mississippi-cruise-ship",
+      "claim_supported": "تیتر منتشرشدهٔ ناشر چنین گزارش می‌کند: New Orleans port sues owners of tanker involved in Mississippi crash",
+      "reporting_chain": "زنجیرهٔ گزارش‌دهی و استقلال منبع هنوز بررسی نشده است."
+    }
+  ],
+  "independent_domains": [],
+  "disagreements": [],
+  "limitations": [
+    "این رکورد بر پایهٔ تیتر و فرادادهٔ خوراک خبری ساخته شده است، نه بررسی متن کامل.",
+    "استقلال ناشر، مالکیت رسانه و بازنشر از خبرگزاری دیگر هنوز ارزیابی نشده است.",
+    "امتیاز اهمیت، احتمال صحت خبر نیست."
+  ],
+  "correction_watch": "برای اصلاحیه، تکذیبیه یا گزارش تکمیلی بعدی ناشر دوباره بررسی شود.",
+  "review_note": "پیش از تغییر وضعیت به verified، منبع اولیه و دست‌کم دو زنجیرهٔ گزارش‌دهی مستقل بررسی شوند."
+}

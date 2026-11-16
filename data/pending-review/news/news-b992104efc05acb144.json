@@ -1,0 +1,154 @@
+{
+  "id": "news-b992104efc05acb144",
+  "headline": "Australien und Philippinen schließen Verteidigungsabkommen",
+  "publisher": "dw.com",
+  "author": null,
+  "source_url": "https://www.dw.com/de/australien-und-philippinen-schlie%C3%9Fen-verteidigungsabkommen/a-79951853?maca=de-rss-de-all-1119-rdf",
+  "published_at": "2026-11-15T11:22:00.000Z",
+  "collected_at": "2026-11-16T17:28:33.779Z",
+  "event_date": null,
+  "language": "de",
+  "category": "world",
+  "summary": "Die Vereinbarung wurde an diesem Sonntag bei einem Besuch des australischen Premierministers Anthony Albanese in der philippinischen Hauptstadt Manila unterzeichnet. Seit 2012 haben Australien und die Philippinen zudem eine Vereinbarung, die Manöver auf dem Territorium des jeweils anderen Staates ermöglicht. Mehr als 60 Prozent der weltweit verschifften Waren werden durch das Seegebiet transportiert.",
+  "dollar_triage": {
+    "status": "summarize",
+    "relevance_score": 51.02,
+    "model_version": "dollar-news-triage-1.1.0+bge-m3-fallback",
+    "reason": {
+      "themes": [],
+      "recency": 0.9221819485780424,
+      "age_days": 1.09,
+      "rationale": "BGE-M3 multilingual semantic match plus topic, source-context, recency, extraction and attribution signals.",
+      "duplicate_of": null,
+      "text_quality": 0.9622727272727273,
+      "model_concepts": [
+        {
+          "id": "military_alliance",
+          "term": "military alliance",
+          "score": 0.41541
+        },
+        {
+          "id": "military_occupation",
+          "term": "military occupation",
+          "score": 0.39516
+        },
+        {
+          "id": "arms_embargo",
+          "term": "arms embargo",
+          "score": 0.39321
+        },
+        {
+          "id": "armistice",
+          "term": "armistice",
+          "score": 0.38682
+        },
+        {
+          "id": "peace_agreement",
+          "term": "peace agreement",
+          "score": 0.38225
+        },
+        {
+          "id": "deescalation",
+          "term": "de-escalation",
+          "score": 0.37026
+        },
+        {
+          "id": "peace_negotiations",
+          "term": "peace negotiations",
+          "score": 0.35817
+        },
+        {
+          "id": "territorial_integrity",
+          "term": "territorial integrity",
+          "score": 0.35733
+        }
+      ],
+      "semantic_score": 0.41541,
+      "source_context": 1,
+      "theme_coverage": 0,
+      "decision_source": "neural_encoder_plus_transparent_fallback",
+      "semantic_status": "neural_semantic_analysis_complete",
+      "duplicate_signal": 0,
+      "attribution_signal": 0,
+      "learned_prediction": null,
+      "quantitative_anchor": 1
+    },
+    "semantic_concepts": [
+      {
+        "id": "military_alliance",
+        "term": "military alliance",
+        "score": 0.41541
+      },
+      {
+        "id": "military_occupation",
+        "term": "military occupation",
+        "score": 0.39516
+      },
+      {
+        "id": "arms_embargo",
+        "term": "arms embargo",
+        "score": 0.39321
+      },
+      {
+        "id": "armistice",
+        "term": "armistice",
+        "score": 0.38682
+      },
+      {
+        "id": "peace_agreement",
+        "term": "peace agreement",
+        "score": 0.38225
+      },
+      {
+        "id": "deescalation",
+        "term": "de-escalation",
+        "score": 0.37026
+      },
+      {
+        "id": "peace_negotiations",
+        "term": "peace negotiations",
+        "score": 0.35817
+      },
+      {
+        "id": "territorial_integrity",
+        "term": "territorial integrity",
+        "score": 0.35733
+      }
+    ]
+  },
+  "claims": [
+    {
+      "claim": "تیتر منتشرشدهٔ ناشر چنین گزارش می‌کند: Australien und Philippinen schließen Verteidigungsabkommen",
+      "evidence_grade": "unverified",
+      "supporting_sources": [
+        "https://www.dw.com/de/australien-und-philippinen-schlie%C3%9Fen-verteidigungsabkommen/a-79951853?maca=de-rss-de-all-1119-rdf"
+      ],
+      "note": "ثبت تیتر به معنی تأیید ادعا نیست؛ بررسی متن کامل و سند پشتیبان لازم است."
+    }
+  ],
+  "status": "pending_review",
+  "significance_score": null,
+  "significance_reason": "امتیاز اهمیت تاریخی هنوز ارزیابی نشده است. امتیاز Dollar در dollar_triage فقط ارتباط موضوعی خبر با بازار را نشان می‌دهد و معیار اهمیت تاریخی یا صحت نیست.",
+  "sources": [
+    {
+      "title": "Australien und Philippinen schließen Verteidigungsabkommen",
+      "publisher": "dw.com",
+      "country": null,
+      "source_type": "other",
+      "original_reporting": null,
+      "ownership_or_mandate_note": "در دریافت خودکار بررسی نشده است.",
+      "url": "https://www.dw.com/de/australien-und-philippinen-schlie%C3%9Fen-verteidigungsabkommen/a-79951853?maca=de-rss-de-all-1119-rdf",
+      "claim_supported": "تیتر منتشرشدهٔ ناشر چنین گزارش می‌کند: Australien und Philippinen schließen Verteidigungsabkommen",
+      "reporting_chain": "زنجیرهٔ گزارش‌دهی و استقلال منبع هنوز بررسی نشده است."
+    }
+  ],
+  "independent_domains": [],
+  "disagreements": [],
+  "limitations": [
+    "این رکورد بر پایهٔ تیتر و فرادادهٔ خوراک خبری ساخته شده است، نه بررسی متن کامل.",
+    "استقلال ناشر، مالکیت رسانه و بازنشر از خبرگزاری دیگر هنوز ارزیابی نشده است.",
+    "امتیاز اهمیت، احتمال صحت خبر نیست."
+  ],
+  "correction_watch": "برای اصلاحیه، تکذیبیه یا گزارش تکمیلی بعدی ناشر دوباره بررسی شود.",
+  "review_note": "پیش از تغییر وضعیت به verified، منبع اولیه و دست‌کم دو زنجیرهٔ گزارش‌دهی مستقل بررسی شوند."
+}

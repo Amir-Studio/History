@@ -1,0 +1,154 @@
+{
+  "id": "news-4da94f5dc567f0c95f",
+  "headline": "تراجع معدل التضخم بإسرائيل في تشرين الأول إلى قاع 5 سنوات",
+  "publisher": "annahar.com",
+  "author": null,
+  "source_url": "https://www.annahar.com/international/israeli-issues/366752/%D8%AA%D8%B1%D8%A7%D8%AC%D8%B9-%D9%85%D8%B9%D8%AF%D9%84-%D8%A7%D9%84%D8%AA%D8%B6%D8%AE%D9%85-%D8%A8%D8%A5%D8%B3%D8%B1%D8%A7%D8%A6%D9%8A%D9%84-%D9%81%D9%8A-%D8%A3%D9%83%D8%AA%D9%88%D8%A8%D8%B1-%D8%A5%D9%84%D9%89-%D9%82%D8%A7%D8%B9-5-%D8%B3%D9%86%D9%88%D8%A7%D8%AA",
+  "published_at": "2026-11-15T18:12:00.000Z",
+  "collected_at": "2026-11-16T17:28:33.779Z",
+  "event_date": null,
+  "language": "ar",
+  "category": "world",
+  "summary": "iframe{max-width:100% !important;} img{height:auto !important; max-width:100% !important;} أظهرت بيانات صادرة عن دائرة الإحصاء المركزية في إسرائيل اليوم الأحد أن التضخم السنوي زاد بأقل من المتوقع لكن المعدل بلغ 1.1 في المئة في تشرين الأول/ أكتوبر، وهو الأدنى منذ أكثر من خمس سنوات وربما يؤدي إلى مزيد من الخفض لأسعار الفائدة . &nbsp; وجاء معدل تشرين الأول/ أكتوبر، وهو الأدنى منذ نيسان/ أبريل 2021، أقل من التوقعات التي بلغت 1.5 في المئة في استطلاع أجرته رويترز، ويقع ضمن النطاق الذي تستهدفه الحكومة ويتراوح من واحد إلى ثلاثة في المئة. &nbsp; وانخفض مؤشر أسعار المستهلكين 0.1 في المئة في تشرين الأول/ أكتوبر مقارنةً بأيلول/ سبتمبر مقابل توقعات بصعوده 0.3 في المئة.",
+  "dollar_triage": {
+    "status": "summarize",
+    "relevance_score": 47.04,
+    "model_version": "dollar-news-triage-1.1.0+bge-m3-fallback",
+    "reason": {
+      "themes": [],
+      "recency": 0.9467367799272487,
+      "age_days": 0.75,
+      "rationale": "BGE-M3 multilingual semantic match plus topic, source-context, recency, extraction and attribution signals.",
+      "duplicate_of": null,
+      "text_quality": 0.3176136363636364,
+      "model_concepts": [
+        {
+          "id": "disinflation",
+          "term": "disinflation",
+          "score": 0.51308
+        },
+        {
+          "id": "inflation",
+          "term": "inflation",
+          "score": 0.45066
+        },
+        {
+          "id": "rate_cut",
+          "term": "interest rate cut",
+          "score": 0.44957
+        },
+        {
+          "id": "deflation",
+          "term": "deflation",
+          "score": 0.44956
+        },
+        {
+          "id": "interest_rate",
+          "term": "interest rate",
+          "score": 0.43924
+        },
+        {
+          "id": "policy_rate",
+          "term": "policy interest rate",
+          "score": 0.43058
+        },
+        {
+          "id": "rate_hike",
+          "term": "interest rate hike",
+          "score": 0.4211
+        },
+        {
+          "id": "bond_yield",
+          "term": "bond yield",
+          "score": 0.39562
+        }
+      ],
+      "semantic_score": 0.51308,
+      "source_context": 1,
+      "theme_coverage": 0,
+      "decision_source": "neural_encoder_plus_transparent_fallback",
+      "semantic_status": "neural_semantic_analysis_complete",
+      "duplicate_signal": 0,
+      "attribution_signal": 0,
+      "learned_prediction": null,
+      "quantitative_anchor": 1
+    },
+    "semantic_concepts": [
+      {
+        "id": "disinflation",
+        "term": "disinflation",
+        "score": 0.51308
+      },
+      {
+        "id": "inflation",
+        "term": "inflation",
+        "score": 0.45066
+      },
+      {
+        "id": "rate_cut",
+        "term": "interest rate cut",
+        "score": 0.44957
+      },
+      {
+        "id": "deflation",
+        "term": "deflation",
+        "score": 0.44956
+      },
+      {
+        "id": "interest_rate",
+        "term": "interest rate",
+        "score": 0.43924
+      },
+      {
+        "id": "policy_rate",
+        "term": "policy interest rate",
+        "score": 0.43058
+      },
+      {
+        "id": "rate_hike",
+        "term": "interest rate hike",
+        "score": 0.4211
+      },
+      {
+        "id": "bond_yield",
+        "term": "bond yield",
+        "score": 0.39562
+      }
+    ]
+  },
+  "claims": [
+    {
+      "claim": "تیتر منتشرشدهٔ ناشر چنین گزارش می‌کند: تراجع معدل التضخم بإسرائيل في تشرين الأول إلى قاع 5 سنوات",
+      "evidence_grade": "unverified",
+      "supporting_sources": [
+        "https://www.annahar.com/international/israeli-issues/366752/%D8%AA%D8%B1%D8%A7%D8%AC%D8%B9-%D9%85%D8%B9%D8%AF%D9%84-%D8%A7%D9%84%D8%AA%D8%B6%D8%AE%D9%85-%D8%A8%D8%A5%D8%B3%D8%B1%D8%A7%D8%A6%D9%8A%D9%84-%D9%81%D9%8A-%D8%A3%D9%83%D8%AA%D9%88%D8%A8%D8%B1-%D8%A5%D9%84%D9%89-%D9%82%D8%A7%D8%B9-5-%D8%B3%D9%86%D9%88%D8%A7%D8%AA"
+      ],
+      "note": "ثبت تیتر به معنی تأیید ادعا نیست؛ بررسی متن کامل و سند پشتیبان لازم است."
+    }
+  ],
+  "status": "pending_review",
+  "significance_score": null,
+  "significance_reason": "امتیاز اهمیت تاریخی هنوز ارزیابی نشده است. امتیاز Dollar در dollar_triage فقط ارتباط موضوعی خبر با بازار را نشان می‌دهد و معیار اهمیت تاریخی یا صحت نیست.",
+  "sources": [
+    {
+      "title": "تراجع معدل التضخم بإسرائيل في تشرين الأول إلى قاع 5 سنوات",
+      "publisher": "annahar.com",
+      "country": null,
+      "source_type": "other",
+      "original_reporting": null,
+      "ownership_or_mandate_note": "در دریافت خودکار بررسی نشده است.",
+      "url": "https://www.annahar.com/international/israeli-issues/366752/%D8%AA%D8%B1%D8%A7%D8%AC%D8%B9-%D9%85%D8%B9%D8%AF%D9%84-%D8%A7%D9%84%D8%AA%D8%B6%D8%AE%D9%85-%D8%A8%D8%A5%D8%B3%D8%B1%D8%A7%D8%A6%D9%8A%D9%84-%D9%81%D9%8A-%D8%A3%D9%83%D8%AA%D9%88%D8%A8%D8%B1-%D8%A5%D9%84%D9%89-%D9%82%D8%A7%D8%B9-5-%D8%B3%D9%86%D9%88%D8%A7%D8%AA",
+      "claim_supported": "تیتر منتشرشدهٔ ناشر چنین گزارش می‌کند: تراجع معدل التضخم بإسرائيل في تشرين الأول إلى قاع 5 سنوات",
+      "reporting_chain": "زنجیرهٔ گزارش‌دهی و استقلال منبع هنوز بررسی نشده است."
+    }
+  ],
+  "independent_domains": [],
+  "disagreements": [],
+  "limitations": [
+    "این رکورد بر پایهٔ تیتر و فرادادهٔ خوراک خبری ساخته شده است، نه بررسی متن کامل.",
+    "استقلال ناشر، مالکیت رسانه و بازنشر از خبرگزاری دیگر هنوز ارزیابی نشده است.",
+    "امتیاز اهمیت، احتمال صحت خبر نیست."
+  ],
+  "correction_watch": "برای اصلاحیه، تکذیبیه یا گزارش تکمیلی بعدی ناشر دوباره بررسی شود.",
+  "review_note": "پیش از تغییر وضعیت به verified، منبع اولیه و دست‌کم دو زنجیرهٔ گزارش‌دهی مستقل بررسی شوند."
+}

@@ -3,6 +3,42 @@
   "updated_at": "2026-11-16",
   "items": [
     {
+      "id": "price-d81a669090260827f9",
+      "instrument": "سکه امامی",
+      "symbol": "COIN_EMAMI_IRR",
+      "market": "iran_free",
+      "observed_at": "2026-11-16T17:24:43.000Z",
+      "status": "pending_review",
+      "json_url": "https://amir-studio.github.io/History/data/pending-review/prices/price-d81a669090260827f9.json"
+    },
+    {
+      "id": "price-19b135fbb231458604",
+      "instrument": "طلای ۱۸ عیار (گرم)",
+      "symbol": "GOLD_18K_IRR",
+      "market": "iran_free",
+      "observed_at": "2026-11-16T17:24:43.000Z",
+      "status": "pending_review",
+      "json_url": "https://amir-studio.github.io/History/data/pending-review/prices/price-19b135fbb231458604.json"
+    },
+    {
+      "id": "price-97b9ec5ae6808789dc",
+      "instrument": "یورو",
+      "symbol": "EUR_IRR_FREE",
+      "market": "iran_free",
+      "observed_at": "2026-11-16T17:24:43.000Z",
+      "status": "pending_review",
+      "json_url": "https://amir-studio.github.io/History/data/pending-review/prices/price-97b9ec5ae6808789dc.json"
+    },
+    {
+      "id": "price-1180cba0ae94126f61",
+      "instrument": "دلار آمریکا (بازار آزاد)",
+      "symbol": "USD_IRR_FREE",
+      "market": "iran_free",
+      "observed_at": "2026-11-16T17:24:43.000Z",
+      "status": "pending_review",
+      "json_url": "https://amir-studio.github.io/History/data/pending-review/prices/price-1180cba0ae94126f61.json"
+    },
+    {
       "id": "price-6da831f5291dd5a03a",
       "instrument": "سکه امامی",
       "symbol": "COIN_EMAMI_IRR",

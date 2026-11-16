@@ -1,0 +1,181 @@
+{
+  "id": "news-c08df64c21da58b7f2",
+  "headline": "The Philippines and Australia strengthen joint military deterrence at ASEAN summit",
+  "publisher": "france24.com",
+  "author": null,
+  "source_url": "https://www.france24.com/en/the-philippines-and-australia-strengthen-joint-military-deterrence-at-asean-summit",
+  "published_at": "2026-11-15T12:18:35.000Z",
+  "collected_at": "2026-11-16T17:28:33.779Z",
+  "event_date": null,
+  "language": "en",
+  "category": "world",
+  "summary": "Southeast Asian leaders opened their annual summit in the Philippine capital Manila on Sunday. During three days, world leaders are expected to focus on trade, energy and conflict – including the war in Iran. Details by FRANCE 24 correspondent in Bangkok Tommy Walker.",
+  "dollar_triage": {
+    "status": "summarize",
+    "relevance_score": 48.65,
+    "model_version": "dollar-news-triage-1.1.0+bge-m3-fallback",
+    "reason": {
+      "themes": [
+        {
+          "id": "oil_energy",
+          "count": 1,
+          "impact": "unknown",
+          "sources": [
+            "france24.com"
+          ],
+          "evidence": [
+            "The Philippines and Australia strengthen joint military deterrence at ASEAN summit"
+          ],
+          "title_fa": "نفت و انرژی",
+          "explanation_fa": "این موضوع در تیتر خبرها شناسایی شده است؛ اثر جهت‌دار آن بدون متن کامل و تأیید چند منبع تعیین نمی‌شود."
+        },
+        {
+          "id": "geopolitics",
+          "count": 1,
+          "impact": "unknown",
+          "sources": [
+            "france24.com"
+          ],
+          "evidence": [
+            "The Philippines and Australia strengthen joint military deterrence at ASEAN summit"
+          ],
+          "title_fa": "ریسک ژئوپلیتیک",
+          "explanation_fa": "این موضوع در تیتر خبرها شناسایی شده است؛ اثر جهت‌دار آن بدون متن کامل و تأیید چند منبع تعیین نمی‌شود."
+        }
+      ],
+      "recency": 0.9274702033730159,
+      "age_days": 1.02,
+      "rationale": "BGE-M3 multilingual semantic match plus topic, source-context, recency, extraction and attribution signals.",
+      "duplicate_of": null,
+      "text_quality": 0.09543181818181819,
+      "model_concepts": [
+        {
+          "id": "military_alliance",
+          "term": "military alliance",
+          "score": 0.41149
+        },
+        {
+          "id": "deescalation",
+          "term": "de-escalation",
+          "score": 0.39647
+        },
+        {
+          "id": "peace_agreement",
+          "term": "peace agreement",
+          "score": 0.38452
+        },
+        {
+          "id": "armistice",
+          "term": "armistice",
+          "score": 0.38441
+        },
+        {
+          "id": "peace_negotiations",
+          "term": "peace negotiations",
+          "score": 0.37904
+        },
+        {
+          "id": "armed_conflict",
+          "term": "armed conflict",
+          "score": 0.37421
+        },
+        {
+          "id": "ceasefire",
+          "term": "ceasefire",
+          "score": 0.37094
+        },
+        {
+          "id": "conflict_escalation",
+          "term": "conflict escalation",
+          "score": 0.36739
+        }
+      ],
+      "semantic_score": 0.41149,
+      "source_context": 1,
+      "theme_coverage": 0.5,
+      "decision_source": "neural_encoder_plus_transparent_fallback",
+      "semantic_status": "neural_semantic_analysis_complete",
+      "duplicate_signal": 0,
+      "attribution_signal": 0,
+      "learned_prediction": null,
+      "quantitative_anchor": 1
+    },
+    "semantic_concepts": [
+      {
+        "id": "military_alliance",
+        "term": "military alliance",
+        "score": 0.41149
+      },
+      {
+        "id": "deescalation",
+        "term": "de-escalation",
+        "score": 0.39647
+      },
+      {
+        "id": "peace_agreement",
+        "term": "peace agreement",
+        "score": 0.38452
+      },
+      {
+        "id": "armistice",
+        "term": "armistice",
+        "score": 0.38441
+      },
+      {
+        "id": "peace_negotiations",
+        "term": "peace negotiations",
+        "score": 0.37904
+      },
+      {
+        "id": "armed_conflict",
+        "term": "armed conflict",
+        "score": 0.37421
+      },
+      {
+        "id": "ceasefire",
+        "term": "ceasefire",
+        "score": 0.37094
+      },
+      {
+        "id": "conflict_escalation",
+        "term": "conflict escalation",
+        "score": 0.36739
+      }
+    ]
+  },
+  "claims": [
+    {
+      "claim": "تیتر منتشرشدهٔ ناشر چنین گزارش می‌کند: The Philippines and Australia strengthen joint military deterrence at ASEAN summit",
+      "evidence_grade": "unverified",
+      "supporting_sources": [
+        "https://www.france24.com/en/the-philippines-and-australia-strengthen-joint-military-deterrence-at-asean-summit"
+      ],
+      "note": "ثبت تیتر به معنی تأیید ادعا نیست؛ بررسی متن کامل و سند پشتیبان لازم است."
+    }
+  ],
+  "status": "pending_review",
+  "significance_score": null,
+  "significance_reason": "امتیاز اهمیت تاریخی هنوز ارزیابی نشده است. امتیاز Dollar در dollar_triage فقط ارتباط موضوعی خبر با بازار را نشان می‌دهد و معیار اهمیت تاریخی یا صحت نیست.",
+  "sources": [
+    {
+      "title": "The Philippines and Australia strengthen joint military deterrence at ASEAN summit",
+      "publisher": "france24.com",
+      "country": null,
+      "source_type": "other",
+      "original_reporting": null,
+      "ownership_or_mandate_note": "در دریافت خودکار بررسی نشده است.",
+      "url": "https://www.france24.com/en/the-philippines-and-australia-strengthen-joint-military-deterrence-at-asean-summit",
+      "claim_supported": "تیتر منتشرشدهٔ ناشر چنین گزارش می‌کند: The Philippines and Australia strengthen joint military deterrence at ASEAN summit",
+      "reporting_chain": "زنجیرهٔ گزارش‌دهی و استقلال منبع هنوز بررسی نشده است."
+    }
+  ],
+  "independent_domains": [],
+  "disagreements": [],
+  "limitations": [
+    "این رکورد بر پایهٔ تیتر و فرادادهٔ خوراک خبری ساخته شده است، نه بررسی متن کامل.",
+    "استقلال ناشر، مالکیت رسانه و بازنشر از خبرگزاری دیگر هنوز ارزیابی نشده است.",
+    "امتیاز اهمیت، احتمال صحت خبر نیست."
+  ],
+  "correction_watch": "برای اصلاحیه، تکذیبیه یا گزارش تکمیلی بعدی ناشر دوباره بررسی شود.",
+  "review_note": "پیش از تغییر وضعیت به verified، منبع اولیه و دست‌کم دو زنجیرهٔ گزارش‌دهی مستقل بررسی شوند."
+}
