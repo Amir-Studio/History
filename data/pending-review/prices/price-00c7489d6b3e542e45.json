@@ -1,0 +1,21 @@
+{
+  "id": "price-00c7489d6b3e542e45",
+  "instrument": "سکه امامی",
+  "symbol": "COIN_EMAMI_IRR",
+  "market": "iran_free",
+  "value": 249795000,
+  "unit": "IRT",
+  "currency": "IRT",
+  "observed_at": "2026-11-20T16:01:52.000Z",
+  "collected_at": "2026-11-20T16:14:11.022Z",
+  "source_name": "NerkhAra",
+  "source_url": "https://nerkhara.com/sekke-emami/",
+  "provider_method": "average",
+  "provider_source_count": 2,
+  "provider_spread_pct": 0.16,
+  "provider_updated_at": "2026-11-20T16:01:52",
+  "methodology": "ثبت عین مشاهدهٔ منتشرشده در خوراک عمومی؛ واحد و زمان منبع حفظ می‌شود و هیچ مقدار کهنه‌ای جایگزین نمی‌شود.",
+  "status": "pending_review",
+  "supersedes": null,
+  "notes": "وضعیت بازار: در خوراک مشخص نشده | زمان تهران: ثبت نشده | تاریخ شمسی: ثبت نشده | زمان بررسی منبع: ثبت نشده | پرچم stale: false"
+}
